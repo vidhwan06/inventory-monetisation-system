@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AI Agents Orchestration | AssetFlow</title>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary-fixed-variant": "#005236",
+                        "on-secondary-container": "#54647a",
+                        "on-background": "#131b2e",
+                        "background": "#faf8ff",
+                        "on-surface-variant": "#464555",
+                        "on-secondary-fixed": "#0b1c30",
+                        "on-error": "#ffffff",
+                        "on-tertiary-fixed": "#002113",
+                        "on-error-container": "#93000a",
+                        "outline": "#777587",
+                        "secondary-fixed": "#d3e4fe",
+                        "primary-fixed": "#e2dfff",
+                        "on-tertiary": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "surface-container-highest": "#dae2fd",
+                        "surface-container": "#eaedff",
+                        "on-primary-fixed": "#0f0069",
+                        "outline-variant": "#c7c4d8",
+                        "on-tertiary-container": "#67f4b7",
+                        "on-primary": "#ffffff",
+                        "error": "#ba1a1a",
+                        "tertiary": "#005338",
+                        "secondary-container": "#d0e1fb",
+                        "surface-container-low": "#f2f3ff",
+                        "inverse-on-surface": "#eef0ff",
+                        "surface": "#faf8ff",
+                        "on-surface": "#131b2e",
+                        "surface-container-high": "#e2e7ff",
+                        "secondary": "#505f76",
+                        "tertiary-fixed-dim": "#4edea3",
+                        "primary-container": "#4f46e5",
+                        "on-primary-fixed-variant": "#3323cc",
+                        "surface-tint": "#4d44e3",
+                        "primary": "#3525cd",
+                        "tertiary-fixed": "#6ffbbe",
+                        "inverse-primary": "#c3c0ff",
+                        "secondary-fixed-dim": "#b7c8e1",
+                        "surface-variant": "#dae2fd",
+                        "tertiary-container": "#006e4b",
+                        "surface-dim": "#d2d9f4",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-bright": "#faf8ff",
+                        "on-secondary": "#ffffff",
+                        "inverse-surface": "#283044",
+                        "primary-fixed-dim": "#c3c0ff",
+                        "on-secondary-fixed-variant": "#38485d",
+                        "on-primary-container": "#dad7ff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "fontFamily": {
+                        "headline": ["Manrope"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body { font-family: 'Inter', sans-serif; }
+        h1, h2, h3, .font-manrope { font-family: 'Manrope', sans-serif; }
+    </style>
+</head>
+<body class="bg-background text-on-surface">
+<!-- SideNavBar -->
+<nav class="fixed left-0 top-0 bottom-0 w-64 border-r-0 bg-[#faf8ff] dark:bg-slate-950 flex flex-col h-screen py-6 px-4 z-50">
+<div class="mb-8 px-2">
+<h1 class="text-2xl font-bold text-[#3525cd] dark:text-white font-manrope tracking-tight">AssetFlow</h1>
+<p class="text-xs text-slate-500 font-manrope">Monetization Engine</p>
+</div>
+<div class="flex-1 space-y-1">
+<a class="flex items-center gap-3 px-3 py-2 text-slate-500 dark:text-slate-400 font-medium hover:translate-x-1 transition-transform duration-200 cursor-pointer active:scale-98" href="/">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-manrope tracking-tight">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-500 dark:text-slate-400 font-medium hover:translate-x-1 transition-transform duration-200 cursor-pointer active:scale-98" href="/">
+<span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
+<span class="font-manrope tracking-tight">Inventory</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-500 dark:text-slate-400 font-medium hover:translate-x-1 transition-transform duration-200 cursor-pointer active:scale-98" href="#">
+<span class="material-symbols-outlined" data-icon="payments">payments</span>
+<span class="font-manrope tracking-tight">Monetization</span>
+</a>
+<!-- Active Tab: Agents -->
+<a class="flex items-center gap-3 px-3 py-2 text-[#3525cd] dark:text-white font-semibold bg-[#3525cd]/5 dark:bg-[#4f46e5]/10 rounded-lg hover:translate-x-1 transition-transform duration-200 cursor-pointer active:scale-98" href="/orchestration">
+<span class="material-symbols-outlined" data-icon="smart_toy">smart_toy</span>
+<span class="font-manrope tracking-tight">Agents</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-500 dark:text-slate-400 font-medium hover:translate-x-1 transition-transform duration-200 cursor-pointer active:scale-98" href="#">
+<span class="material-symbols-outlined" data-icon="leaderboard">leaderboard</span>
+<span class="font-manrope tracking-tight">Analytics</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-500 dark:text-slate-400 font-medium hover:translate-x-1 transition-transform duration-200 cursor-pointer active:scale-98" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-manrope tracking-tight">Settings</span>
+</a>
+</div>
+<div class="mt-auto pt-6 space-y-1">
+<button class="w-full bg-gradient-to-br from-primary to-primary-container text-white py-2.5 rounded-xl font-semibold text-sm mb-6 shadow-lg shadow-primary/20 flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-sm" data-icon="add">add</span>
+                New Asset
+            </button>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-500 dark:text-slate-400 font-medium hover:translate-x-1 transition-transform duration-200 cursor-pointer active:scale-98" href="#">
+<span class="material-symbols-outlined" data-icon="support_agent">support_agent</span>
+<span class="font-manrope tracking-tight">Support</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-500 dark:text-slate-400 font-medium hover:translate-x-1 transition-transform duration-200 cursor-pointer active:scale-98" href="/login">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+<span class="font-manrope tracking-tight">Sign Out</span>
+</a>
+</div>
+</nav>
+<!-- TopNavBar -->
+<header class="fixed top-0 right-0 left-0 z-40 bg-[#faf8ff]/70 dark:bg-slate-900/70 backdrop-blur-xl shadow-sm dark:shadow-none flex justify-between items-center h-16 px-8 ml-64">
+<div class="flex items-center flex-1">
+<div class="relative w-full max-w-md group">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-lg">search</span>
+<input class="w-full bg-surface-container-low border-none rounded-full py-2 pl-10 pr-4 text-sm focus:ring-2 focus:ring-primary/20 transition-all outline-none" placeholder="Search agents or workflows..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-4">
+<button class="text-slate-500 hover:bg-slate-100 p-2 rounded-full transition-colors relative">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full border-2 border-white"></span>
+</button>
+<button class="text-slate-500 hover:bg-slate-100 p-2 rounded-full transition-colors">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+</button>
+</div>
+<div class="h-8 w-[1px] bg-outline-variant/30"></div>
+<div class="flex items-center gap-3 cursor-pointer group">
+<div class="text-right hidden sm:block">
+<p class="text-xs font-bold font-manrope">Alex Rivera</p>
+<p class="text-[10px] text-slate-500 uppercase tracking-wider">Admin</p>
+</div>
+<img alt="User profile avatar" class="w-9 h-9 rounded-full object-cover ring-2 ring-primary/10 group-hover:ring-primary transition-all" data-alt="Professional headshot of a young male executive with short hair, smiling warmly in a bright corporate office setting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDQ1xaxNt7FaRzPtTM_94AWBW9E838pGnoklyHHmZRDh6Y64541TVhgdgQcCIyXsZRyrrKjTi5qDrHdGoSGjebnoVqIo4ZfwhKMIEjSGjxppkpE8Y_cg3Xz6tJGWlK7h7t-pZsb97TTsZGYgzzXssyp1nbWFw_BWmlfj9fQnkUAm70tiNCeWpE7R8blP29-5uH8gUSn8KoBJn8YK4y29OdssNsE0mHrdAMphaCbQx-Gc-UTL27ftVI_rkpYpwkHg-xk32UM6D87neYJ"/>
+</div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="ml-64 pt-24 pb-12 px-10">
+<!-- Header -->
+<div class="max-w-7xl mx-auto mb-10">
+<h2 class="text-4xl font-extrabold font-headline tracking-tight text-on-surface mb-2">AI Agents Orchestration</h2>
+<p class="text-lg text-on-surface-variant max-w-3xl">Multiple AI agents collaborate to analyze inventory and generate monetisation strategies through real-time feedback loops.</p>
+</div>
+<!-- Agents Overview Grid -->
+<div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+<!-- Analyzer Agent -->
+<div class="bg-surface-container-lowest p-6 rounded-xl shadow-sm hover:translate-y-[-4px] transition-all duration-300 group">
+<div class="flex justify-between items-start mb-6">
+<div class="p-3 bg-primary/10 text-primary rounded-xl group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-2xl" data-icon="analytics">analytics</span>
+</div>
+<span class="px-3 py-1 bg-tertiary-container text-on-tertiary-fixed-variant text-[10px] font-bold uppercase rounded-full tracking-widest flex items-center gap-1">
+<span class="w-1.5 h-1.5 bg-tertiary-fixed-dim rounded-full"></span> Active
+                    </span>
+</div>
+<h3 class="text-lg font-bold font-headline mb-1">Analyzer Agent</h3>
+<p class="text-sm text-on-surface-variant mb-6 leading-relaxed">Detect slow-moving inventory across global warehouses.</p>
+<div class="space-y-3 pt-4 border-t border-outline-variant/10">
+<div class="flex justify-between text-xs">
+<span class="text-slate-400 font-label">Input</span>
+<span class="font-semibold text-primary">CSV data</span>
+</div>
+<div class="flex justify-between text-xs">
+<span class="text-slate-400 font-label">Output</span>
+<span class="font-semibold text-on-surface">Inventory List</span>
+</div>
+</div>
+</div>
+<!-- Strategy Agent -->
+<div class="bg-surface-container-lowest p-6 rounded-xl shadow-sm hover:translate-y-[-4px] transition-all duration-300 group border-2 border-primary/5">
+<div class="flex justify-between items-start mb-6">
+<div class="p-3 bg-primary-container/10 text-primary-container rounded-xl group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-2xl" data-icon="psychology">psychology</span>
+</div>
+<span class="px-3 py-1 bg-amber-100 text-amber-800 text-[10px] font-bold uppercase rounded-full tracking-widest flex items-center gap-1">
+<span class="w-1.5 h-1.5 bg-amber-500 rounded-full animate-pulse"></span> Processing
+                    </span>
+</div>
+<h3 class="text-lg font-bold font-headline mb-1">Strategy Agent</h3>
+<p class="text-sm text-on-surface-variant mb-6 leading-relaxed">Generate monetisation strategies including bundling &amp; liquidation.</p>
+<div class="space-y-3 pt-4 border-t border-outline-variant/10">
+<div class="flex justify-between text-xs">
+<span class="text-slate-400 font-label">Input</span>
+<span class="font-semibold text-primary">Items List</span>
+</div>
+<div class="flex justify-between text-xs">
+<span class="text-slate-400 font-label">Output</span>
+<span class="font-semibold text-on-surface">Strategy Map</span>
+</div>
+</div>
+</div>
+<!-- Pricing Agent -->
+<div class="bg-surface-container-lowest p-6 rounded-xl shadow-sm hover:translate-y-[-4px] transition-all duration-300 group">
+<div class="flex justify-between items-start mb-6">
+<div class="p-3 bg-secondary-container/30 text-secondary rounded-xl group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-2xl" data-icon="sell">sell</span>
+</div>
+<span class="px-3 py-1 bg-slate-100 text-slate-500 text-[10px] font-bold uppercase rounded-full tracking-widest flex items-center gap-1">
+<span class="w-1.5 h-1.5 bg-slate-400 rounded-full"></span> Idle
+                    </span>
+</div>
+<h3 class="text-lg font-bold font-headline mb-1">Pricing Agent</h3>
+<p class="text-sm text-on-surface-variant mb-6 leading-relaxed">Suggest optimal discounts based on historical elasticity.</p>
+<div class="space-y-3 pt-4 border-t border-outline-variant/10">
+<div class="flex justify-between text-xs">
+<span class="text-slate-400 font-label">Input</span>
+<span class="font-semibold text-primary">Sales data</span>
+</div>
+<div class="flex justify-between text-xs">
+<span class="text-slate-400 font-label">Output</span>
+<span class="font-semibold text-on-surface">Price Levels</span>
+</div>
+</div>
+</div>
+<!-- Market Agent -->
+<div class="bg-surface-container-lowest p-6 rounded-xl shadow-sm hover:translate-y-[-4px] transition-all duration-300 group">
+<div class="flex justify-between items-start mb-6">
+<div class="p-3 bg-tertiary-fixed/20 text-tertiary rounded-xl group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-2xl" data-icon="public">public</span>
+</div>
+<span class="px-3 py-1 bg-tertiary-container text-on-tertiary-fixed-variant text-[10px] font-bold uppercase rounded-full tracking-widest flex items-center gap-1">
+<span class="w-1.5 h-1.5 bg-tertiary-fixed-dim rounded-full"></span> Active
+                    </span>
+</div>
+<h3 class="text-lg font-bold font-headline mb-1">Market Agent</h3>
+<p class="text-sm text-on-surface-variant mb-6 leading-relaxed">Identify high-converting platforms and niche audiences.</p>
+<div class="space-y-3 pt-4 border-t border-outline-variant/10">
+<div class="flex justify-between text-xs">
+<span class="text-slate-400 font-label">Input</span>
+<span class="font-semibold text-primary">Category data</span>
+</div>
+<div class="flex justify-between text-xs">
+<span class="text-slate-400 font-label">Output</span>
+<span class="font-semibold text-on-surface">Target Audience</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Workflow Visual -->
+<div class="max-w-7xl mx-auto mb-12">
+<div class="bg-surface-container-low rounded-3xl p-10 relative overflow-hidden">
+<div class="absolute inset-0 bg-gradient-to-r from-primary/5 to-transparent pointer-events-none"></div>
+<div class="relative z-10">
+<div class="flex items-center gap-2 mb-8">
+<span class="material-symbols-outlined text-primary" data-icon="account_tree">account_tree</span>
+<h3 class="text-xl font-bold font-headline">Live Orchestration Flow</h3>
+</div>
+<div class="flex flex-col lg:flex-row items-center justify-between gap-8 px-4">
+<!-- Step 1 -->
+<div class="flex flex-col items-center text-center max-w-[160px]">
+<div class="w-16 h-16 rounded-full bg-white flex items-center justify-center shadow-sm mb-4 relative z-20">
+<span class="material-symbols-outlined text-primary text-3xl" data-icon="upload_file">upload_file</span>
+</div>
+<p class="text-sm font-bold font-manrope">Upload CSV</p>
+<p class="text-[10px] text-slate-500 mt-1">Raw inventory feed</p>
+</div>
+<div class="hidden lg:block flex-1 h-[2px] bg-gradient-to-r from-primary/20 to-primary/60 relative">
+<span class="material-symbols-outlined absolute right-0 -top-2 text-primary/60" data-icon="chevron_right">chevron_right</span>
+</div>
+<!-- Step 2 -->
+<div class="flex flex-col items-center text-center max-w-[160px]">
+<div class="w-16 h-16 rounded-full bg-primary flex items-center justify-center shadow-lg mb-4 relative z-20">
+<span class="material-symbols-outlined text-white text-3xl" data-icon="analytics">analytics</span>
+<div class="absolute -top-1 -right-1 w-5 h-5 bg-tertiary-fixed-dim rounded-full border-2 border-white flex items-center justify-center">
+<span class="material-symbols-outlined text-[10px] text-white" data-icon="check" data-weight="fill">check</span>
+</div>
+</div>
+<p class="text-sm font-bold font-manrope">Analyzer Agent</p>
+<p class="text-[10px] text-slate-500 mt-1">Detecting patterns</p>
+</div>
+<div class="hidden lg:block flex-1 h-[2px] bg-gradient-to-r from-primary/60 to-primary/20 relative">
+<span class="material-symbols-outlined absolute right-0 -top-2 text-primary/20" data-icon="chevron_right">chevron_right</span>
+</div>
+<!-- Step 3 -->
+<div class="flex flex-col items-center text-center max-w-[160px]">
+<div class="w-16 h-16 rounded-full bg-white flex items-center justify-center shadow-sm mb-4 relative z-20">
+<span class="material-symbols-outlined text-primary-container text-3xl animate-pulse" data-icon="psychology">psychology</span>
+</div>
+<p class="text-sm font-bold font-manrope">Strategy Agent</p>
+<p class="text-[10px] text-slate-500 mt-1">Generating options</p>
+</div>
+<div class="hidden lg:block flex-1 h-[2px] bg-gradient-to-r from-primary/20 to-primary/10 border-dashed border-t-2 relative">
+<span class="material-symbols-outlined absolute right-0 -top-2 text-primary/10" data-icon="chevron_right">chevron_right</span>
+</div>
+<!-- Step 4 -->
+<div class="flex flex-col items-center text-center max-w-[160px]">
+<div class="w-16 h-16 rounded-full bg-white flex items-center justify-center shadow-sm mb-4 relative z-20">
+<span class="material-symbols-outlined text-tertiary text-3xl" data-icon="recommend">recommend</span>
+</div>
+<p class="text-sm font-bold font-manrope">Recommendations</p>
+<p class="text-[10px] text-slate-500 mt-1">Final monetisation plan</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Explainability Section -->
+<div class="max-w-7xl mx-auto">
+<div class="flex items-center gap-3 mb-8">
+<div class="w-10 h-1 bg-primary rounded-full"></div>
+<h3 class="text-2xl font-extrabold font-headline">How AI Makes Decisions</h3>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<!-- Example 1 -->
+<div class="bg-surface-container-low/50 rounded-2xl p-8 flex gap-6 group hover:bg-white transition-colors duration-300">
+<div class="shrink-0 w-12 h-12 bg-white rounded-xl shadow-sm flex items-center justify-center group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-primary" data-icon="auto_awesome">auto_awesome</span>
+</div>
+<div>
+<h4 class="text-lg font-bold mb-3">Logical Deduction: Inventory Aging</h4>
+<p class="text-on-surface-variant text-sm leading-relaxed mb-4">"Analyzer Agent identified 400 units of Winter Coats in California that haven't moved in 14 days. Strategy Agent determined that since local weather is warming, holding inventory costs more than a 30% liquidation discount."</p>
+<div class="flex items-center gap-2 text-xs font-semibold text-primary">
+<span>Low sales detected</span>
+<span class="material-symbols-outlined text-sm" data-icon="arrow_forward">arrow_forward</span>
+<span class="text-tertiary">High discount applied</span>
+</div>
+</div>
+</div>
+<!-- Example 2 -->
+<div class="bg-surface-container-low/50 rounded-2xl p-8 flex gap-6 group hover:bg-white transition-colors duration-300">
+<div class="shrink-0 w-12 h-12 bg-white rounded-xl shadow-sm flex items-center justify-center group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-primary" data-icon="ads_click">ads_click</span>
+</div>
+<div>
+<h4 class="text-lg font-bold mb-3">Contextual Targeting</h4>
+<p class="text-on-surface-variant text-sm leading-relaxed mb-4">"Market Agent analyzed the 'Clothing' category and matched it with upcoming University orientation weeks. It suggested Instagram Ads specifically for Gen Z students interested in budget-friendly fashion."</p>
+<div class="flex items-center gap-2 text-xs font-semibold text-primary">
+<span>Category = Clothing</span>
+<span class="material-symbols-outlined text-sm" data-icon="arrow_forward">arrow_forward</span>
+<span class="text-tertiary">Target university students</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- FAB Suppression: Not rendered on Settings, Profile, Details, or transactional screens -->
+<!-- As this is a specialized Orchestration page, we omit the generic FAB to focus on the workflow -->
+</body></html>
