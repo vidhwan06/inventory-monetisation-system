@@ -102,9 +102,18 @@
 <span class="text-2xl font-extrabold brand-font text-primary tracking-tight">AssetFlow</span>
 </div>
 <h1 class="text-2xl font-bold text-on-surface mb-2">Welcome back</h1>
-<p class="text-on-surface-variant text-sm font-medium">Please enter your details to sign in</p>
+<p class="text-on-surface-variant text-sm font-medium">Please enter your name, email, and password to continue</p>
 </div>
 <form action="/" method="GET" class="space-y-6">
+<div class="space-y-2">
+<label class="block text-xs font-semibold uppercase tracking-wider text-on-surface-variant px-1" for="name">Name</label>
+<div class="relative group">
+<div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-on-surface-variant group-focus-within:text-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]" data-icon="person">person</span>
+</div>
+<input class="w-full pl-11 pr-4 py-3 bg-surface-container-low border-0 rounded-lg text-on-surface placeholder:text-on-surface-variant/50 focus:ring-2 focus:ring-primary/20 focus:bg-surface-container-lowest transition-all duration-200 outline-none body-md" id="name" name="name" placeholder="Your full name" type="text"/>
+</div>
+</div>
 <div class="space-y-2">
 <label class="block text-xs font-semibold uppercase tracking-wider text-on-surface-variant px-1" for="email">Email Address</label>
 <div class="relative group">
@@ -115,50 +124,22 @@
 </div>
 </div>
 <div class="space-y-2">
-<div class="flex justify-between items-center px-1">
-<label class="block text-xs font-semibold uppercase tracking-wider text-on-surface-variant" for="password">Password</label>
-<a class="text-xs font-bold text-primary hover:text-primary-container transition-colors" href="#">Forgot Password?</a>
-</div>
+<label class="block text-xs font-semibold uppercase tracking-wider text-on-surface-variant px-1" for="password">Password</label>
 <div class="relative group">
 <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-on-surface-variant group-focus-within:text-primary transition-colors">
 <span class="material-symbols-outlined text-[20px]" data-icon="lock">lock</span>
 </div>
-<input class="w-full pl-11 pr-4 py-3 bg-surface-container-low border-0 rounded-lg text-on-surface placeholder:text-on-surface-variant/50 focus:ring-2 focus:ring-primary/20 focus:bg-surface-container-lowest transition-all duration-200 outline-none body-md" id="password" name="password" placeholder="••••••••" type="password"/>
-<div class="absolute inset-y-0 right-0 pr-4 flex items-center cursor-pointer text-on-surface-variant hover:text-on-surface">
-<span class="material-symbols-outlined text-[20px]" data-icon="visibility">visibility</span>
+<input class="w-full pl-11 pr-12 py-3 bg-surface-container-low border-0 rounded-lg text-on-surface placeholder:text-on-surface-variant/50 focus:ring-2 focus:ring-primary/20 focus:bg-surface-container-lowest transition-all duration-200 outline-none body-md" id="password" name="password" placeholder="Password" type="password"/>
+<button aria-label="Show password" class="absolute inset-y-0 right-0 pr-4 flex items-center text-on-surface-variant hover:text-on-surface transition-colors" id="password-toggle" type="button">
+<span class="material-symbols-outlined text-[20px]" id="password-toggle-icon">visibility</span>
+</button>
 </div>
-</div>
-</div>
-<div class="flex items-center space-x-3 px-1">
-<input class="w-4 h-4 text-primary border-outline-variant rounded focus:ring-primary/20 transition-all" id="remember" type="checkbox"/>
-<label class="text-sm font-medium text-on-surface-variant" for="remember">Keep me logged in</label>
 </div>
 <button class="w-full py-4 bg-gradient-to-r from-primary to-primary-container text-white font-bold rounded-lg shadow-xl shadow-primary/20 hover:scale-[1.01] active:scale-[0.99] transition-all duration-200 flex items-center justify-center gap-2" type="submit">
                     Sign In
                     <span class="material-symbols-outlined text-[20px]" data-icon="arrow_forward">arrow_forward</span>
 </button>
 </form>
-<div class="mt-8">
-<div class="relative flex items-center mb-8">
-<div class="flex-grow border-t border-outline-variant/30"></div>
-<span class="flex-shrink mx-4 text-xs font-bold text-on-surface-variant uppercase tracking-widest">Or continue with</span>
-<div class="flex-grow border-t border-outline-variant/30"></div>
-</div>
-<div class="grid grid-cols-2 gap-4">
-<button class="flex items-center justify-center gap-3 py-3 px-4 border border-outline-variant/30 rounded-lg bg-surface-container-lowest hover:bg-surface-container-low transition-colors duration-200">
-<img alt="Google" class="w-5 h-5" data-alt="Google logo icon with multi-color G symbol on a white background for social authentication" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBvoI_RGeepkMbLU690MNkdUM2vs-ktxrKMEIecVXsrEJs9SIQX78TKJ46lT5yxj6HzDHWs3d4ldaIgeRoGzPK4RZNz2gBB0fslH8saX8B7Cy1VSrPKTHo93RGAfyjEQYko_5wuQ5jJevr6MacIOV_2KSJcmNigmdeT_kgE8TbgBjcOp0cPYQlteBJsGJghworN3vV6Lg-8fbzqf1rYoNf5phVyTWpzAe6EQp_FktDKG5ZCaf9wEI2xZ8bPHChI1JCltG-dUFi850Jb"/>
-<span class="text-sm font-bold text-on-surface">Google</span>
-</button>
-<button class="flex items-center justify-center gap-3 py-3 px-4 border border-outline-variant/30 rounded-lg bg-surface-container-lowest hover:bg-surface-container-low transition-colors duration-200">
-<span class="material-symbols-outlined text-on-surface text-[20px]" data-icon="terminal">terminal</span>
-<span class="text-sm font-bold text-on-surface">SSO</span>
-</button>
-</div>
-</div>
-<p class="mt-10 text-center text-sm font-medium text-on-surface-variant">
-                New to the platform? 
-                <a class="text-primary font-bold hover:underline underline-offset-4 ml-1" href="#">Request Access</a>
-</p>
 </div>
 <footer class="mt-8 flex justify-center gap-6 text-xs font-bold text-on-surface-variant uppercase tracking-widest opacity-60">
 <a class="hover:text-primary transition-colors" href="#">Privacy Policy</a>
@@ -182,4 +163,18 @@
             </p>
 </div>
 </div>
+<script>
+        const passwordInput = document.getElementById('password');
+        const passwordToggle = document.getElementById('password-toggle');
+        const passwordToggleIcon = document.getElementById('password-toggle-icon');
+
+        if (passwordInput && passwordToggle && passwordToggleIcon) {
+            passwordToggle.addEventListener('click', () => {
+                const isHidden = passwordInput.type === 'password';
+                passwordInput.type = isHidden ? 'text' : 'password';
+                passwordToggle.setAttribute('aria-label', isHidden ? 'Hide password' : 'Show password');
+                passwordToggleIcon.textContent = isHidden ? 'visibility_off' : 'visibility';
+            });
+        }
+    </script>
 </body></html>
