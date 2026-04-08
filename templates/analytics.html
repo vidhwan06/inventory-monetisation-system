@@ -1,220 +1,320 @@
-<!DOCTYPE html>
-<html class="light" lang="en">
-<head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>AssetFlow | Analytics</title>
+{% extends "base.html" %}
 
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
-
+{% block head_scripts %}
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+{% endblock %}
 
-<style>
-body { font-family: 'Inter', sans-serif; }
-h1, h2, h3 { font-family: 'Manrope', sans-serif; }
-</style>
-</head>
+{% block content %}
+<section class="mb-8">
+    <h2 class="text-4xl font-bold font-headline tracking-tight text-on-surface">{{ dashboard_title }}</h2>
+    <p class="mt-2 max-w-2xl text-sm text-on-surface-variant sm:text-base">{{ dashboard_subtitle }}</p>
+</section>
 
-<body class="bg-surface text-on-surface overflow-x-hidden">
-
-<!-- ✅ FIXED SIDEBAR -->
-<aside class="fixed left-0 top-0 bottom-0 w-64 border-r-0 bg-[#faf8ff] flex flex-col h-screen py-6 px-4 z-50">
-
-  <div class="mb-10 px-2">
-    <h1 class="text-2xl font-bold text-[#3525cd] font-manrope tracking-tight">
-      AssetFlow
-    </h1>
-    <p class="text-xs text-slate-500 font-medium tracking-tight">
-      Monetization Engine
-    </p>
-  </div>
-
-  <nav class="flex-1 space-y-1">
-
-    <a href="/"
-       class="flex items-center gap-3 px-4 py-3 text-slate-500 dark:text-slate-400 font-medium font-manrope hover:translate-x-1 transition-transform duration-200">
-      <span class="material-symbols-outlined">dashboard</span>
-      <span>Dashboard</span>
+{% if empty_state %}
+<section class="rounded-3xl border border-dashed border-outline-variant/40 bg-surface-container-low p-10 text-center">
+    <p class="text-lg font-semibold text-on-surface">No analytics yet.</p>
+    <p class="mt-2 text-sm text-on-surface-variant">Upload inventory from the dashboard to populate this page with live metrics and recommendations.</p>
+    <a class="mt-6 inline-flex items-center gap-2 rounded-xl bg-primary px-5 py-3 text-sm font-semibold text-white" href="/inventory">
+        <span class="material-symbols-outlined text-lg">upload_file</span>
+        Go to Inventory
     </a>
-
-    <a href="/inventory"
-       class="flex items-center gap-3 px-4 py-3 text-slate-500 dark:text-slate-400 font-medium font-manrope hover:translate-x-1 transition-transform duration-200">
-      <span class="material-symbols-outlined">inventory_2</span>
-      <span>Inventory</span>
-    </a>
-
-    <a href="#"
-       class="flex items-center gap-3 px-4 py-3 text-slate-500 dark:text-slate-400 font-medium font-manrope hover:translate-x-1 transition-transform duration-200">
-      <span class="material-symbols-outlined">payments</span>
-      <span>Monetization</span>
-    </a>
-
-    <a href="/orchestration"
-       class="flex items-center gap-3 px-4 py-3 text-slate-500 dark:text-slate-400 font-medium font-manrope hover:translate-x-1 transition-transform duration-200">
-      <span class="material-symbols-outlined">smart_toy</span>
-      <span>Agents</span>
-    </a>
-
-    <!-- 🔥 ACTIVE ANALYTICS -->
-    <a href="/analytics"
-       class="flex items-center gap-3 px-4 py-3 text-[#3525cd] dark:text-white font-semibold bg-[#3525cd]/5 dark:bg-[#4f46e5]/10 rounded-lg font-manrope">
-      <span class="material-symbols-outlined">leaderboard</span>
-      <span>Analytics</span>
-    </a>
-
-    <a href="#"
-       class="flex items-center gap-3 px-4 py-3 text-slate-500 dark:text-slate-400 font-medium font-manrope hover:translate-x-1 transition-transform duration-200">
-      <span class="material-symbols-outlined">settings</span>
-      <span>Settings</span>
-    </a>
-
-  </nav>
-
-  <div class="mt-auto space-y-1 border-t pt-4">
-
-    <button class="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-3 rounded-xl font-semibold text-sm mb-6 flex items-center justify-center gap-2">
-      <span class="material-symbols-outlined text-sm">add</span>
-      New Asset
+</section>
+{% else %}
+<section class="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+    {% for stat in stats %}
+    <button
+        type="button"
+        class="analytics-drilldown-card rounded-3xl bg-surface-container-low p-6 text-left shadow-sm transition duration-200 hover:-translate-y-1 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-primary/40"
+        data-drilldown-key="{{ stat.label | lower | replace(' ', '_') }}"
+    >
+        <p class="text-xs font-semibold uppercase tracking-[0.2em] text-on-surface-variant">{{ stat.label }}</p>
+        <p class="mt-3 text-3xl font-bold font-headline {{ stat.tone }}">{{ stat.value }}</p>
+        <p class="mt-4 text-xs font-semibold uppercase tracking-[0.2em] text-primary">View matching products</p>
     </button>
+    {% endfor %}
+</section>
 
-    <a href="#"
-       class="flex items-center gap-3 px-4 py-3 text-slate-500 font-medium font-manrope">
-      <span class="material-symbols-outlined">support_agent</span>
-      <span>Support</span>
-    </a>
+<section class="mt-8 grid gap-6 xl:grid-cols-[1.2fr,0.8fr]">
+    <article class="rounded-3xl bg-surface-container-low p-6 shadow-sm">
+        <h3 class="text-lg font-semibold text-on-surface">Inventory Distribution</h3>
+        <p class="mt-1 text-sm text-on-surface-variant">How the current catalog is split across demand categories.</p>
+        <div class="mt-6 h-[320px]">
+            <canvas id="distributionChart"></canvas>
+        </div>
+    </article>
 
-    <a href="#"
-       class="flex items-center gap-3 px-4 py-3 text-slate-500 font-medium font-manrope">
-      <span class="material-symbols-outlined">logout</span>
-      <span>Sign Out</span>
-    </a>
+    <article class="rounded-3xl bg-surface-container-low p-6 shadow-sm">
+        <h3 class="text-lg font-semibold text-on-surface">Revenue Potential by Action</h3>
+        <p class="mt-1 text-sm text-on-surface-variant">Positive upside currently available from each recommended action.</p>
+        <div class="mt-6 h-[320px]">
+            <canvas id="revenueChart"></canvas>
+        </div>
+    </article>
+</section>
 
-  </div>
+<section class="mt-8 grid gap-6 xl:grid-cols-[1.1fr,0.9fr]">
+    <article class="rounded-3xl bg-white p-6 shadow-sm">
+        <div class="flex items-center justify-between gap-4">
+            <div>
+                <h3 class="text-lg font-semibold text-on-surface">Highest Risk Items</h3>
+                <p class="mt-1 text-sm text-on-surface-variant">These products need attention first based on low demand and holding exposure.</p>
+            </div>
+        </div>
+        <div class="mt-6 overflow-x-auto">
+            <table class="min-w-full text-left">
+                <thead>
+                    <tr class="border-b border-surface-container-high text-xs uppercase tracking-[0.16em] text-on-surface-variant">
+                        <th class="pb-3 pr-4">Item</th>
+                        <th class="pb-3 pr-4">Status</th>
+                        <th class="pb-3 pr-4">Risk</th>
+                        <th class="pb-3">Action</th>
+                    </tr>
+                </thead>
+                <tbody class="text-sm">
+                    {% for row in risk_rows %}
+                    <tr class="border-b border-surface-container-low">
+                        <td class="py-4 pr-4 font-semibold text-on-surface">{{ row.item }}</td>
+                        <td class="py-4 pr-4 text-on-surface-variant">{{ row.status }}</td>
+                        <td class="py-4 pr-4">
+                            <span class="inline-flex rounded-full px-3 py-1 text-xs font-bold uppercase tracking-widest {% if row.risk_label == 'High' %}bg-error-container text-on-error-container{% elif row.risk_label == 'Medium' %}bg-amber-100 text-amber-700{% else %}bg-tertiary-container text-on-tertiary-fixed-variant{% endif %}">
+                                {{ row.risk_label }}
+                            </span>
+                        </td>
+                        <td class="py-4 font-medium text-primary">{{ row.action }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </article>
 
-</aside>
+    <article class="rounded-3xl bg-gradient-to-br from-primary to-primary-container p-6 text-white shadow-lg shadow-primary/20">
+        <h3 class="text-xl font-bold font-headline">AI Insights</h3>
+        <div class="mt-4 space-y-4 text-sm leading-6 text-white/85">
+            {% for insight in insights %}
+            <p>{{ insight }}</p>
+            {% endfor %}
+        </div>
+    </article>
+</section>
 
-<!-- MAIN -->
-<main class="ml-64 min-h-screen">
+<section class="mt-8 rounded-3xl bg-surface-container-low p-6 shadow-sm">
+    <div class="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+            <p class="text-xs font-semibold uppercase tracking-[0.2em] text-primary">Analytics Drilldown</p>
+            <h3 id="analyticsDrilldownTitle" class="mt-2 text-xl font-bold font-headline text-on-surface">Largest Inventory Value Exposure</h3>
+            <p id="analyticsDrilldownSummary" class="mt-2 max-w-3xl text-sm text-on-surface-variant">Products contributing the most to current inventory value based on stock and current price.</p>
+        </div>
+        <p class="text-xs font-semibold uppercase tracking-[0.2em] text-on-surface-variant">Click a card or chart segment to switch the view</p>
+    </div>
+    <div class="mt-6 grid gap-3 lg:grid-cols-[1fr,180px,auto]">
+        <label class="flex items-center gap-3 rounded-2xl border border-outline-variant/30 bg-white px-4 py-3">
+            <span class="material-symbols-outlined text-on-surface-variant">search</span>
+            <input id="analyticsDrilldownSearch" type="search" placeholder="Search products in this view" class="w-full bg-transparent text-sm text-on-surface outline-none placeholder:text-on-surface-variant">
+        </label>
+        <label class="flex items-center gap-3 rounded-2xl border border-outline-variant/30 bg-white px-4 py-3">
+            <span class="material-symbols-outlined text-on-surface-variant">swap_vert</span>
+            <select id="analyticsDrilldownSort" class="w-full bg-transparent text-sm text-on-surface outline-none">
+                <option value="inventory_desc">Highest inventory value</option>
+                <option value="upside_desc">Highest revenue upside</option>
+                <option value="risk_desc">Highest risk</option>
+                <option value="name_asc">Product name A-Z</option>
+            </select>
+        </label>
+        <div class="flex items-center justify-between rounded-2xl border border-outline-variant/30 bg-white px-4 py-3 text-sm text-on-surface-variant">
+            <span>Visible products</span>
+            <span id="analyticsDrilldownCount" class="font-semibold text-on-surface">0</span>
+        </div>
+    </div>
+    <div id="analyticsDrilldownEmpty" class="mt-6 hidden rounded-2xl border border-dashed border-outline-variant/40 px-6 py-8 text-sm text-on-surface-variant">
+        No matching products were found for this selection.
+    </div>
+    <div id="analyticsDrilldownItems" class="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3"></div>
+</section>
+{% endif %}
+{% endblock %}
 
-<header class="fixed top-0 right-0 left-64 z-40 bg-[#faf8ff]/70 backdrop-blur-xl h-16 flex justify-between items-center px-8">
-<input class="bg-surface-container-low rounded-full px-4 py-2 w-1/3" placeholder="Search inventory..."/>
-<div class="flex items-center gap-4">
-<span class="text-sm font-semibold">Alex Thompson</span>
-</div>
-</header>
-
-<div class="pt-24 px-8">
-
-<h2 class="text-4xl font-bold mb-2">Analytics Dashboard</h2>
-<p class="text-on-surface-variant mb-8">AI-powered insights from your inventory</p>
-
-<div class="grid grid-cols-4 gap-6 mb-10">
-
-<div class="bg-surface-container-low p-6 rounded-2xl shadow">
-<p class="text-sm text-on-surface-variant">Total Inventory Value</p>
-<h3 class="text-2xl font-bold">₹12,50,000</h3>
-</div>
-
-<div class="bg-surface-container-low p-6 rounded-2xl shadow">
-<p class="text-sm text-on-surface-variant">Dead Stock</p>
-<h3 class="text-2xl font-bold text-red-500">18%</h3>
-</div>
-
-<div class="bg-surface-container-low p-6 rounded-2xl shadow">
-<p class="text-sm text-on-surface-variant">Fast Moving</p>
-<h3 class="text-2xl font-bold text-green-500">32%</h3>
-</div>
-
-<div class="bg-surface-container-low p-6 rounded-2xl shadow">
-<p class="text-sm text-on-surface-variant">Revenue Opportunity</p>
-<h3 class="text-2xl font-bold text-indigo-600">₹3,20,000</h3>
-</div>
-
-</div>
-
-<div class="grid grid-cols-2 gap-6 mb-10">
-
-<div class="bg-surface-container-low p-6 rounded-2xl shadow">
-<h3 class="mb-4 font-semibold">Inventory Distribution</h3>
-<canvas id="pieChart"></canvas>
-</div>
-
-<div class="bg-surface-container-low p-6 rounded-2xl shadow">
-<h3 class="mb-4 font-semibold">Revenue Potential</h3>
-<canvas id="barChart"></canvas>
-</div>
-
-</div>
-
-<div class="bg-white p-6 rounded-xl shadow mb-10">
-<h3 class="font-semibold mb-4">Risk Analysis</h3>
-
-<table class="w-full text-left">
-<thead>
-<tr class="text-on-surface-variant text-sm">
-<th>Item</th>
-<th>Status</th>
-<th>Risk</th>
-<th>Action</th>
-</tr>
-</thead>
-
-<tbody>
-<tr class="border-t">
-<td class="py-3">Item A</td>
-<td class="text-yellow-500">Slow Moving</td>
-<td>Medium</td>
-<td class="text-indigo-600">Hold</td>
-</tr>
-
-<tr class="border-t">
-<td class="py-3">Item B</td>
-<td class="text-red-500">Dead Stock</td>
-<td>High</td>
-<td class="text-red-600">Liquidate</td>
-</tr>
-</tbody>
-
-</table>
-</div>
-
-<div class="bg-indigo-600 text-white p-6 rounded-xl shadow">
-<h3 class="text-xl font-bold mb-2">AI Insights</h3>
-<p>
-Electronics category shows high dead stock. Recommended aggressive discounting strategy to maximize revenue recovery.
-</p>
-</div>
-
-</div>
-
-</main>
-
+{% block extra_scripts %}
+{% if not empty_state %}
 <script>
-new Chart(document.getElementById("pieChart"), {
-type: "pie",
-data: {
-labels: ["Fast Moving", "Slow Moving", "Dead Stock"],
-datasets: [{
-data: [32, 50, 18],
-backgroundColor: ["green", "orange", "red"]
-}]
-}
-});
+    const distributionLabels = {{ distribution_labels | tojson }};
+    const distributionValues = {{ distribution_values | tojson }};
+    const actionLabels = {{ action_labels | tojson }};
+    const actionValues = {{ action_values | tojson }};
+    const analyticsDrilldowns = {{ analytics_drilldowns | tojson }};
+    const drilldownCards = document.querySelectorAll("[data-drilldown-key]");
+    const drilldownTitle = document.getElementById("analyticsDrilldownTitle");
+    const drilldownSummary = document.getElementById("analyticsDrilldownSummary");
+    const drilldownItems = document.getElementById("analyticsDrilldownItems");
+    const drilldownEmpty = document.getElementById("analyticsDrilldownEmpty");
+    const drilldownSearch = document.getElementById("analyticsDrilldownSearch");
+    const drilldownSort = document.getElementById("analyticsDrilldownSort");
+    const drilldownCount = document.getElementById("analyticsDrilldownCount");
+    let activeDrilldownKey = "total_inventory_value";
 
-new Chart(document.getElementById("barChart"), {
-type: "bar",
-data: {
-labels: ["Electronics", "Clothing", "Furniture"],
-datasets: [{
-label: "Revenue",
-data: [120000, 90000, 60000]
-}]
-}
-});
+    function setActiveDrilldownCard(key) {
+        drilldownCards.forEach((card) => {
+            const isActive = card.dataset.drilldownKey === key;
+            card.classList.toggle("ring-2", isActive);
+            card.classList.toggle("ring-primary/40", isActive);
+        });
+    }
+
+    function sortDrilldownItems(items) {
+        const sorted = [...items];
+        const sortMode = drilldownSort.value;
+
+        sorted.sort((left, right) => {
+            if (sortMode === "name_asc") {
+                return left.item.localeCompare(right.item);
+            }
+            if (sortMode === "risk_desc") {
+                return (right.risk_score || 0) - (left.risk_score || 0);
+            }
+            if (sortMode === "upside_desc") {
+                return (right.expected_change || 0) - (left.expected_change || 0);
+            }
+            return (right.inventory_value || 0) - (left.inventory_value || 0);
+        });
+
+        return sorted;
+    }
+
+    function filteredDrilldownItems(items) {
+        const query = drilldownSearch.value.trim().toLowerCase();
+        const searched = query
+            ? items.filter((item) => {
+                const haystack = `${item.item} ${item.meta} ${item.action || ""} ${item.status || ""}`.toLowerCase();
+                return haystack.includes(query);
+            })
+            : items;
+        return sortDrilldownItems(searched);
+    }
+
+    function openInInventory(productName) {
+        localStorage.setItem("analyticsSelectedProduct", productName);
+        window.location.href = "/inventory";
+    }
+
+    function renderAnalyticsDrilldown(key) {
+        const drilldown = analyticsDrilldowns[key];
+        if (!drilldown) {
+            return;
+        }
+
+        activeDrilldownKey = key;
+        setActiveDrilldownCard(key);
+        drilldownTitle.textContent = drilldown.title;
+        drilldownSummary.textContent = drilldown.summary;
+        drilldownItems.innerHTML = "";
+
+        const visibleItems = filteredDrilldownItems(drilldown.items || []);
+        drilldownCount.textContent = String(visibleItems.length);
+
+        if (!visibleItems.length) {
+            drilldownEmpty.classList.remove("hidden");
+            return;
+        }
+
+        drilldownEmpty.classList.add("hidden");
+        visibleItems.forEach((item) => {
+            const card = document.createElement("article");
+            card.className = "rounded-2xl border border-outline-variant/30 bg-white p-5 shadow-sm transition duration-200 hover:-translate-y-1 hover:shadow-md";
+            card.innerHTML = `
+                <p class="text-base font-semibold text-on-surface">${item.item}</p>
+                <p class="mt-2 text-sm text-on-surface-variant">${item.meta}</p>
+                <div class="mt-4 flex items-end justify-between gap-3">
+                    <div>
+                        <p class="text-[11px] font-semibold uppercase tracking-[0.18em] text-on-surface-variant">${item.value_label}</p>
+                        <p class="mt-1 text-sm font-semibold text-primary">${item.value}</p>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <button type="button" class="analytics-agent-output inline-flex items-center gap-2 rounded-xl border border-outline-variant/30 px-3 py-2 text-xs font-semibold text-on-surface transition hover:border-primary/40 hover:text-primary" data-product="${item.item}">
+                            <span class="material-symbols-outlined text-sm">psychology</span>
+                            Agent output
+                        </button>
+                        <button type="button" class="analytics-open-inventory inline-flex items-center gap-2 rounded-xl bg-primary px-3 py-2 text-xs font-semibold text-white transition hover:opacity-90" data-product="${item.item}">
+                            <span class="material-symbols-outlined text-sm">open_in_new</span>
+                            Open in inventory
+                        </button>
+                    </div>
+                </div>
+            `;
+            drilldownItems.appendChild(card);
+        });
+
+        drilldownItems.querySelectorAll(".analytics-open-inventory, .analytics-agent-output").forEach((button) => {
+            button.addEventListener("click", () => openInInventory(button.dataset.product));
+        });
+    }
+
+    drilldownCards.forEach((card) => {
+        card.addEventListener("click", () => renderAnalyticsDrilldown(card.dataset.drilldownKey));
+    });
+    drilldownSearch.addEventListener("input", () => renderAnalyticsDrilldown(activeDrilldownKey));
+    drilldownSort.addEventListener("change", () => renderAnalyticsDrilldown(activeDrilldownKey));
+
+    new Chart(document.getElementById("distributionChart"), {
+        type: "doughnut",
+        data: {
+            labels: distributionLabels,
+            datasets: [{
+                data: distributionValues,
+                backgroundColor: ["#10b981", "#4f46e5", "#f59e0b", "#dc2626"],
+                borderWidth: 0,
+            }]
+        },
+        options: {
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: "bottom",
+                }
+            },
+            onClick: (_, elements, chart) => {
+                if (!elements.length) {
+                    return;
+                }
+                const label = chart.data.labels[elements[0].index];
+                renderAnalyticsDrilldown(`category::${label}`);
+            }
+        }
+    });
+
+    new Chart(document.getElementById("revenueChart"), {
+        type: "bar",
+        data: {
+            labels: actionLabels,
+            datasets: [{
+                label: "Upside",
+                data: actionValues,
+                backgroundColor: "#3525cd",
+                borderRadius: 10,
+            }]
+        },
+        options: {
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                }
+            },
+            plugins: {
+                legend: {
+                    display: false,
+                }
+            },
+            onClick: (_, elements, chart) => {
+                if (!elements.length) {
+                    return;
+                }
+                const label = chart.data.labels[elements[0].index];
+                renderAnalyticsDrilldown(`action::${label}`);
+            }
+        }
+    });
+
+    renderAnalyticsDrilldown("total_inventory_value");
 </script>
-
-</body>
-</html>
+{% endif %}
+{% endblock %}

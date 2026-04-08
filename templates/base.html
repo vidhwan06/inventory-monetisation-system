@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>{% block title %}{{ page_title | default('AssetFlow') }}{% endblock %}</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    {% block head_scripts %}{% endblock %}
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "tertiary-fixed": "#6ffbbe",
+                        "secondary-container": "#d0e1fb",
+                        "surface-tint": "#4d44e3",
+                        "primary-container": "#4f46e5",
+                        "on-error-container": "#93000a",
+                        "inverse-surface": "#283044",
+                        "on-tertiary": "#ffffff",
+                        "surface-container": "#eaedff",
+                        "surface-container-lowest": "#ffffff",
+                        "on-error": "#ffffff",
+                        "on-tertiary-fixed": "#002113",
+                        "surface-variant": "#dae2fd",
+                        "primary-fixed": "#e2dfff",
+                        "on-secondary-fixed-variant": "#38485d",
+                        "on-secondary": "#ffffff",
+                        "surface-dim": "#d2d9f4",
+                        "on-secondary-fixed": "#0b1c30",
+                        "on-primary-container": "#dad7ff",
+                        "outline-variant": "#c7c4d8",
+                        "on-tertiary-container": "#67f4b7",
+                        "surface-bright": "#faf8ff",
+                        "on-tertiary-fixed-variant": "#005236",
+                        "on-secondary-container": "#54647a",
+                        "surface-container-low": "#f2f3ff",
+                        "error-container": "#ffdad6",
+                        "outline": "#777587",
+                        "on-primary-fixed-variant": "#3323cc",
+                        "error": "#ba1a1a",
+                        "on-background": "#131b2e",
+                        "tertiary-container": "#006e4b",
+                        "secondary-fixed": "#d3e4fe",
+                        "inverse-on-surface": "#eef0ff",
+                        "tertiary-fixed-dim": "#4edea3",
+                        "tertiary": "#005338",
+                        "inverse-primary": "#c3c0ff",
+                        "on-primary-fixed": "#0f0069",
+                        "surface-container-highest": "#dae2fd",
+                        "on-surface-variant": "#464555",
+                        "on-primary": "#ffffff",
+                        "secondary": "#505f76",
+                        "surface-container-high": "#e2e7ff",
+                        "surface": "#faf8ff",
+                        "primary-fixed-dim": "#c3c0ff",
+                        "background": "#faf8ff",
+                        "primary": "#3525cd",
+                        "on-surface": "#131b2e",
+                        "secondary-fixed-dim": "#b7c8e1"
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.125rem",
+                        lg: "0.25rem",
+                        xl: "0.5rem",
+                        full: "0.75rem"
+                    },
+                    fontFamily: {
+                        headline: ["Manrope"],
+                        body: ["Inter"],
+                        label: ["Inter"]
+                    }
+                },
+            },
+        }
+    </script>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body { font-family: 'Inter', sans-serif; }
+        h1, h2, h3, .font-manrope { font-family: 'Manrope', sans-serif; }
+        .nav-link-active {
+            background: linear-gradient(135deg, rgba(53, 37, 205, 0.12), rgba(79, 70, 229, 0.18));
+            color: #3525cd;
+            box-shadow: inset 0 0 0 1px rgba(53, 37, 205, 0.08);
+        }
+    </style>
+    {% block extra_head %}{% endblock %}
+</head>
+<body class="{% block body_class %}bg-surface text-on-surface overflow-x-hidden{% endblock %}">
+    <aside class="fixed left-0 top-0 bottom-0 hidden w-72 overflow-x-hidden bg-[#f8f7ff] lg:flex flex-col h-screen px-5 py-5 z-50">
+        <div class="rounded-[1.75rem] bg-white/90 p-5 shadow-sm shadow-primary/5">
+            <div class="flex items-center gap-3">
+                <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-primary to-primary-container text-white shadow-lg shadow-primary/20">
+                    <span class="material-symbols-outlined">deployed_code</span>
+                </div>
+                <div>
+                    <h1 class="text-2xl font-bold text-primary font-manrope tracking-tight">AssetFlow</h1>
+                    <p class="text-xs text-slate-500 font-medium tracking-tight">Monetization Engine</p>
+                </div>
+            </div>
+            <div class="mt-5 rounded-2xl bg-surface-container-low px-4 py-3">
+                <p class="text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-500">Current Workspace</p>
+                <p class="mt-1 text-sm font-semibold text-on-surface">{{ page_title | default('AssetFlow') }}</p>
+            </div>
+        </div>
+
+        <nav class="mt-6 flex-1 overflow-y-auto overflow-x-hidden">
+            <div>
+                <p class="px-3 text-[11px] font-semibold uppercase tracking-[0.22em] text-slate-400">Workspace</p>
+                <div class="mt-3 space-y-1">
+            <a class="flex items-center gap-3 rounded-2xl px-4 py-3 font-manrope transition-all duration-200 hover:translate-x-1 hover:bg-white {% if active_page == 'inventory' %}nav-link-active font-semibold{% else %}text-slate-500 font-medium{% endif %}" href="/inventory">
+                <span class="material-symbols-outlined">inventory_2</span>
+                <span>Inventory</span>
+            </a>
+                </div>
+            </div>
+            <div class="mt-6">
+                <p class="px-3 text-[11px] font-semibold uppercase tracking-[0.22em] text-slate-400">Intelligence</p>
+                <div class="mt-3 space-y-1">
+            <a class="flex items-center gap-3 rounded-2xl px-4 py-3 font-manrope transition-all duration-200 hover:translate-x-1 hover:bg-white {% if active_page == 'monetization' %}nav-link-active font-semibold{% else %}text-slate-500 font-medium{% endif %}" href="/monetization">
+                <span class="material-symbols-outlined">payments</span>
+                <span>Monetization</span>
+            </a>
+            <a class="flex items-center gap-3 rounded-2xl px-4 py-3 font-manrope transition-all duration-200 hover:translate-x-1 hover:bg-white {% if active_page == 'agents' %}nav-link-active font-semibold{% else %}text-slate-500 font-medium{% endif %}" href="/orchestration">
+                <span class="material-symbols-outlined">smart_toy</span>
+                <span>Agents</span>
+            </a>
+            <a class="flex items-center gap-3 rounded-2xl px-4 py-3 font-manrope transition-all duration-200 hover:translate-x-1 hover:bg-white {% if active_page == 'analytics' %}nav-link-active font-semibold{% else %}text-slate-500 font-medium{% endif %}" href="/analytics">
+                <span class="material-symbols-outlined">leaderboard</span>
+                <span>Analytics</span>
+            </a>
+                </div>
+            </div>
+            <div class="mt-6">
+                <p class="px-3 text-[11px] font-semibold uppercase tracking-[0.22em] text-slate-400">System</p>
+                <div class="mt-3 space-y-1">
+            <a class="flex items-center gap-3 rounded-2xl px-4 py-3 font-manrope transition-all duration-200 hover:translate-x-1 hover:bg-white {% if active_page == 'settings' %}nav-link-active font-semibold{% else %}text-slate-500 font-medium{% endif %}" href="/settings">
+                <span class="material-symbols-outlined">settings</span>
+                <span>Settings</span>
+            </a>
+                </div>
+            </div>
+        </nav>
+
+        <div class="mt-4 space-y-1 border-t border-surface-container-high pt-4">
+            <a class="flex items-center gap-3 rounded-2xl px-4 py-3 text-slate-500 font-medium font-manrope transition-all duration-200 hover:translate-x-1 hover:bg-white" href="/login">
+                <span class="material-symbols-outlined">logout</span>
+                <span>Sign Out</span>
+            </a>
+        </div>
+    </aside>
+
+    <main class="min-h-screen pb-24 lg:ml-72 lg:pb-10">
+        <header class="sticky top-0 z-40 flex h-16 items-center justify-between border-b border-white/50 bg-[#faf8ff]/85 px-4 backdrop-blur-xl sm:px-6 lg:left-72 lg:px-8">
+            <div class="flex min-w-0 flex-1 items-center gap-3">
+                <a class="lg:hidden text-lg font-bold text-primary font-manrope" href="/inventory">AssetFlow</a>
+                <div class="hidden rounded-full bg-primary/8 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-primary sm:inline-flex">
+                    {{ active_page | default('workspace') | replace('_', ' ') }}
+                </div>
+                <div class="relative w-full max-w-md">
+                    <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-lg">search</span>
+                    <input class="w-full rounded-full bg-surface-container-low py-2 pl-10 pr-4 text-sm text-on-surface outline-none transition-all focus:ring-2 focus:ring-primary/30" placeholder="{{ search_placeholder | default('Search...') }}" type="text"/>
+                </div>
+            </div>
+            <div class="relative flex items-center">
+                <button id="profileMenuButton" type="button" class="flex items-center gap-3 rounded-full bg-white/80 px-3 py-2 shadow-sm transition hover:bg-white" aria-expanded="false" aria-haspopup="true">
+                    <div class="text-right hidden sm:block">
+                        <p id="headerProfileName" class="text-sm font-semibold font-manrope text-on-surface">Alex Thompson</p>
+                        <p class="text-[10px] uppercase tracking-wider text-slate-500">Inventory Lead</p>
+                    </div>
+                    <div class="flex h-10 w-10 items-center justify-center rounded-full border-2 border-primary/15 bg-white text-primary">
+                        <span class="material-symbols-outlined">person</span>
+                    </div>
+                </button>
+                <div id="profileMenuPanel" class="absolute right-0 top-[calc(100%+0.75rem)] hidden min-w-[240px] rounded-2xl border border-outline-variant/20 bg-white p-4 shadow-xl shadow-slate-900/10">
+                    <p class="text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-400">Profile</p>
+                    <p id="profilePanelName" class="mt-3 text-sm font-semibold text-on-surface">Alex Thompson</p>
+                    <p id="profilePanelEmail" class="mt-1 text-sm text-on-surface-variant">alex@example.com</p>
+                </div>
+            </div>
+        </header>
+
+        <div class="px-4 pb-10 pt-8 sm:px-6 lg:px-8">
+            {% block content %}{% endblock %}
+        </div>
+    </main>
+    <nav class="fixed inset-x-0 bottom-0 z-50 overflow-x-hidden border-t border-white/70 bg-[#faf8ff]/95 px-2 py-2 backdrop-blur-xl lg:hidden">
+        <div class="grid grid-cols-5 gap-1">
+            <a class="flex flex-col items-center gap-1 rounded-2xl px-2 py-2 text-[10px] font-semibold {% if active_page == 'inventory' %}bg-primary text-white{% else %}text-slate-500{% endif %}" href="/inventory">
+                <span class="material-symbols-outlined text-lg">inventory_2</span>
+                <span>Inventory</span>
+            </a>
+            <a class="flex flex-col items-center gap-1 rounded-2xl px-2 py-2 text-[10px] font-semibold {% if active_page == 'monetization' %}bg-primary text-white{% else %}text-slate-500{% endif %}" href="/monetization">
+                <span class="material-symbols-outlined text-lg">payments</span>
+                <span>Revenue</span>
+            </a>
+            <a class="flex flex-col items-center gap-1 rounded-2xl px-2 py-2 text-[10px] font-semibold {% if active_page == 'agents' %}bg-primary text-white{% else %}text-slate-500{% endif %}" href="/orchestration">
+                <span class="material-symbols-outlined text-lg">smart_toy</span>
+                <span>Agents</span>
+            </a>
+            <a class="flex flex-col items-center gap-1 rounded-2xl px-2 py-2 text-[10px] font-semibold {% if active_page == 'analytics' %}bg-primary text-white{% else %}text-slate-500{% endif %}" href="/analytics">
+                <span class="material-symbols-outlined text-lg">leaderboard</span>
+                <span>Analytics</span>
+            </a>
+            <a class="flex flex-col items-center gap-1 rounded-2xl px-2 py-2 text-[10px] font-semibold {% if active_page == 'settings' %}bg-primary text-white{% else %}text-slate-500{% endif %}" href="/settings">
+                <span class="material-symbols-outlined text-lg">settings</span>
+                <span>Settings</span>
+            </a>
+        </div>
+    </nav>
+    <script>
+        (() => {
+            const profileStorageKey = "assetflowSettingsProfile";
+            const defaultProfile = {
+                name: "Alex Thompson",
+                email: "alex@example.com",
+            };
+
+            function loadProfile() {
+                try {
+                    const stored = localStorage.getItem(profileStorageKey);
+                    return stored ? { ...defaultProfile, ...JSON.parse(stored) } : defaultProfile;
+                } catch (error) {
+                    return defaultProfile;
+                }
+            }
+
+            const profileMenuButton = document.getElementById("profileMenuButton");
+            const profileMenuPanel = document.getElementById("profileMenuPanel");
+            const headerProfileName = document.getElementById("headerProfileName");
+            const profilePanelName = document.getElementById("profilePanelName");
+            const profilePanelEmail = document.getElementById("profilePanelEmail");
+
+            if (!profileMenuButton || !profileMenuPanel) {
+                return;
+            }
+
+            const profile = loadProfile();
+            if (headerProfileName) headerProfileName.textContent = profile.name || defaultProfile.name;
+            if (profilePanelName) profilePanelName.textContent = profile.name || defaultProfile.name;
+            if (profilePanelEmail) profilePanelEmail.textContent = profile.email || defaultProfile.email;
+
+            function closePanel() {
+                profileMenuPanel.classList.add("hidden");
+                profileMenuButton.setAttribute("aria-expanded", "false");
+            }
+
+            profileMenuButton.addEventListener("click", (event) => {
+                event.stopPropagation();
+                const willOpen = profileMenuPanel.classList.contains("hidden");
+                profileMenuPanel.classList.toggle("hidden", !willOpen);
+                profileMenuButton.setAttribute("aria-expanded", willOpen ? "true" : "false");
+            });
+
+            document.addEventListener("click", (event) => {
+                if (!profileMenuPanel.contains(event.target) && !profileMenuButton.contains(event.target)) {
+                    closePanel();
+                }
+            });
+
+            document.addEventListener("keydown", (event) => {
+                if (event.key === "Escape") {
+                    closePanel();
+                }
+            });
+        })();
+    </script>
+    {% block extra_scripts %}{% endblock %}
+</body>
+</html>
