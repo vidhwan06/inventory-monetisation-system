@@ -297,14 +297,6 @@ async def analyze_csv(file: UploadFile = File(...)):
         contents = await file.read()
         csv_string = contents.decode("utf-8-sig")
         reader = csv.DictReader(StringIO(csv_string))
-        
-        products = load_products_from_rows(reader)
-        results = [process_product(p) for p in products]
-        
-        # We return the format but the frontend index.html expects the old structure
-        # Let's map our results to the expected format so the UI works seamlessly!
-        
-        # Build structure for old UI:
 
         products = load_products_from_rows(reader)
         results = [process_product(product) for product in products]
@@ -314,23 +306,6 @@ async def analyze_csv(file: UploadFile = File(...)):
         rec_prices = {}
         discounts = {}
         decisions_list = []
-        
-        for r in results:
-            name = r["product"]
-            demand_cat = r["agents"]["demand_agent"]["category"]
-            if demand_cat == "fast_moving": demand_analysis["fast_moving"].append(name)
-            elif demand_cat == "slow_moving": demand_analysis["slow_moving"].append(name)
-            elif demand_cat == "dead_stock": demand_analysis["dead_stock"].append(name)
-            
-            risk_score = r["agents"]["risk_agent"]["risk_score"]
-            dead_stock_results.append({"product_name": name, "risk_score": risk_score})
-            
-            rec_prices[name] = r["agents"]["pricing_agent"]["suggested_price"]
-            discounts[name] = r["agents"]["pricing_agent"]["discount"]
-            
-            decisions_list.append({"item": name, "action": r["final_decision"]["final_action"], "reason": r["final_decision"]["explanation"]})
-
-        old_format_response = {
 
         for result in results:
             name = result["product"]
@@ -361,12 +336,6 @@ async def analyze_csv(file: UploadFile = File(...)):
             "dead_stock_analysis": {"results": dead_stock_results},
             "pricing": {"recommended_prices": rec_prices, "discounts": discounts},
             "decisions": {"decisions": decisions_list},
-            "results": results
-        }
-        
-        return JSONResponse(content=old_format_response)
-    except Exception as e:
-        return JSONResponse(status_code=400, content={"error": str(e)})
             "results": results,
         }
 
