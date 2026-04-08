@@ -1,0 +1,16 @@
+item_name,category,price,stock,sales,last_sold_days
+Shirt A,Clothing,999,50,5,60
+Shirt B,Clothing,799,30,2,90
+Jeans A,Clothing,1499,40,8,45
+Shoes X,Footwear,1999,20,15,10
+Shoes Y,Footwear,2499,25,3,70
+Watch A,Accessories,2999,15,1,120
+Watch B,Accessories,1999,10,6,25
+Bag A,Bags,1299,35,4,80
+Bag B,Bags,999,40,12,20
+T-shirt A,Clothing,499,60,20,5
+T-shirt B,Clothing,599,70,18,7
+Sandals A,Footwear,799,45,7,35
+Sandals B,Footwear,899,50,2,95
+Cap A,Accessories,299,80,25,3
+Cap B,Accessories,399,90,22,4
