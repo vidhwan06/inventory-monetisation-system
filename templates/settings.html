@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Settings | AssetFlow</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#3525cd",
+                        "surface": "#faf8ff",
+                        "on-surface": "#131b2e",
+                        "secondary": "#505f76",
+                        "surface-container-low": "#f2f3ff"
+                    },
+                    "fontFamily": {
+                        "headline": ["Manrope"],
+                        "body": ["Inter"]
+                    }
+                },
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body { font-family: 'Inter', sans-serif; }
+        h1, h2, h3 { font-family: 'Manrope', sans-serif; }
+    </style>
+</head>
+<body class="bg-surface text-on-surface overflow-x-hidden">
+<aside class="fixed left-0 top-0 bottom-0 w-64 bg-[#faf8ff] flex flex-col h-screen py-6 px-4 z-50">
+    <div class="mb-10 px-2">
+        <h1 class="text-2xl font-bold text-[#3525cd] font-headline tracking-tight">AssetFlow</h1>
+        <p class="text-xs text-slate-500 font-medium">Monetization Engine</p>
+    </div>
+    <nav class="flex-1 space-y-1">
+        <a class="flex items-center gap-3 px-4 py-3 text-slate-500 font-medium hover:translate-x-1 transition-transform duration-200 rounded-lg" href="/inventory">
+            <span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+            <span>Inventory</span>
+        </a>
+        <a class="flex items-center gap-3 px-4 py-3 text-slate-500 font-medium hover:translate-x-1 transition-transform duration-200 rounded-lg" href="/monetization">
+            <span class="material-symbols-outlined" data-icon="payments">payments</span>
+            <span>Monetization</span>
+        </a>
+        <a class="flex items-center gap-3 px-4 py-3 text-slate-500 font-medium hover:translate-x-1 transition-transform duration-200 rounded-lg" href="/orchestration">
+            <span class="material-symbols-outlined" data-icon="smart_toy">smart_toy</span>
+            <span>Agents</span>
+        </a>
+        <a class="flex items-center gap-3 px-4 py-3 text-[#3525cd] font-semibold bg-[#3525cd]/5 rounded-lg hover:translate-x-1 transition-transform duration-200" href="/settings">
+            <span class="material-symbols-outlined" data-icon="settings">settings</span>
+            <span>Settings</span>
+        </a>
+    </nav>
+    <div class="mt-auto space-y-1 pt-6 border-t border-slate-200">
+        <a class="flex items-center gap-3 px-4 py-3 text-slate-500 hover:translate-x-1 transition-transform duration-200 rounded-lg" href="/login">
+            <span class="material-symbols-outlined" data-icon="logout">logout</span>
+            <span>Sign Out</span>
+        </a>
+    </div>
+</aside>
+<header class="fixed top-0 right-0 left-0 z-40 glass-header flex justify-between items-center h-16 px-8 ml-64 shadow-sm bg-white/80 backdrop-blur">
+    <div>
+        <h2 class="text-2xl font-bold text-on-surface font-headline">Settings</h2>
+        <p class="text-sm text-slate-500">Manage application preferences and default monetization controls.</p>
+    </div>
+</header>
+<main class="ml-64 mt-16 p-8 min-h-screen bg-surface-container-low">
+    <div class="grid grid-cols-12 gap-6">
+        <section class="col-span-12 lg:col-span-8 bg-white rounded-[1.5rem] p-8 shadow-sm">
+            <h3 class="text-xl font-semibold mb-4">Account & Preferences</h3>
+            <div class="space-y-6">
+                <div class="rounded-3xl border border-slate-200 p-6">
+                    <h4 class="font-semibold mb-2">Profile</h4>
+                    <p class="text-sm text-slate-500 mb-4">Update your name, email, and user preferences for AssetFlow.</p>
+                    <button class="px-5 py-3 bg-primary text-white rounded-2xl font-semibold">Edit profile</button>
+                </div>
+                <div class="rounded-3xl border border-slate-200 p-6">
+                    <h4 class="font-semibold mb-2">Notifications</h4>
+                    <p class="text-sm text-slate-500 mb-4">Control alerts for analysis results, inventory updates, and agent recommendations.</p>
+                    <button class="px-5 py-3 bg-slate-100 text-slate-700 rounded-2xl font-semibold">Set notification preferences</button>
+                </div>
+                <div class="rounded-3xl border border-slate-200 p-6">
+                    <h4 class="font-semibold mb-2">Analysis Defaults</h4>
+                    <p class="text-sm text-slate-500 mb-4">Choose default inventory filters, report frequency, and accuracy preferences.</p>
+                    <button class="px-5 py-3 bg-slate-100 text-slate-700 rounded-2xl font-semibold">Manage defaults</button>
+                </div>
+            </div>
+        </section>
+        <section class="col-span-12 lg:col-span-4 space-y-6">
+            <div class="rounded-[1.5rem] bg-white p-6 shadow-sm">
+                <h4 class="font-semibold mb-4">Theme</h4>
+                <p class="text-sm text-slate-500 mb-4">Switch between light and dark mode for the AssetFlow dashboard.</p>
+                <div class="flex gap-3">
+                    <button class="flex-1 px-4 py-3 bg-primary text-white rounded-2xl">Light</button>
+                    <button class="flex-1 px-4 py-3 bg-slate-100 text-slate-700 rounded-2xl">Dark</button>
+                </div>
+            </div>
+            <div class="rounded-[1.5rem] bg-white p-6 shadow-sm">
+                <h4 class="font-semibold mb-4">Agent Controls</h4>
+                <p class="text-sm text-slate-500 mb-4">Enable or disable automated suggestions from the monetization agent system.</p>
+                <button class="px-5 py-3 bg-slate-100 text-slate-700 rounded-2xl">Configure agents</button>
+            </div>
+        </section>
+    </div>
+</main>
+</body>
+</html>

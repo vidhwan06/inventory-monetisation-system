@@ -58,6 +58,10 @@ def serve_inventory():
 def serve_monetization():
     return FileResponse(os.path.join(TEMPLATES_DIR, "monetization.html"))
 
+@app.get("/settings")
+def serve_settings():
+    return FileResponse(os.path.join(TEMPLATES_DIR, "settings.html"))
+
 # -----------------------------
 # MAIN ANALYSIS API
 # -----------------------------

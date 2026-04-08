@@ -96,19 +96,19 @@
 <p class="text-xs font-medium text-slate-500 font-body">Monetization Engine</p>
 </div>
 <nav class="flex-1 space-y-1">
-<a class="flex items-center px-4 py-3 text-slate-500 font-medium font-body hover:translate-x-1 transition-transform duration-200 cursor-pointer" href="#">
+<a class="flex items-center px-4 py-3 text-slate-500 font-medium font-body hover:translate-x-1 transition-transform duration-200 cursor-pointer" href="/">
 <span class="material-symbols-outlined mr-3" data-icon="dashboard">dashboard</span>
 <span>Dashboard</span>
 </a>
-<a class="flex items-center px-4 py-3 text-slate-500 font-medium font-body hover:translate-x-1 transition-transform duration-200 cursor-pointer" href="#">
+<a class="flex items-center px-4 py-3 text-slate-500 font-medium font-body hover:translate-x-1 transition-transform duration-200 cursor-pointer" href="/inventory">
 <span class="material-symbols-outlined mr-3" data-icon="inventory_2">inventory_2</span>
 <span>Inventory</span>
 </a>
-<a class="flex items-center px-4 py-3 text-[#3525cd] font-semibold bg-[#3525cd]/5 rounded-lg font-body hover:translate-x-1 transition-transform duration-200 cursor-pointer" href="#">
+<a class="flex items-center px-4 py-3 text-[#3525cd] font-semibold bg-[#3525cd]/5 rounded-lg font-body hover:translate-x-1 transition-transform duration-200 cursor-pointer" href="/monetization">
 <span class="material-symbols-outlined mr-3" data-icon="payments">payments</span>
 <span>Monetization</span>
 </a>
-<a class="flex items-center px-4 py-3 text-slate-500 font-medium font-body hover:translate-x-1 transition-transform duration-200 cursor-pointer" href="#">
+<a class="flex items-center px-4 py-3 text-slate-500 font-medium font-body hover:translate-x-1 transition-transform duration-200 cursor-pointer" href="/orchestration">
 <span class="material-symbols-outlined mr-3" data-icon="smart_toy">smart_toy</span>
 <span>Agents</span>
 </a>
@@ -116,7 +116,7 @@
 <span class="material-symbols-outlined mr-3" data-icon="leaderboard">leaderboard</span>
 <span>Analytics</span>
 </a>
-<a class="flex items-center px-4 py-3 text-slate-500 font-medium font-body hover:translate-x-1 transition-transform duration-200 cursor-pointer" href="#">
+<a class="flex items-center px-4 py-3 text-slate-500 font-medium font-body hover:translate-x-1 transition-transform duration-200 cursor-pointer" href="/settings">
 <span class="material-symbols-outlined mr-3" data-icon="settings">settings</span>
 <span>Settings</span>
 </a>
@@ -345,4 +345,9 @@
 <button class="fixed bottom-8 right-8 w-14 h-14 bg-primary text-white rounded-full shadow-2xl flex items-center justify-center hover:scale-110 active:scale-95 transition-all z-50">
 <span class="material-symbols-outlined" data-icon="add" style="font-variation-settings: 'wght' 600;">add</span>
 </button>
+<button id="themeToggle" class="fixed bottom-6 left-6 z-50 inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/90 px-4 py-2 text-sm text-slate-700 shadow-xl shadow-slate-200/60 backdrop-blur-md transition-colors duration-200 hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-900/90 dark:text-slate-100 dark:hover:bg-slate-800">
+    <span class="material-symbols-outlined">dark_mode</span>
+    <span class="hidden sm:inline">Dark mode</span>
+</button>
+<script src="/static/theme.js" defer></script>
 </body></html>

@@ -98,11 +98,11 @@
 <span>Dashboard</span>
 </a>
 <!-- Active Tab: Inventory -->
-<a class="flex items-center gap-3 px-4 py-3 text-[#3525cd] dark:text-white font-semibold bg-[#3525cd]/5 dark:bg-[#4f46e5]/10 rounded-lg font-manrope hover:translate-x-1 transition-transform duration-200 cursor-pointer active:scale-98" href="/">
+<a class="flex items-center gap-3 px-4 py-3 text-[#3525cd] dark:text-white font-semibold bg-[#3525cd]/5 rounded-lg font-manrope hover:translate-x-1 transition-transform duration-200 cursor-pointer active:scale-98" href="/inventory">
 <span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
 <span>Inventory</span>
 </a>
-<a class="flex items-center gap-3 px-4 py-3 text-slate-500 dark:text-slate-400 font-medium font-manrope hover:translate-x-1 transition-transform duration-200 cursor-pointer active:scale-98" href="#">
+<a class="flex items-center gap-3 px-4 py-3 text-slate-500 dark:text-slate-400 font-medium font-manrope hover:translate-x-1 transition-transform duration-200 cursor-pointer active:scale-98" href="/monetization">
 <span class="material-symbols-outlined" data-icon="payments">payments</span>
 <span>Monetization</span>
 </a>
@@ -115,7 +115,7 @@
 <span class="material-symbols-outlined" data-icon="leaderboard">leaderboard</span>
 <span>Analytics</span>
 </a>
-<a class="flex items-center gap-3 px-4 py-3 text-slate-500 dark:text-slate-400 font-medium font-manrope hover:translate-x-1 transition-transform duration-200 cursor-pointer active:scale-98" href="#">
+<a class="flex items-center gap-3 px-4 py-3 text-slate-500 dark:text-slate-400 font-medium font-manrope hover:translate-x-1 transition-transform duration-200 cursor-pointer active:scale-98" href="/settings">
 <span class="material-symbols-outlined" data-icon="settings">settings</span>
 <span>Settings</span>
 </a>
@@ -464,4 +464,9 @@
         analyzeBtn.innerHTML = '<span class="material-symbols-outlined text-lg" data-icon="analytics">analytics</span> Run Analysis';
     });
 </script>
+<button id="themeToggle" class="fixed bottom-6 left-6 z-50 inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/90 px-4 py-2 text-sm text-slate-700 shadow-xl shadow-slate-200/60 backdrop-blur-md transition-colors duration-200 hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-900/90 dark:text-slate-100 dark:hover:bg-slate-800">
+    <span class="material-symbols-outlined">dark_mode</span>
+    <span class="hidden sm:inline">Dark mode</span>
+</button>
+<script src="/static/theme.js" defer></script>
 </body></html>

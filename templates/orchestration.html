@@ -104,7 +104,7 @@
 <span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
 <span class="font-manrope tracking-tight">Inventory</span>
 </a>
-<a class="flex items-center gap-3 px-3 py-2 text-slate-500 dark:text-slate-400 font-medium hover:translate-x-1 transition-transform duration-200 cursor-pointer active:scale-98" href="#">
+<a class="flex items-center gap-3 px-3 py-2 text-slate-500 dark:text-slate-400 font-medium hover:translate-x-1 transition-transform duration-200 cursor-pointer active:scale-98" href="/monetization">
 <span class="material-symbols-outlined" data-icon="payments">payments</span>
 <span class="font-manrope tracking-tight">Monetization</span>
 </a>
@@ -117,7 +117,7 @@
 <span class="material-symbols-outlined" data-icon="leaderboard">leaderboard</span>
 <span class="font-manrope tracking-tight">Analytics</span>
 </a>
-<a class="flex items-center gap-3 px-3 py-2 text-slate-500 dark:text-slate-400 font-medium hover:translate-x-1 transition-transform duration-200 cursor-pointer active:scale-98" href="#">
+<a class="flex items-center gap-3 px-3 py-2 text-slate-500 dark:text-slate-400 font-medium hover:translate-x-1 transition-transform duration-200 cursor-pointer active:scale-98" href="/settings">
 <span class="material-symbols-outlined" data-icon="settings">settings</span>
 <span class="font-manrope tracking-tight">Settings</span>
 </a>
@@ -367,4 +367,9 @@
 </main>
 <!-- FAB Suppression: Not rendered on Settings, Profile, Details, or transactional screens -->
 <!-- As this is a specialized Orchestration page, we omit the generic FAB to focus on the workflow -->
+<button id="themeToggle" class="fixed bottom-6 left-6 z-50 inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/90 px-4 py-2 text-sm text-slate-700 shadow-xl shadow-slate-200/60 backdrop-blur-md transition-colors duration-200 hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-900/90 dark:text-slate-100 dark:hover:bg-slate-800">
+    <span class="material-symbols-outlined">dark_mode</span>
+    <span class="hidden sm:inline">Dark mode</span>
+</button>
+<script src="/static/theme.js" defer></script>
 </body></html>
