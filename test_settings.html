@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings Test</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 p-8">
+    <div class="max-w-2xl mx-auto bg-white p-6 rounded-lg shadow">
+        <h1 class="text-2xl font-bold mb-4">Settings Test</h1>
+
+        <!-- Profile Section -->
+        <div class="mb-6">
+            <h2 class="text-lg font-semibold mb-2">Profile</h2>
+            <button id="edit-profile-btn" class="px-4 py-2 bg-blue-500 text-white rounded">Edit Profile</button>
+        </div>
+
+        <!-- AI Configuration -->
+        <div class="mb-6">
+            <h2 class="text-lg font-semibold mb-2">AI Configuration</h2>
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium mb-1">AI Provider</label>
+                    <select id="ai-provider" class="w-full px-3 py-2 border rounded">
+                        <option value="gemini">Gemini</option>
+                        <option value="openai">OpenAI</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium mb-1">API Key</label>
+                    <input type="password" id="api-key" class="w-full px-3 py-2 border rounded">
+                </div>
+                <label class="flex items-center cursor-pointer">
+                    <input type="checkbox" id="enable-ai-agents" class="sr-only">
+                    <div class="relative">
+                        <div class="w-10 h-6 bg-gray-300 rounded-full shadow-inner"></div>
+                        <div class="dot absolute w-4 h-4 bg-white rounded-full shadow left-0.5 top-1/2 transform -translate-y-1/2 transition"></div>
+                    </div>
+                    <span class="ml-3 text-sm font-medium">Enable AI Agents</span>
+                </label>
+            </div>
+            <button id="save-config" class="mt-4 px-6 py-3 bg-blue-500 text-white rounded font-semibold">Save Configuration</button>
+        </div>
+
+        <!-- Success Message -->
+        <div id="settings-success" class="mt-4 bg-green-100 text-green-800 px-4 py-2 rounded hidden">
+            Settings saved successfully
+        </div>
+    </div>
+
+    <!-- Edit Profile Modal -->
+    <div id="profile-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center">
+        <div class="bg-white rounded-lg p-8 w-full max-w-md mx-4">
+            <h3 class="text-xl font-semibold mb-6">Edit Profile</h3>
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium mb-2">Name</label>
+                    <input type="text" id="profile-name" class="w-full px-3 py-2 border rounded">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium mb-2">Email</label>
+                    <input type="email" id="profile-email" class="w-full px-3 py-2 border rounded">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium mb-2">Company Name</label>
+                    <input type="text" id="profile-company" class="w-full px-3 py-2 border rounded">
+                </div>
+            </div>
+            <div class="flex gap-3 mt-6">
+                <button id="profile-cancel" class="flex-1 px-4 py-2 bg-gray-100 text-gray-700 rounded">Cancel</button>
+                <button id="profile-save" class="flex-1 px-4 py-2 bg-blue-500 text-white rounded">Save</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Modal management
+        function openModal(modalId) {
+            document.getElementById(modalId).classList.remove('hidden');
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.add('hidden');
+        }
+
+        // Button event listeners
+        document.getElementById('edit-profile-btn').addEventListener('click', () => openModal('profile-modal'));
+        document.getElementById('profile-cancel').addEventListener('click', () => closeModal('profile-modal'));
+
+        // Save profile
+        document.getElementById('profile-save').addEventListener('click', () => {
+            const profile = {
+                name: document.getElementById('profile-name').value,
+                email: document.getElementById('profile-email').value,
+                company: document.getElementById('profile-company').value
+            };
+            localStorage.setItem('profile-settings', JSON.stringify(profile));
+            closeModal('profile-modal');
+            showSuccess();
+        });
+
+        // Success message
+        function showSuccess() {
+            const msg = document.getElementById('settings-success');
+            msg.classList.remove('hidden');
+            setTimeout(() => msg.classList.add('hidden'), 3000);
+        }
+
+        // Toggle handler
+        function setupToggle(toggleId) {
+            const toggle = document.getElementById(toggleId);
+            const dot = toggle.nextElementSibling.querySelector('.dot');
+            const bg = toggle.nextElementSibling.querySelector('div:first-child');
+
+            toggle.addEventListener('change', () => {
+                if (toggle.checked) {
+                    bg.classList.remove('bg-gray-300');
+                    bg.classList.add('bg-blue-500');
+                    dot.classList.add('translate-x-5');
+                } else {
+                    bg.classList.add('bg-gray-300');
+                    bg.classList.remove('bg-blue-500');
+                    dot.classList.remove('translate-x-5');
+                }
+            });
+        }
+
+        // Setup all toggles
+        const allToggles = ['enable-ai-agents'];
+        allToggles.forEach(setupToggle);
+
+        // Save functions
+        document.getElementById('save-config').addEventListener('click', () => {
+            const settings = {
+                aiProvider: document.getElementById('ai-provider').value,
+                apiKey: document.getElementById('api-key').value,
+                enableAiAgents: document.getElementById('enable-ai-agents').checked
+            };
+
+            localStorage.setItem('system-config', JSON.stringify(settings));
+            showSuccess();
+        });
+
+        // Load settings from localStorage
+        function loadSettings() {
+            // System config
+            const systemSettings = JSON.parse(localStorage.getItem('system-config') || '{}');
+            document.getElementById('ai-provider').value = systemSettings.aiProvider || 'gemini';
+            document.getElementById('api-key').value = systemSettings.apiKey || '';
+            document.getElementById('enable-ai-agents').checked = systemSettings.enableAiAgents || false;
+
+            // Profile
+            const profileSettings = JSON.parse(localStorage.getItem('profile-settings') || '{}');
+            document.getElementById('profile-name').value = profileSettings.name || '';
+            document.getElementById('profile-email').value = profileSettings.email || '';
+            document.getElementById('profile-company').value = profileSettings.company || '';
+
+            // Update UI
+            allToggles.forEach(id => {
+                const toggle = document.getElementById(id);
+                toggle.dispatchEvent(new Event('change'));
+            });
+        }
+
+        // Load settings on page load
+        window.addEventListener('DOMContentLoaded', loadSettings);
+    </script>
+</body>
+</html>

@@ -1,0 +1,96 @@
+:root {
+  color-scheme: light;
+  --bg-color: #faf8ff;
+  --text-color: #111827;
+  --card-bg: #ffffff;
+  --surface-bg: #f8fafc;
+  --surface-low: #f2f3ff;
+  --surface-high: #e2e8f0;
+  --border-color: #e2e8f0;
+  --sidebar-bg: #faf8ff;
+  --topbar-bg: rgba(250, 248, 255, 0.9);
+  --button-bg: #3525cd;
+  --button-text: #ffffff;
+  --muted-text: #64748b;
+}
+
+body {
+  background: var(--bg-color);
+  color: var(--text-color);
+}
+
+body.light-theme {
+  color-scheme: light;
+}
+
+body.dark-theme {
+  color-scheme: dark;
+  --bg-color: #050816;
+  --text-color: #f8fafc;
+  --card-bg: #111827;
+  --surface-bg: #0f172a;
+  --surface-low: #111827;
+  --surface-high: #1f2937;
+  --border-color: #334155;
+  --sidebar-bg: #020617;
+  --topbar-bg: rgba(15, 23, 41, 0.88);
+  --button-bg: #818cf8;
+  --button-text: #ffffff;
+  --muted-text: #94a3b8;
+}
+
+/* Apply theme color to base text only; preserve component-specific color utility classes */
+body {
+  color: var(--text-color);
+}
+
+.bg-theme-surface {
+  background-color: var(--surface-bg) !important;
+}
+
+.bg-theme-card,
+.card,
+.panel {
+  background-color: var(--card-bg) !important;
+  color: var(--text-color) !important;
+  border-color: var(--border-color) !important;
+}
+
+.border-theme,
+.border-theme-light {
+  border-color: var(--border-color) !important;
+}
+
+.text-theme-muted {
+  color: var(--muted-text) !important;
+}
+
+body.dark-theme .bg-white {
+  background-color: var(--card-bg) !important;
+}
+
+body.dark-theme .bg-slate-100,
+body.dark-theme .bg-surface-container-low,
+body.dark-theme .bg-surface-container-lowest,
+body.dark-theme .bg-surface-container-high,
+body.dark-theme .bg-surface-container-highest {
+  background-color: #111827 !important;
+}
+
+body.dark-theme .text-slate-500,
+body.dark-theme .text-slate-400,
+body.dark-theme .text-slate-600,
+body.dark-theme .text-slate-700 {
+  color: #cbd5e1 !important;
+}
+
+body.dark-theme .border-slate-200,
+body.dark-theme .border-slate-300,
+body.dark-theme .border-slate-400,
+body.dark-theme .border-slate-500 {
+  border-color: #334155 !important;
+}
+
+body.dark-theme .shadow-slate-200\/60 {
+  box-shadow: 0 10px 25px rgba(15, 23, 41, 0.12) !important;
+}

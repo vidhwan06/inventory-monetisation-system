@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html class="light" lang="en"><head>
+<html lang="en"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Monetization Suggestions | AssetFlow</title>
@@ -13,64 +13,36 @@
             theme: {
                 extend: {
                     "colors": {
-                        "tertiary-fixed": "#6ffbbe",
-                        "secondary-container": "#d0e1fb",
-                        "surface-tint": "#4d44e3",
-                        "primary-container": "#4f46e5",
-                        "on-error-container": "#93000a",
-                        "inverse-surface": "#283044",
-                        "on-tertiary": "#ffffff",
-                        "surface-container": "#eaedff",
-                        "surface-container-lowest": "#ffffff",
-                        "on-error": "#ffffff",
-                        "on-tertiary-fixed": "#002113",
-                        "surface-variant": "#dae2fd",
-                        "primary-fixed": "#e2dfff",
-                        "on-secondary-fixed-variant": "#38485d",
-                        "on-secondary": "#ffffff",
-                        "surface-dim": "#d2d9f4",
-                        "on-secondary-fixed": "#0b1c30",
-                        "on-primary-container": "#dad7ff",
-                        "outline-variant": "#c7c4d8",
-                        "on-tertiary-container": "#67f4b7",
-                        "surface-bright": "#faf8ff",
-                        "on-tertiary-fixed-variant": "#005236",
-                        "on-secondary-container": "#54647a",
-                        "surface-container-low": "#f2f3ff",
-                        "error-container": "#ffdad6",
-                        "outline": "#777587",
-                        "on-primary-fixed-variant": "#3323cc",
-                        "error": "#ba1a1a",
-                        "on-background": "#131b2e",
-                        "tertiary-container": "#006e4b",
-                        "secondary-fixed": "#d3e4fe",
-                        "inverse-on-surface": "#eef0ff",
-                        "tertiary-fixed-dim": "#4edea3",
-                        "tertiary": "#005338",
-                        "inverse-primary": "#c3c0ff",
-                        "on-primary-fixed": "#0f0069",
-                        "surface-container-highest": "#dae2fd",
-                        "on-surface-variant": "#464555",
-                        "on-primary": "#ffffff",
-                        "secondary": "#505f76",
-                        "surface-container-high": "#e2e7ff",
-                        "surface": "#faf8ff",
-                        "primary-fixed-dim": "#c3c0ff",
-                        "background": "#faf8ff",
                         "primary": "#3525cd",
-                        "on-surface": "#131b2e",
-                        "secondary-fixed-dim": "#b7c8e1"
-                    },
-                    "borderRadius": {
-                        "DEFAULT": "0.125rem",
-                        "lg": "0.25rem",
-                        "xl": "0.5rem",
-                        "full": "0.75rem"
+                        "surface": {
+                            DEFAULT: "#faf8ff",
+                            dark: "#1a1a2e"
+                        },
+                        "on-surface": {
+                            DEFAULT: "#131b2e",
+                            dark: "#e2e8f0"
+                        },
+                        "secondary": "#505f76",
+                        "surface-container-low": {
+                            DEFAULT: "#f2f3ff",
+                            dark: "#2a2a3e"
+                        },
+                        "slate": {
+                            50: "#f8fafc",
+                            100: "#f1f5f9",
+                            200: "#e2e8f0",
+                            300: "#cbd5e1",
+                            400: "#94a3b8",
+                            500: "#64748b",
+                            600: "#475569",
+                            700: "#334155",
+                            800: "#1e293b",
+                            900: "#0f172a"
+                        }
                     },
                     "fontFamily": {
                         "headline": ["Manrope"],
-                        "body": ["Inter"],
-                        "label": ["Inter"]
+                        "body": ["Inter"]
                     }
                 },
             }
@@ -88,9 +60,9 @@
         }
     </style>
 </head>
-<body class="bg-surface text-on-surface">
+<body class="bg-surface text-on-surface overflow-x-hidden">
 <!-- SideNavBar -->
-<aside class="fixed left-0 top-0 bottom-0 w-64 bg-[#faf8ff] flex flex-col h-screen py-6 px-4 z-50">
+<aside class="fixed left-0 top-0 bottom-0 w-64 bg-surface dark:bg-slate-950 flex flex-col h-screen py-6 px-4 z-50">
 <div class="mb-10 px-2">
 <h1 class="text-2xl font-bold text-[#3525cd] font-headline tracking-tight">AssetFlow</h1>
 <p class="text-xs font-medium text-slate-500 font-body">Monetization Engine</p>
@@ -104,7 +76,7 @@
 <span class="material-symbols-outlined mr-3" data-icon="inventory_2">inventory_2</span>
 <span>Inventory</span>
 </a>
-<a class="flex items-center px-4 py-3 text-[#3525cd] font-semibold bg-[#3525cd]/5 rounded-lg font-body hover:translate-x-1 transition-transform duration-200 cursor-pointer" href="/monetization">
+<a class="flex items-center px-4 py-3 text-primary font-semibold bg-primary/10 dark:bg-primary/20 rounded-lg font-body hover:translate-x-1 transition-transform duration-200 cursor-pointer" href="/monetization">
 <span class="material-symbols-outlined mr-3" data-icon="payments">payments</span>
 <span>Monetization</span>
 </a>
@@ -210,6 +182,33 @@
 <p class="text-2xl font-bold text-tertiary font-headline">94%</p>
 </div>
 </div>
+<div class="mb-6">
+<button class="text-primary font-semibold text-sm hover:underline flex items-center gap-1" onclick="toggleAIExplanation('bundle-explanation')">
+<span class="material-symbols-outlined text-sm" data-icon="expand_more">expand_more</span>
+Why this recommendation?
+</button>
+<div id="bundle-explanation" class="hidden mt-4 p-4 bg-surface-container-low rounded-xl">
+<h5 class="font-semibold text-on-surface mb-3">AI Reasoning</h5>
+<div class="grid grid-cols-2 gap-4 text-sm">
+<div>
+<p class="text-on-surface-variant mb-1">Demand Trend</p>
+<p class="font-medium text-on-surface">↑ 23% increase in Q4 enterprise segment</p>
+</div>
+<div>
+<p class="text-on-surface-variant mb-1">Inventory Aging</p>
+<p class="font-medium text-on-surface">Lumina Series: 8 months, Apex Modules: 6 months</p>
+</div>
+<div>
+<p class="text-on-surface-variant mb-1">Cross-sell Probability</p>
+<p class="font-medium text-on-surface">78% based on purchase patterns</p>
+</div>
+<div>
+<p class="text-on-surface-variant mb-1">Forecasted Revenue Increase</p>
+<p class="font-medium text-on-surface">$64,200 (34% uplift)</p>
+</div>
+</div>
+</div>
+</div>
 </div>
 <div class="flex items-center gap-4 relative z-10">
 <button class="px-8 py-4 bg-gradient-to-br from-primary to-primary-container text-white font-bold rounded-xl active:scale-95 transition-all shadow-lg shadow-primary/20">
@@ -264,13 +263,42 @@
 <h4 class="text-xl font-bold font-headline mb-2">Discount Recommendation</h4>
 <p class="text-sm text-on-surface-variant font-body mb-6 flex-grow">
                     Apply <span class="font-bold text-on-surface">20% off Item X (Dead Stock)</span> to clear 450 units before EOY reporting cycle.
-                </p>
-<div class="bg-surface-container-low p-4 rounded-xl mb-6 flex items-center justify-between">
+                </p><div class="mb-6">
+<button class="text-primary font-semibold text-sm hover:underline flex items-center gap-1" onclick="toggleAIExplanation('discount-explanation')">
+<span class="material-symbols-outlined text-sm" data-icon="expand_more">expand_more</span>
+Why this recommendation?
+</button>
+<div id="discount-explanation" class="hidden mt-4 p-4 bg-surface-container-low rounded-xl">
+<h5 class="font-semibold text-on-surface mb-3">AI Reasoning</h5>
+<div class="grid grid-cols-2 gap-4 text-sm">
+<div>
+<p class="text-on-surface-variant mb-1">Demand Trend</p>
+<p class="font-medium text-on-surface">↓ 15% decline in category demand</p>
+</div>
+<div>
+<p class="text-on-surface-variant mb-1">Inventory Aging</p>
+<p class="font-medium text-on-surface">450 units aged 18+ months</p>
+</div>
+<div>
+<p class="text-on-surface-variant mb-1">Cross-sell Probability</p>
+<p class="font-medium text-on-surface">N/A - Dead stock clearance</p>
+</div>
+<div>
+<p class="text-on-surface-variant mb-1">Forecasted Revenue Increase</p>
+<p class="font-medium text-on-surface">$18,400 (Cash recovery)</p>
+</div>
+</div>
+</div>
+</div><div class="bg-surface-container-low p-4 rounded-xl mb-6 flex items-center justify-between">
 <div>
 <p class="text-[10px] text-on-surface-variant font-label uppercase">Cash Recovery</p>
-<p class="text-lg font-bold text-on-surface">$18,400</p>
+<p class="text-lg font-bold text-on-surface" id="cash-recovery">$18,400</p>
 </div>
 <span class="material-symbols-outlined text-primary" data-icon="trending_up">trending_up</span>
+</div>
+<div class="mb-6">
+<label class="block text-sm font-medium text-on-surface mb-2">Discount Percentage: <span id="discount-value">20</span>%</label>
+<input type="range" id="discount-slider" min="0" max="40" value="20" class="w-full h-2 bg-surface-container-low rounded-lg appearance-none cursor-pointer" oninput="updateRevenueImpact()">
 </div>
 <div class="flex gap-2">
 <button class="flex-1 py-3 bg-surface-container-highest text-on-surface font-bold rounded-xl hover:bg-primary hover:text-white transition-all">Apply</button>
@@ -290,8 +318,33 @@
 <h4 class="text-xl font-bold font-headline mb-2">Cross-Sell Strategy</h4>
 <p class="text-sm text-on-surface-variant font-body mb-6 flex-grow">
                     Active buyers of <span class="font-bold text-on-surface">Precision Tools</span> are 4.2x more likely to purchase <span class="font-bold text-on-surface">Safety Casings</span>.
-                </p>
-<div class="bg-surface-container-low p-4 rounded-xl mb-6 flex items-center justify-between">
+                </p><div class="mb-6">
+<button class="text-primary font-semibold text-sm hover:underline flex items-center gap-1" onclick="toggleAIExplanation('crosssell-explanation')">
+<span class="material-symbols-outlined text-sm" data-icon="expand_more">expand_more</span>
+Why this recommendation?
+</button>
+<div id="crosssell-explanation" class="hidden mt-4 p-4 bg-surface-container-low rounded-xl">
+<h5 class="font-semibold text-on-surface mb-3">AI Reasoning</h5>
+<div class="grid grid-cols-2 gap-4 text-sm">
+<div>
+<p class="text-on-surface-variant mb-1">Demand Trend</p>
+<p class="font-medium text-on-surface">↑ 28% growth in safety equipment</p>
+</div>
+<div>
+<p class="text-on-surface-variant mb-1">Inventory Aging</p>
+<p class="font-medium text-on-surface">Safety Casings: 3 months</p>
+</div>
+<div>
+<p class="text-on-surface-variant mb-1">Cross-sell Probability</p>
+<p class="font-medium text-on-surface">4.2x higher conversion rate</p>
+</div>
+<div>
+<p class="text-on-surface-variant mb-1">Forecasted Revenue Increase</p>
+<p class="font-medium text-on-surface">$22,150 (Network effect)</p>
+</div>
+</div>
+</div>
+</div><div class="bg-surface-container-low p-4 rounded-xl mb-6 flex items-center justify-between">
 <div>
 <p class="text-[10px] text-on-surface-variant font-label uppercase">Up-lift Potential</p>
 <p class="text-lg font-bold text-on-surface">+$22,150</p>
@@ -316,8 +369,33 @@
 <h4 class="text-xl font-bold font-headline mb-2">Route Consolidation</h4>
 <p class="text-sm text-on-surface-variant font-body mb-6 flex-grow">
                     Combine liquidation shipments for <span class="font-bold text-on-surface">Region 4</span> into a single freight carrier to save on transport overhead.
-                </p>
-<div class="bg-surface-container-low p-4 rounded-xl mb-6 flex items-center justify-between">
+                </p><div class="mb-6">
+<button class="text-primary font-semibold text-sm hover:underline flex items-center gap-1" onclick="toggleAIExplanation('logistics-explanation')">
+<span class="material-symbols-outlined text-sm" data-icon="expand_more">expand_more</span>
+Why this recommendation?
+</button>
+<div id="logistics-explanation" class="hidden mt-4 p-4 bg-surface-container-low rounded-xl">
+<h5 class="font-semibold text-on-surface mb-3">AI Reasoning</h5>
+<div class="grid grid-cols-2 gap-4 text-sm">
+<div>
+<p class="text-on-surface-variant mb-1">Demand Trend</p>
+<p class="font-medium text-on-surface">Stable regional demand</p>
+</div>
+<div>
+<p class="text-on-surface-variant mb-1">Inventory Aging</p>
+<p class="font-medium text-on-surface">Liquidation items ready for shipment</p>
+</div>
+<div>
+<p class="text-on-surface-variant mb-1">Cross-sell Probability</p>
+<p class="font-medium text-on-surface">N/A - Logistics optimization</p>
+</div>
+<div>
+<p class="text-on-surface-variant mb-1">Forecasted Revenue Increase</p>
+<p class="font-medium text-on-surface">$3,920 (Cost savings)</p>
+</div>
+</div>
+</div>
+</div><div class="bg-surface-container-low p-4 rounded-xl mb-6 flex items-center justify-between">
 <div>
 <p class="text-[10px] text-on-surface-variant font-label uppercase">Savings Estimate</p>
 <p class="text-lg font-bold text-on-surface">$3,920</p>
@@ -331,6 +409,49 @@
 </button>
 </div>
 </div>
+<!-- Inventory Health Score Card -->
+<div class="col-span-12 md:col-span-6 lg:col-span-4 bg-surface-container-lowest rounded-[1.5rem] p-6 flex flex-col">
+<div class="flex justify-between items-start mb-6">
+<div class="p-3 bg-success-container rounded-2xl">
+<span class="material-symbols-outlined text-on-success-container" data-icon="health_and_safety">health_and_safety</span>
+</div>
+<span class="text-on-surface-variant text-[10px] font-bold uppercase tracking-[0.2em]">Health Overview</span>
+</div>
+<h4 class="text-xl font-bold font-headline mb-4">Inventory Health Score</h4>
+<div class="text-center mb-6">
+<div class="text-4xl font-bold text-success font-headline">82 / 100</div>
+<p class="text-sm text-on-surface-variant">Overall inventory health</p>
+</div>
+<div class="space-y-3">
+<div class="flex items-center justify-between">
+<span class="text-sm text-on-surface">High Risk Inventory</span>
+<div class="flex items-center gap-2">
+<div class="w-24 h-2 bg-surface-container-low rounded-full overflow-hidden">
+<div class="h-full bg-error w-3/4 rounded-full"></div>
+</div>
+<span class="text-xs text-on-surface-variant">15%</span>
+</div>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-sm text-on-surface">Medium Risk</span>
+<div class="flex items-center gap-2">
+<div class="w-24 h-2 bg-surface-container-low rounded-full overflow-hidden">
+<div class="h-full bg-warning w-1/2 rounded-full"></div>
+</div>
+<span class="text-xs text-on-surface-variant">25%</span>
+</div>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-sm text-on-surface">Healthy Stock</span>
+<div class="flex items-center gap-2">
+<div class="w-24 h-2 bg-surface-container-low rounded-full overflow-hidden">
+<div class="h-full bg-success w-4/5 rounded-full"></div>
+</div>
+<span class="text-xs text-on-surface-variant">60%</span>
+</div>
+</div>
+</div>
+</div>
 <!-- Empty State / Upcoming placeholder -->
 <div class="col-span-12 bg-surface-container-low/50 border-2 border-dashed border-outline-variant/30 rounded-[1.5rem] py-12 flex flex-col items-center justify-center text-center">
 <div class="w-16 h-16 rounded-full bg-surface flex items-center justify-center mb-4">
@@ -340,14 +461,124 @@
 <p class="text-sm text-on-surface-variant">Check back in 4 hours for refreshed monetization opportunities based on real-time market shifts.</p>
 </div>
 </div>
+<!-- Action History Panel -->
+<section class="ml-64 px-8 pb-8">
+<div class="bg-surface-container-lowest rounded-[1.5rem] p-6">
+<h3 class="text-xl font-bold font-headline mb-6 text-on-surface">Recent Monetization Actions</h3>
+<div class="overflow-x-auto">
+<table class="w-full">
+<thead>
+<tr class="border-b border-surface-container-low">
+<th class="text-left py-3 px-4 text-sm font-semibold text-on-surface-variant">Date</th>
+<th class="text-left py-3 px-4 text-sm font-semibold text-on-surface-variant">Action</th>
+<th class="text-left py-3 px-4 text-sm font-semibold text-on-surface-variant">Estimated Revenue Impact</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-surface-container-low">
+<tr>
+<td class="py-3 px-4 text-sm text-on-surface">Dec 15, 2024</td>
+<td class="py-3 px-4 text-sm text-on-surface">Applied 15% discount on Legacy Servers</td>
+<td class="py-3 px-4 text-sm text-success font-semibold">+$12,450</td>
+</tr>
+<tr>
+<td class="py-3 px-4 text-sm text-on-surface">Dec 14, 2024</td>
+<td class="py-3 px-4 text-sm text-on-surface">Bundle offer: Networking + Security Suite</td>
+<td class="py-3 px-4 text-sm text-success font-semibold">+$28,900</td>
+</tr>
+<tr>
+<td class="py-3 px-4 text-sm text-on-surface">Dec 13, 2024</td>
+<td class="py-3 px-4 text-sm text-on-surface">Route consolidation - Region 3</td>
+<td class="py-3 px-4 text-sm text-success font-semibold">+$4,200</td>
+</tr>
+<tr>
+<td class="py-3 px-4 text-sm text-on-surface">Dec 12, 2024</td>
+<td class="py-3 px-4 text-sm text-on-surface">Cross-sell campaign: Tools + Accessories</td>
+<td class="py-3 px-4 text-sm text-success font-semibold">+$18,750</td>
+</tr>
+<tr>
+<td class="py-3 px-4 text-sm text-on-surface">Dec 11, 2024</td>
+<td class="py-3 px-4 text-sm text-on-surface">Liquidation marketplace listing</td>
+<td class="py-3 px-4 text-sm text-success font-semibold">+$9,300</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
 </main>
 <!-- FAB (Suppressed on Details/Settings but active here as it's a primary dashboard view) -->
 <button class="fixed bottom-8 right-8 w-14 h-14 bg-primary text-white rounded-full shadow-2xl flex items-center justify-center hover:scale-110 active:scale-95 transition-all z-50">
 <span class="material-symbols-outlined" data-icon="add" style="font-variation-settings: 'wght' 600;">add</span>
 </button>
-<button id="themeToggle" class="fixed bottom-6 left-6 z-50 inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/90 px-4 py-2 text-sm text-slate-700 shadow-xl shadow-slate-200/60 backdrop-blur-md transition-colors duration-200 hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-900/90 dark:text-slate-100 dark:hover:bg-slate-800">
-    <span class="material-symbols-outlined">dark_mode</span>
-    <span class="hidden sm:inline">Dark mode</span>
-</button>
-<script src="/static/theme.js" defer></script>
+
+<script>
+// AI Explanation Panel Toggle
+function toggleAIExplanation(explanationId) {
+    const explanation = document.getElementById(explanationId);
+    const button = explanation.previousElementSibling.querySelector('.material-symbols-outlined');
+    
+    if (explanation.classList.contains('hidden')) {
+        explanation.classList.remove('hidden');
+        button.textContent = 'expand_less';
+    } else {
+        explanation.classList.add('hidden');
+        button.textContent = 'expand_more';
+    }
+}
+
+// Revenue Impact Simulator
+function updateRevenueImpact() {
+    const slider = document.getElementById('discount-slider');
+    const discountValue = document.getElementById('discount-value');
+    const cashRecovery = document.getElementById('cash-recovery');
+    
+    const discount = parseInt(slider.value);
+    discountValue.textContent = discount;
+    
+    // Calculate projected revenue based on discount percentage
+    // Base recovery at 20% discount: $18,400
+    // Revenue decreases as discount increases (less profit margin)
+    const baseRevenue = 18400;
+    const discountFactor = 1 - (discount - 20) * 0.02; // 2% decrease per percentage point above 20%
+    const projectedRevenue = Math.max(0, Math.round(baseRevenue * discountFactor));
+    
+    cashRecovery.textContent = '$' + projectedRevenue.toLocaleString();
+}
+
+// Button confirmation messages
+document.addEventListener('DOMContentLoaded', function() {
+    // Add click handlers for action buttons
+    const actionButtons = document.querySelectorAll('button[class*="bg-surface-container-highest"], button[class*="bg-gradient-to-br"], button[class*="bg-on-error-container"]');
+    
+    actionButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const buttonText = this.textContent.trim();
+            let message = '';
+            
+            if (buttonText.includes('Apply')) {
+                message = 'Recommendation applied successfully!';
+            } else if (buttonText.includes('Deploy')) {
+                message = 'Campaign deployed successfully!';
+            } else if (buttonText.includes('Optimize')) {
+                message = 'Optimization applied successfully!';
+            } else if (buttonText.includes('List on Marketplace')) {
+                message = 'Item listed on marketplace successfully!';
+            }
+            
+            if (message) {
+                // Create and show success message
+                const successMsg = document.createElement('div');
+                successMsg.className = 'fixed bottom-4 right-4 bg-green-100 text-green-800 px-4 py-2 rounded-lg shadow-lg z-50';
+                successMsg.textContent = message;
+                document.body.appendChild(successMsg);
+                
+                // Remove after 3 seconds
+                setTimeout(() => {
+                    successMsg.remove();
+                }, 3000);
+            }
+        });
+    });
+});
+</script>
 </body></html>

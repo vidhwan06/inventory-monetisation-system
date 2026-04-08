@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html class="light" lang="en"><head>
+<html lang="en"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>AI Agents Orchestration | AssetFlow</title>
@@ -17,53 +17,32 @@
             theme: {
                 extend: {
                     "colors": {
-                        "on-tertiary-fixed-variant": "#005236",
-                        "on-secondary-container": "#54647a",
-                        "on-background": "#131b2e",
-                        "background": "#faf8ff",
-                        "on-surface-variant": "#464555",
-                        "on-secondary-fixed": "#0b1c30",
-                        "on-error": "#ffffff",
-                        "on-tertiary-fixed": "#002113",
-                        "on-error-container": "#93000a",
-                        "outline": "#777587",
-                        "secondary-fixed": "#d3e4fe",
-                        "primary-fixed": "#e2dfff",
-                        "on-tertiary": "#ffffff",
-                        "error-container": "#ffdad6",
-                        "surface-container-highest": "#dae2fd",
-                        "surface-container": "#eaedff",
-                        "on-primary-fixed": "#0f0069",
-                        "outline-variant": "#c7c4d8",
-                        "on-tertiary-container": "#67f4b7",
-                        "on-primary": "#ffffff",
-                        "error": "#ba1a1a",
-                        "tertiary": "#005338",
-                        "secondary-container": "#d0e1fb",
-                        "surface-container-low": "#f2f3ff",
-                        "inverse-on-surface": "#eef0ff",
-                        "surface": "#faf8ff",
-                        "on-surface": "#131b2e",
-                        "surface-container-high": "#e2e7ff",
-                        "secondary": "#505f76",
-                        "tertiary-fixed-dim": "#4edea3",
-                        "primary-container": "#4f46e5",
-                        "on-primary-fixed-variant": "#3323cc",
-                        "surface-tint": "#4d44e3",
                         "primary": "#3525cd",
-                        "tertiary-fixed": "#6ffbbe",
-                        "inverse-primary": "#c3c0ff",
-                        "secondary-fixed-dim": "#b7c8e1",
-                        "surface-variant": "#dae2fd",
-                        "tertiary-container": "#006e4b",
-                        "surface-dim": "#d2d9f4",
-                        "surface-container-lowest": "#ffffff",
-                        "surface-bright": "#faf8ff",
-                        "on-secondary": "#ffffff",
-                        "inverse-surface": "#283044",
-                        "primary-fixed-dim": "#c3c0ff",
-                        "on-secondary-fixed-variant": "#38485d",
-                        "on-primary-container": "#dad7ff"
+                        "surface": {
+                            DEFAULT: "#faf8ff",
+                            dark: "#1a1a2e"
+                        },
+                        "on-surface": {
+                            DEFAULT: "#131b2e",
+                            dark: "#e2e8f0"
+                        },
+                        "secondary": "#505f76",
+                        "surface-container-low": {
+                            DEFAULT: "#f2f3ff",
+                            dark: "#2a2a3e"
+                        },
+                        "slate": {
+                            50: "#f8fafc",
+                            100: "#f1f5f9",
+                            200: "#e2e8f0",
+                            300: "#cbd5e1",
+                            400: "#94a3b8",
+                            500: "#64748b",
+                            600: "#475569",
+                            700: "#334155",
+                            800: "#1e293b",
+                            900: "#0f172a"
+                        }
                     },
                     "borderRadius": {
                         "DEFAULT": "0.125rem",
@@ -88,9 +67,9 @@
         h1, h2, h3, .font-manrope { font-family: 'Manrope', sans-serif; }
     </style>
 </head>
-<body class="bg-background text-on-surface">
+<body class="bg-surface text-on-surface overflow-x-hidden">
 <!-- SideNavBar -->
-<nav class="fixed left-0 top-0 bottom-0 w-64 border-r-0 bg-[#faf8ff] dark:bg-slate-950 flex flex-col h-screen py-6 px-4 z-50">
+<nav class="fixed left-0 top-0 bottom-0 w-64 border-r-0 bg-surface dark:bg-slate-950 flex flex-col h-screen py-6 px-4 z-50">
 <div class="mb-8 px-2">
 <h1 class="text-2xl font-bold text-[#3525cd] dark:text-white font-manrope tracking-tight">AssetFlow</h1>
 <p class="text-xs text-slate-500 font-manrope">Monetization Engine</p>
@@ -100,7 +79,7 @@
 <span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
 <span class="font-manrope tracking-tight">Dashboard</span>
 </a>
-<a class="flex items-center gap-3 px-3 py-2 text-slate-500 dark:text-slate-400 font-medium hover:translate-x-1 transition-transform duration-200 cursor-pointer active:scale-98" href="/">
+<a class="flex items-center gap-3 px-3 py-2 text-slate-500 dark:text-slate-400 font-medium hover:translate-x-1 transition-transform duration-200 cursor-pointer active:scale-98" href="/inventory">
 <span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
 <span class="font-manrope tracking-tight">Inventory</span>
 </a>
@@ -109,7 +88,7 @@
 <span class="font-manrope tracking-tight">Monetization</span>
 </a>
 <!-- Active Tab: Agents -->
-<a class="flex items-center gap-3 px-3 py-2 text-[#3525cd] dark:text-white font-semibold bg-[#3525cd]/5 dark:bg-[#4f46e5]/10 rounded-lg hover:translate-x-1 transition-transform duration-200 cursor-pointer active:scale-98" href="/orchestration">
+<a class="flex items-center gap-3 px-3 py-2 text-primary dark:text-white font-semibold bg-primary/10 dark:bg-primary/20 rounded-lg hover:translate-x-1 transition-transform duration-200 cursor-pointer active:scale-98" href="/orchestration">
 <span class="material-symbols-outlined" data-icon="smart_toy">smart_toy</span>
 <span class="font-manrope tracking-tight">Agents</span>
 </a>
@@ -371,5 +350,4 @@
     <span class="material-symbols-outlined">dark_mode</span>
     <span class="hidden sm:inline">Dark mode</span>
 </button>
-<script src="/static/theme.js" defer></script>
 </body></html>
