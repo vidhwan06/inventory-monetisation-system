@@ -2,6 +2,9 @@ from fastapi import FastAPI, File, UploadFile
 from fastapi.responses import FileResponse
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
+from fastapi.responses import HTMLResponse
+from fastapi import Request
 import os
 import pandas as pd
 from dotenv import load_dotenv
@@ -57,6 +60,14 @@ def serve_inventory():
 @app.get("/monetization")
 def serve_monetization():
     return FileResponse(os.path.join(TEMPLATES_DIR, "monetization.html"))
+
+templates = Jinja2Templates(directory="templates")
+
+@app.get("/analytics")
+def serve_analytics():
+    analytics_path = os.path.join(TEMPLATES_DIR, "analytics.html")
+    with open(analytics_path, "r", encoding="utf-8") as f:
+        return HTMLResponse(f.read())
 
 # -----------------------------
 # MAIN ANALYSIS API
