@@ -229,7 +229,10 @@
 </main>
 
 <script>
-const API_BASE = "https://inventory-monetisation-system.onrender.com";
+const LOCAL_API_BASE = "http://127.0.0.1:8001";
+const PROD_API_BASE = "https://inventory-monetisation-system.onrender.com";
+const API_BASE = localStorage.getItem("assetflow_backend")
+  || (["127.0.0.1", "localhost"].includes(window.location.hostname) ? LOCAL_API_BASE : PROD_API_BASE);
 
 function catLabel(c){return(c||"healthy").replace(/_/g," ").replace(/\b\w/g,x=>x.toUpperCase());}
 function currency(v){return`₹${Number(v).toLocaleString("en-IN",{maximumFractionDigits:2})}`;}

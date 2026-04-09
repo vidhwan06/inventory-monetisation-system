@@ -225,7 +225,10 @@
 </main>
 
 <script>
-const API_BASE = "https://inventory-monetisation-system.onrender.com";
+const LOCAL_API_BASE = "http://127.0.0.1:8001";
+const PROD_API_BASE = "https://inventory-monetisation-system.onrender.com";
+const API_BASE = localStorage.getItem("assetflow_backend")
+  || (["127.0.0.1", "localhost"].includes(window.location.hostname) ? LOCAL_API_BASE : PROD_API_BASE);
 
 function riskColor(s){return s>=7?"bg-error-container text-on-error-container":s>=4?"bg-amber-100 text-amber-700":"bg-tertiary-fixed/20 text-tertiary";}
 function riskLabel(s){return s>=7?"High":s>=4?"Medium":"Low";}

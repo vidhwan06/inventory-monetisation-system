@@ -34,7 +34,20 @@ LATEST_ANALYSIS_FILENAME: str | None = None
 
 FIELD_ALIASES = {
     "name": {"name", "product", "productname", "product_name", "item", "item_name", "productname"},
-    "price": {"price", "productprice", "product_price", "mrp", "sellingprice", "selling_price"},
+    "price": {
+        "price",
+        "productprice",
+        "product_price",
+        "mrp",
+        "sellingprice",
+        "selling_price",
+        "unitprice",
+        "unit_price",
+        "saleprice",
+        "sale_price",
+        "retailprice",
+        "retail_price",
+    },
     "discount": {"discount", "discountpercent", "discount_percentage", "discount_pct"},
     "sales": {
         "sales",
@@ -45,6 +58,18 @@ FIELD_ALIASES = {
         "units_sold_last_30_days",
         "units_sold_last30days",
         "last30daysales",
+        "saleslast30days",
+        "sales_last_30_days",
+        "monthlysales",
+        "monthly_sales",
+        "salesvolume",
+        "sales_volume",
+        "soldqty",
+        "sold_qty",
+        "quantitysold",
+        "quantity_sold",
+        "qtysold",
+        "qty_sold",
     },
     "stock": {
         "stock",
@@ -54,6 +79,16 @@ FIELD_ALIASES = {
         "quantity",
         "availablequantity",
         "available_quantity",
+        "currentstock",
+        "current_stock",
+        "onhand",
+        "on_hand",
+        "stockonhand",
+        "stock_on_hand",
+        "inventoryonhand",
+        "inventory_on_hand",
+        "availablestock",
+        "available_stock",
     },
     "last_sold_date": {
         "lastsolddate",
@@ -61,7 +96,43 @@ FIELD_ALIASES = {
         "lastsold",
         "recent_sale_date",
         "last_sale_date",
+        "dateoflastsale",
+        "date_of_last_sale",
+        "lastsoldon",
+        "last_sold_on",
+        "lastsale",
+        "last_sale",
     },
+}
+
+FIELD_TOKEN_HINTS = {
+    "name": [{"name"}, {"product"}, {"item"}],
+    "price": [{"price"}, {"mrp"}, {"selling", "price"}, {"unit", "price"}, {"retail", "price"}],
+    "discount": [{"discount"}],
+    "sales": [
+        {"sales"},
+        {"sold"},
+        {"units", "sold"},
+        {"quantity", "sold"},
+        {"qty", "sold"},
+        {"monthly", "sales"},
+        {"30", "days", "sales"},
+        {"30", "days", "sold"},
+    ],
+    "stock": [
+        {"stock"},
+        {"inventory"},
+        {"quantity"},
+        {"available", "quantity"},
+        {"available", "stock"},
+        {"on", "hand"},
+    ],
+    "last_sold_date": [
+        {"last", "sold", "date"},
+        {"last", "sale", "date"},
+        {"recent", "sale", "date"},
+        {"date", "last", "sale"},
+    ],
 }
 
 
@@ -104,6 +175,19 @@ def find_matching_column(columns: Iterable[str], aliases: set[str]) -> str | Non
     return None
 
 
+def find_matching_column_for_field(columns: Iterable[str], field_name: str, aliases: set[str]) -> str | None:
+    matched_column = find_matching_column(columns, aliases)
+    if matched_column:
+        return matched_column
+
+    token_hints = FIELD_TOKEN_HINTS.get(field_name, [])
+    for column in columns:
+        column_tokens = set(normalize_header(column).split("_"))
+        if any(token_hint.issubset(column_tokens) for token_hint in token_hints):
+            return column
+    return None
+
+
 def build_clean_inventory_dataframe(rows: Iterable[Dict[str, Any]]) -> pd.DataFrame:
     raw_df = pd.DataFrame(list(rows))
     if raw_df.empty:
@@ -121,10 +205,12 @@ def build_clean_inventory_dataframe(rows: Iterable[Dict[str, Any]]) -> pd.DataFr
         )
 
     raw_df.columns = [normalize_header(column) for column in raw_df.columns]
+    matched_columns: dict[str, str | None] = {}
 
     cleaned_df = pd.DataFrame(index=raw_df.index)
     for target_key, aliases in FIELD_ALIASES.items():
-        matched_column = find_matching_column(raw_df.columns, aliases)
+        matched_column = find_matching_column_for_field(raw_df.columns, target_key, aliases)
+        matched_columns[target_key] = matched_column
         cleaned_df[target_key] = raw_df[matched_column] if matched_column else None
 
     cleaned_df["name"] = cleaned_df["name"].fillna("Unknown").astype(str).str.strip()
@@ -144,6 +230,10 @@ def build_clean_inventory_dataframe(rows: Iterable[Dict[str, Any]]) -> pd.DataFr
     else:
         day_deltas = (reference_date - cleaned_df["last_sold_date"]).dt.days
         cleaned_df["days_since_last_sale"] = day_deltas.where(cleaned_df["last_sold_date"].notna(), other=None)
+
+    cleaned_df["sales_data_present"] = matched_columns["sales"] is not None
+    cleaned_df["stock_data_present"] = matched_columns["stock"] is not None
+    cleaned_df["last_sold_date_present"] = matched_columns["last_sold_date"] is not None
 
     return cleaned_df
 
@@ -176,6 +266,9 @@ def normalize_product_row(product: Dict[str, Any]) -> Dict[str, Any]:
         "last_sold_date": last_sold_date,
         "reference_date": reference_date,
         "days_since_last_sale": days_since_last_sale,
+        "sales_data_present": bool(product.get("sales_data_present", False)),
+        "stock_data_present": bool(product.get("stock_data_present", False)),
+        "last_sold_date_present": bool(product.get("last_sold_date_present", False)),
     }
 
 

@@ -1,5 +1,9 @@
 window.AssetFlowApp = (() => {
-    const API_BASE = "https://inventory-monetisation-system.onrender.com";
+    const LOCAL_API_BASE = "http://127.0.0.1:8001";
+    const PROD_API_BASE = "https://inventory-monetisation-system.onrender.com";
+    const storedApiBase = localStorage.getItem("assetflow_backend");
+    const isLocalHost = ["127.0.0.1", "localhost"].includes(window.location.hostname);
+    const API_BASE = storedApiBase || (isLocalHost ? LOCAL_API_BASE : PROD_API_BASE);
     const pageMap = {
         inventory: "./index.html",
         analytics: "./analytics.html",
