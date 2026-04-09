@@ -5,9 +5,18 @@
 {% endblock %}
 
 {% block content %}
-<section class="mb-8">
-    <h2 class="text-4xl font-bold font-headline tracking-tight text-on-surface">{{ dashboard_title }}</h2>
-    <p class="mt-2 max-w-2xl text-sm text-on-surface-variant sm:text-base">{{ dashboard_subtitle }}</p>
+<section class="mb-8 flex items-center justify-between">
+    <div>
+        <h2 class="text-4xl font-bold font-headline tracking-tight text-on-surface">{{ dashboard_title }}</h2>
+        <p class="mt-2 max-w-2xl text-sm text-on-surface-variant sm:text-base">{{ dashboard_subtitle }}</p>
+    </div>
+
+  <a href="/export-report" 
+   class="inline-flex items-center gap-2 rounded-xl bg-primary px-5 py-3 text-sm font-semibold text-white">
+    <span class="material-symbols-outlined">download</span>
+    Download Report
+</a>
+
 </section>
 
 {% if empty_state %}
@@ -315,6 +324,38 @@
     });
 
     renderAnalyticsDrilldown("total_inventory_value");
+
+    <script>
+<script>
+async function downloadReport() {
+    try {
+        const response = await fetch("/export-report");
+
+        if (!response.ok) {
+            alert("No data available. Please upload CSV first.");
+            return;
+        }
+
+        const blob = await response.blob();
+        const url = window.URL.createObjectURL(blob);
+
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "AssetFlow_Report.pdf";
+
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+
+        window.URL.revokeObjectURL(url);
+
+    } catch (error) {
+        console.error(error);
+        alert("Error downloading report");
+    }
+}
+</script>
+
 </script>
 {% endif %}
 {% endblock %}

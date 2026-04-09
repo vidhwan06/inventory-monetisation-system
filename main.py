@@ -15,6 +15,9 @@ from agents.pricing import pricing_agent
 from agents.risk import risk_agent
 from aggregator.decision import aggregate_decision
 
+from fastapi.responses import FileResponse
+from report_generator import generate_pdf
+
 app = FastAPI(title="Inventory Monetisation Multi-Agent System")
 
 app.add_middleware(
@@ -960,6 +963,18 @@ def settings(request: Request):
         },
     )
 
+@app.get("/export-report")
+async def export_report():
+    if not LATEST_ANALYSIS_RESULTS:
+        raise HTTPException(status_code=400, detail="No data to export")
+
+    file_path = generate_pdf(LATEST_ANALYSIS_RESULTS)
+
+    return FileResponse(
+        file_path,
+        filename="AssetFlow_Report.pdf",
+        media_type="application/pdf"
+    )
 
 @app.get("/{page_name}")
 def get_page(request: Request, page_name: str):
