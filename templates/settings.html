@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Settings | AssetFlow{% endblock %}
+{% block title %}Settings | Monetra{% endblock %}
 
 {% block extra_head %}
 <style>
@@ -45,7 +45,7 @@
             <h3 class="text-2xl font-bold font-headline text-on-surface">Account &amp; Preferences</h3>
             <div class="mt-8 rounded-[1.75rem] border border-outline-variant/20 p-6 sm:p-8">
                 <h4 class="text-xl font-bold font-headline text-on-surface">Profile</h4>
-                <p id="settingsProfileDescription" class="mt-3 text-sm text-on-surface-variant sm:text-base">Update your name, email, and user preferences for AssetFlow.</p>
+                <p id="settingsProfileDescription" class="mt-3 text-sm text-on-surface-variant sm:text-base">Update your name, email, and user preferences for Monetra.</p>
                 <div class="mt-8 flex flex-wrap items-center gap-4">
                     <button id="openProfileModal" type="button" class="rounded-2xl bg-primary px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-primary/20 transition hover:opacity-95">
                         Edit profile
@@ -101,7 +101,7 @@
         <div class="flex items-start justify-between gap-4">
             <div>
                 <h3 class="text-4xl font-bold font-headline text-on-surface">Edit Profile</h3>
-                <p class="mt-2 text-sm text-on-surface-variant">Update the information used across AssetFlow.</p>
+                <p class="mt-2 text-sm text-on-surface-variant">Update the information used across Monetra.</p>
             </div>
             <button id="closeProfileModalIcon" type="button" class="rounded-full p-2 text-on-surface-variant transition hover:bg-surface-container-low hover:text-on-surface">
                 <span class="material-symbols-outlined">close</span>
@@ -206,7 +206,7 @@
 
         function syncProfileView() {
             companyInline.textContent = currentProfile.company || "Not set";
-            profileDescription.textContent = `${currentProfile.name || "User"} uses ${currentProfile.email || "no email set"} for AssetFlow notifications and account preferences.`;
+            profileDescription.textContent = `${currentProfile.name || "User"} uses ${currentProfile.email || "no email set"} for Monetra notifications and account preferences.`;
             profileNameInput.value = currentProfile.name || "";
             profileEmailInput.value = currentProfile.email || "";
             profileCompanyInput.value = currentProfile.company || "";

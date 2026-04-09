@@ -168,7 +168,7 @@ def build_analytics_context(results: list[Dict[str, Any]]) -> Dict[str, Any]:
     if total_products == 0:
         return {
             "active_page": "analytics",
-            "page_title": "AssetFlow | Analytics",
+            "page_title": "Monetra | Analytics",
             "search_placeholder": "Search analytics...",
             "dashboard_title": "Analytics Dashboard",
             "dashboard_subtitle": "Upload a CSV from Inventory to generate live analytics.",
@@ -332,7 +332,7 @@ def build_analytics_context(results: list[Dict[str, Any]]) -> Dict[str, Any]:
 
     return {
         "active_page": "analytics",
-        "page_title": "AssetFlow | Analytics",
+        "page_title": "Monetra | Analytics",
         "search_placeholder": "Search analytics...",
         "dashboard_title": "Analytics Dashboard",
         "dashboard_subtitle": "Live metrics generated from the current inventory dataset.",
@@ -374,7 +374,7 @@ def build_monetization_context(results: list[Dict[str, Any]]) -> Dict[str, Any]:
     if total_products == 0:
         return {
             "active_page": "monetization",
-            "page_title": "Monetization Suggestions | AssetFlow",
+            "page_title": "Monetization Suggestions | Monetra",
             "search_placeholder": "Search monetization actions...",
             "empty_state": True,
             "headline_value": currency(0),
@@ -554,7 +554,7 @@ def build_monetization_context(results: list[Dict[str, Any]]) -> Dict[str, Any]:
 
     return {
         "active_page": "monetization",
-        "page_title": "Monetization Suggestions | AssetFlow",
+        "page_title": "Monetization Suggestions | Monetra",
         "search_placeholder": "Search monetization actions...",
         "empty_state": False,
         "headline_value": format_money(positive_gain),
@@ -587,7 +587,7 @@ def build_orchestration_context(
     if total_products == 0:
         return {
             "active_page": "agents",
-            "page_title": "AI Agents Orchestration | AssetFlow",
+            "page_title": "AI Agents Orchestration | Monetra",
             "search_placeholder": "Search agents or workflows...",
             "empty_state": True,
             "source_filename": source_filename,
@@ -793,7 +793,7 @@ def build_orchestration_context(
 
     return {
         "active_page": "agents",
-        "page_title": "AI Agents Orchestration | AssetFlow",
+        "page_title": "AI Agents Orchestration | Monetra",
         "search_placeholder": "Search agents or workflows...",
         "empty_state": False,
         "source_filename": source_filename,
@@ -955,7 +955,7 @@ def settings(request: Request):
         name="settings.html",
         context={
             "active_page": "settings",
-            "page_title": "Settings | AssetFlow",
+            "page_title": "Settings | Monetra",
             "search_placeholder": "Search settings...",
         },
     )
