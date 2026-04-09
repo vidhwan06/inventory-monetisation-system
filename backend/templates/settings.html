@@ -1,0 +1,279 @@
+{% extends "base.html" %}
+
+{% block title %}Settings | AssetFlow{% endblock %}
+
+{% block extra_head %}
+<style>
+    .settings-panel {
+        box-shadow: 0 18px 40px rgba(53, 37, 205, 0.06);
+    }
+
+    .settings-tab-active {
+        background: linear-gradient(135deg, #3525cd 0%, #4338ca 100%);
+        color: #ffffff;
+        box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.9);
+    }
+    .settings-toggle[data-enabled="true"] .settings-toggle-track {
+        background: #3525cd;
+    }
+    .settings-toggle[data-enabled="true"] .settings-toggle-thumb {
+        transform: translateX(1.5rem);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<section class="space-y-7">
+    <div>
+        <h2 class="text-4xl font-bold font-headline tracking-tight text-on-surface">Settings</h2>
+        <p class="mt-2 text-sm text-on-surface-variant sm:text-base">Manage application preferences and default monetization controls.</p>
+    </div>
+
+    <section class="rounded-[2rem] bg-surface-container-low p-2 shadow-sm">
+        <div class="grid gap-2 md:grid-cols-2">
+            <button type="button" class="settings-tab settings-tab-active rounded-[1.25rem] px-6 py-4 text-sm font-semibold" data-tab="account">
+                Account &amp; Preferences
+            </button>
+            <button type="button" class="settings-tab rounded-[1.25rem] px-6 py-4 text-sm font-semibold text-on-surface-variant transition hover:bg-white/70" data-tab="system">
+                System Configuration
+            </button>
+        </div>
+    </section>
+
+    <section id="settingsAccountPanel" class="settings-panel rounded-[2rem] bg-white p-8">
+        <div class="max-w-4xl">
+            <h3 class="text-2xl font-bold font-headline text-on-surface">Account &amp; Preferences</h3>
+            <div class="mt-8 rounded-[1.75rem] border border-outline-variant/20 p-6 sm:p-8">
+                <h4 class="text-xl font-bold font-headline text-on-surface">Profile</h4>
+                <p id="settingsProfileDescription" class="mt-3 text-sm text-on-surface-variant sm:text-base">Update your name, email, and user preferences for AssetFlow.</p>
+                <div class="mt-8 flex flex-wrap items-center gap-4">
+                    <button id="openProfileModal" type="button" class="rounded-2xl bg-primary px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-primary/20 transition hover:opacity-95">
+                        Edit profile
+                    </button>
+                    <div class="rounded-2xl bg-surface-container-low px-4 py-3 text-sm text-on-surface-variant">
+                        <span class="font-semibold text-on-surface">Company:</span>
+                        <span id="settingsCompanyInline">Not set</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="settingsSystemPanel" class="settings-panel hidden rounded-[2rem] bg-white p-8">
+        <div class="max-w-5xl">
+            <h3 class="text-2xl font-bold font-headline text-on-surface">System Configuration</h3>
+            <div class="mt-8 rounded-[1.75rem] border border-outline-variant/20 p-6 sm:p-8">
+                <h4 class="text-xl font-bold font-headline text-on-surface">AI Configuration</h4>
+                <div class="mt-8 grid gap-6 xl:grid-cols-[1fr,1fr,auto] xl:items-end">
+                    <label class="block">
+                        <span class="mb-3 block text-sm font-semibold text-on-surface">AI Provider</span>
+                        <select id="settingsProvider" class="w-full rounded-2xl border border-outline-variant/30 bg-white px-4 py-4 text-base text-on-surface outline-none transition focus:border-primary/40 focus:ring-2 focus:ring-primary/10">
+                            <option value="OpenAI">OpenAI</option>
+                            <option value="Azure OpenAI">Azure OpenAI</option>
+                            <option value="Anthropic">Anthropic</option>
+                            <option value="Custom">Custom</option>
+                        </select>
+                    </label>
+                    <label class="block">
+                        <span class="mb-3 block text-sm font-semibold text-on-surface">API Key</span>
+                        <input id="settingsApiKey" type="password" placeholder="Enter API Key" class="w-full rounded-2xl border border-outline-variant/30 bg-white px-4 py-4 text-base text-on-surface outline-none transition placeholder:text-on-surface-variant focus:border-primary/40 focus:ring-2 focus:ring-primary/10">
+                    </label>
+                    <button id="settingsToggle" type="button" class="settings-toggle inline-flex items-center gap-3 self-center rounded-2xl px-1 py-1 text-sm font-semibold text-on-surface" data-enabled="false" aria-pressed="false">
+                        <span class="settings-toggle-track relative inline-flex h-8 w-14 items-center rounded-full bg-slate-300 transition-colors">
+                            <span class="settings-toggle-thumb ml-1 inline-block h-6 w-6 rounded-full bg-white shadow transition-transform"></span>
+                        </span>
+                        <span>Enable AI Agents</span>
+                    </button>
+                </div>
+                <div class="mt-10 flex flex-wrap justify-end gap-3">
+                    <button id="saveSystemConfig" type="button" class="rounded-2xl bg-primary px-8 py-3 text-sm font-semibold text-white shadow-lg shadow-primary/20 transition hover:opacity-95">
+                        Save Configuration
+                    </button>
+                </div>
+                <p id="systemConfigStatus" class="mt-4 text-right text-sm text-on-surface-variant">Configuration changes are stored locally in this browser.</p>
+            </div>
+        </div>
+    </section>
+</section>
+
+<div id="profileModalBackdrop" class="fixed inset-0 z-[70] hidden items-center justify-center bg-slate-900/45 px-4">
+    <div class="w-full max-w-2xl rounded-[2rem] bg-white p-8 shadow-2xl shadow-slate-900/20 sm:p-12">
+        <div class="flex items-start justify-between gap-4">
+            <div>
+                <h3 class="text-4xl font-bold font-headline text-on-surface">Edit Profile</h3>
+                <p class="mt-2 text-sm text-on-surface-variant">Update the information used across AssetFlow.</p>
+            </div>
+            <button id="closeProfileModalIcon" type="button" class="rounded-full p-2 text-on-surface-variant transition hover:bg-surface-container-low hover:text-on-surface">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+        </div>
+
+        <div class="mt-8 space-y-6">
+            <label class="block">
+                <span class="mb-3 block text-sm font-semibold text-on-surface">Name</span>
+                <input id="profileNameInput" type="text" class="w-full rounded-2xl border border-outline-variant/30 bg-white px-4 py-4 text-lg text-on-surface outline-none transition focus:border-primary/40 focus:ring-2 focus:ring-primary/10">
+            </label>
+            <label class="block">
+                <span class="mb-3 block text-sm font-semibold text-on-surface">Email</span>
+                <input id="profileEmailInput" type="email" class="w-full rounded-2xl border border-outline-variant/30 bg-white px-4 py-4 text-lg text-on-surface outline-none transition focus:border-primary/40 focus:ring-2 focus:ring-primary/10">
+            </label>
+            <label class="block">
+                <span class="mb-3 block text-sm font-semibold text-on-surface">Company Name</span>
+                <input id="profileCompanyInput" type="text" class="w-full rounded-2xl border border-outline-variant/30 bg-white px-4 py-4 text-lg text-on-surface outline-none transition focus:border-primary/40 focus:ring-2 focus:ring-primary/10">
+            </label>
+        </div>
+
+        <div class="mt-10 grid gap-3 sm:grid-cols-2">
+            <button id="cancelProfileModal" type="button" class="rounded-2xl bg-surface-container-low px-6 py-4 text-lg font-semibold text-on-surface transition hover:bg-surface-container-high">
+                Cancel
+            </button>
+            <button id="saveProfileButton" type="button" class="rounded-2xl bg-primary px-6 py-4 text-lg font-semibold text-white shadow-lg shadow-primary/20 transition hover:opacity-95">
+                Save
+            </button>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+    (() => {
+        const SETTINGS_PROFILE_KEY = "assetflowSettingsProfile";
+        const SETTINGS_SYSTEM_KEY = "assetflowSystemConfig";
+
+        const tabButtons = document.querySelectorAll(".settings-tab");
+        const accountPanel = document.getElementById("settingsAccountPanel");
+        const systemPanel = document.getElementById("settingsSystemPanel");
+        const profileDescription = document.getElementById("settingsProfileDescription");
+        const companyInline = document.getElementById("settingsCompanyInline");
+
+        const profileModalBackdrop = document.getElementById("profileModalBackdrop");
+        const openProfileModal = document.getElementById("openProfileModal");
+        const closeProfileModalIcon = document.getElementById("closeProfileModalIcon");
+        const cancelProfileModal = document.getElementById("cancelProfileModal");
+        const saveProfileButton = document.getElementById("saveProfileButton");
+        const profileNameInput = document.getElementById("profileNameInput");
+        const profileEmailInput = document.getElementById("profileEmailInput");
+        const profileCompanyInput = document.getElementById("profileCompanyInput");
+
+        const providerSelect = document.getElementById("settingsProvider");
+        const apiKeyInput = document.getElementById("settingsApiKey");
+        const settingsToggle = document.getElementById("settingsToggle");
+        const saveSystemConfig = document.getElementById("saveSystemConfig");
+        const systemConfigStatus = document.getElementById("systemConfigStatus");
+
+        const defaultProfile = {
+            name: "V",
+            email: "1@gmail.com",
+            company: "abc",
+        };
+
+        const defaultSystem = {
+            provider: "OpenAI",
+            apiKey: "",
+            enabled: false,
+        };
+
+        let currentProfile = loadFromStorage(SETTINGS_PROFILE_KEY, defaultProfile);
+        let currentSystem = loadFromStorage(SETTINGS_SYSTEM_KEY, defaultSystem);
+
+        function loadFromStorage(key, fallback) {
+            try {
+                const stored = localStorage.getItem(key);
+                if (!stored) return { ...fallback };
+                return { ...fallback, ...JSON.parse(stored) };
+            } catch (error) {
+                return { ...fallback };
+            }
+        }
+
+        function saveToStorage(key, value) {
+            localStorage.setItem(key, JSON.stringify(value));
+        }
+
+        function setActiveTab(tab) {
+            const isAccount = tab === "account";
+            accountPanel.classList.toggle("hidden", !isAccount);
+            systemPanel.classList.toggle("hidden", isAccount);
+
+            tabButtons.forEach((button) => {
+                const active = button.dataset.tab === tab;
+                button.classList.toggle("settings-tab-active", active);
+                button.classList.toggle("text-on-surface-variant", !active);
+                button.classList.toggle("hover:bg-white/70", !active);
+            });
+        }
+
+        function syncProfileView() {
+            companyInline.textContent = currentProfile.company || "Not set";
+            profileDescription.textContent = `${currentProfile.name || "User"} uses ${currentProfile.email || "no email set"} for AssetFlow notifications and account preferences.`;
+            profileNameInput.value = currentProfile.name || "";
+            profileEmailInput.value = currentProfile.email || "";
+            profileCompanyInput.value = currentProfile.company || "";
+        }
+
+        function syncSystemView() {
+            providerSelect.value = currentSystem.provider || defaultSystem.provider;
+            apiKeyInput.value = currentSystem.apiKey || "";
+            settingsToggle.dataset.enabled = currentSystem.enabled ? "true" : "false";
+            settingsToggle.setAttribute("aria-pressed", currentSystem.enabled ? "true" : "false");
+            systemConfigStatus.textContent = currentSystem.enabled
+                ? "AI agents are enabled for this browser session."
+                : "Configuration changes are stored locally in this browser.";
+        }
+
+        function openModal() {
+            profileModalBackdrop.classList.remove("hidden");
+            profileModalBackdrop.classList.add("flex");
+        }
+
+        function closeModal() {
+            profileModalBackdrop.classList.add("hidden");
+            profileModalBackdrop.classList.remove("flex");
+        }
+
+        tabButtons.forEach((button) => {
+            button.addEventListener("click", () => setActiveTab(button.dataset.tab));
+        });
+
+        openProfileModal.addEventListener("click", openModal);
+        closeProfileModalIcon.addEventListener("click", closeModal);
+        cancelProfileModal.addEventListener("click", closeModal);
+        profileModalBackdrop.addEventListener("click", (event) => {
+            if (event.target === profileModalBackdrop) {
+                closeModal();
+            }
+        });
+
+        saveProfileButton.addEventListener("click", () => {
+            currentProfile = {
+                name: profileNameInput.value.trim(),
+                email: profileEmailInput.value.trim(),
+                company: profileCompanyInput.value.trim(),
+            };
+            saveToStorage(SETTINGS_PROFILE_KEY, currentProfile);
+            syncProfileView();
+            closeModal();
+        });
+
+        settingsToggle.addEventListener("click", () => {
+            currentSystem.enabled = !currentSystem.enabled;
+            syncSystemView();
+        });
+
+        saveSystemConfig.addEventListener("click", () => {
+            currentSystem = {
+                provider: providerSelect.value,
+                apiKey: apiKeyInput.value,
+                enabled: currentSystem.enabled,
+            };
+            saveToStorage(SETTINGS_SYSTEM_KEY, currentSystem);
+            systemConfigStatus.textContent = `Saved ${currentSystem.provider} configuration${currentSystem.enabled ? " with AI agents enabled." : "."}`;
+        });
+
+        setActiveTab("account");
+        syncProfileView();
+        syncSystemView();
+    })();
+</script>
+{% endblock %}

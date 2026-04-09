@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>{{ page_title or 'AI Agents Orchestration | AssetFlow' }}</title>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary-fixed-variant": "#005236",
+                        "on-secondary-container": "#54647a",
+                        "on-background": "#131b2e",
+                        "background": "#faf8ff",
+                        "on-surface-variant": "#464555",
+                        "on-secondary-fixed": "#0b1c30",
+                        "on-error": "#ffffff",
+                        "on-tertiary-fixed": "#002113",
+                        "on-error-container": "#93000a",
+                        "outline": "#777587",
+                        "secondary-fixed": "#d3e4fe",
+                        "primary-fixed": "#e2dfff",
+                        "on-tertiary": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "surface-container-highest": "#dae2fd",
+                        "surface-container": "#eaedff",
+                        "on-primary-fixed": "#0f0069",
+                        "outline-variant": "#c7c4d8",
+                        "on-tertiary-container": "#67f4b7",
+                        "on-primary": "#ffffff",
+                        "error": "#ba1a1a",
+                        "tertiary": "#005338",
+                        "secondary-container": "#d0e1fb",
+                        "surface-container-low": "#f2f3ff",
+                        "inverse-on-surface": "#eef0ff",
+                        "surface": "#faf8ff",
+                        "on-surface": "#131b2e",
+                        "surface-container-high": "#e2e7ff",
+                        "secondary": "#505f76",
+                        "tertiary-fixed-dim": "#4edea3",
+                        "primary-container": "#4f46e5",
+                        "on-primary-fixed-variant": "#3323cc",
+                        "surface-tint": "#4d44e3",
+                        "primary": "#3525cd",
+                        "tertiary-fixed": "#6ffbbe",
+                        "inverse-primary": "#c3c0ff",
+                        "secondary-fixed-dim": "#b7c8e1",
+                        "surface-variant": "#dae2fd",
+                        "tertiary-container": "#006e4b",
+                        "surface-dim": "#d2d9f4",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-bright": "#faf8ff",
+                        "on-secondary": "#ffffff",
+                        "inverse-surface": "#283044",
+                        "primary-fixed-dim": "#c3c0ff",
+                        "on-secondary-fixed-variant": "#38485d",
+                        "on-primary-container": "#dad7ff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "fontFamily": {
+                        "headline": ["Manrope"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body { font-family: 'Inter', sans-serif; }
+        h1, h2, h3, .font-manrope { font-family: 'Manrope', sans-serif; }
+        .nav-link-active {
+            background: linear-gradient(135deg, rgba(53, 37, 205, 0.12), rgba(79, 70, 229, 0.18));
+            color: #3525cd;
+            box-shadow: inset 0 0 0 1px rgba(53, 37, 205, 0.08);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface">
+<nav class="fixed left-0 top-0 bottom-0 hidden w-72 overflow-x-hidden bg-[#f8f7ff] lg:flex flex-col h-screen px-5 py-5 z-50">
+<div class="rounded-[1.75rem] bg-white/90 p-5 shadow-sm shadow-primary/5">
+<div class="flex items-center gap-3">
+<div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-primary to-primary-container text-white shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined">deployed_code</span>
+</div>
+<div>
+<h1 class="text-2xl font-bold text-primary font-manrope tracking-tight">AssetFlow</h1>
+<p class="text-xs text-slate-500 font-manrope">Monetization Engine</p>
+</div>
+</div>
+<div class="mt-5 rounded-2xl bg-surface-container-low px-4 py-3">
+<p class="text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-500">Current Workspace</p>
+<p class="mt-1 text-sm font-semibold text-on-surface">AI Agents Orchestration</p>
+</div>
+</div>
+<div class="mt-6 flex-1 overflow-y-auto overflow-x-hidden">
+<div>
+<p class="px-3 text-[11px] font-semibold uppercase tracking-[0.22em] text-slate-400">Workspace</p>
+<div class="mt-3 space-y-1">
+<a class="flex items-center gap-3 rounded-2xl px-4 py-3 text-slate-500 font-medium hover:translate-x-1 hover:bg-white transition-all duration-200 cursor-pointer" href="/inventory">
+<span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
+<span class="font-manrope tracking-tight">Inventory</span>
+</a>
+</div>
+</div>
+<div class="mt-6">
+<p class="px-3 text-[11px] font-semibold uppercase tracking-[0.22em] text-slate-400">Intelligence</p>
+<div class="mt-3 space-y-1">
+<a class="flex items-center gap-3 rounded-2xl px-4 py-3 text-slate-500 font-medium hover:translate-x-1 hover:bg-white transition-all duration-200 cursor-pointer" href="/monetization">
+<span class="material-symbols-outlined">payments</span>
+<span class="font-manrope tracking-tight">Monetization</span>
+</a>
+<a class="nav-link-active flex items-center gap-3 rounded-2xl px-4 py-3 font-semibold hover:translate-x-1 transition-all duration-200 cursor-pointer" href="/orchestration">
+<span class="material-symbols-outlined" data-icon="smart_toy">smart_toy</span>
+<span class="font-manrope tracking-tight">Agents</span>
+</a>
+<a class="flex items-center gap-3 rounded-2xl px-4 py-3 text-slate-500 font-medium hover:translate-x-1 hover:bg-white transition-all duration-200 cursor-pointer" href="/analytics">
+<span class="material-symbols-outlined">leaderboard</span>
+<span class="font-manrope tracking-tight">Analytics</span>
+</a>
+</div>
+</div>
+<div class="mt-6">
+<p class="px-3 text-[11px] font-semibold uppercase tracking-[0.22em] text-slate-400">System</p>
+<div class="mt-3 space-y-1">
+<a class="flex items-center gap-3 rounded-2xl px-4 py-3 text-slate-500 font-medium hover:translate-x-1 hover:bg-white transition-all duration-200 cursor-pointer" href="/settings">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-manrope tracking-tight">Settings</span>
+</a>
+</div>
+</div>
+</div>
+<div class="mt-4 pt-6 space-y-1 border-t border-surface-container-high">
+<a class="flex items-center gap-3 rounded-2xl px-4 py-3 text-slate-500 font-medium hover:translate-x-1 hover:bg-white transition-all duration-200 cursor-pointer" href="/login">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+<span class="font-manrope tracking-tight">Sign Out</span>
+</a>
+</div>
+</nav>
+
+<header class="fixed top-0 right-0 left-0 z-40 bg-[#faf8ff]/85 backdrop-blur-xl shadow-sm flex justify-between items-center h-16 px-4 sm:px-6 lg:left-72 lg:px-8">
+<div class="flex items-center flex-1">
+<a class="lg:hidden text-lg font-bold text-primary font-manrope" href="/inventory">AssetFlow</a>
+<div class="hidden rounded-full bg-primary/8 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-primary sm:inline-flex">Agents</div>
+<div class="relative w-full max-w-md group">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-lg">search</span>
+<input class="w-full bg-surface-container-low border-none rounded-full py-2 pl-10 pr-4 text-sm focus:ring-2 focus:ring-primary/20 transition-all outline-none" placeholder="{{ search_placeholder or 'Search agents or workflows...' }}" type="text"/>
+</div>
+</div>
+<div class="relative flex items-center">
+<button id="profileMenuButton" type="button" class="flex items-center gap-3 rounded-full bg-white/80 px-3 py-2 shadow-sm transition hover:bg-white" aria-expanded="false" aria-haspopup="true">
+<div class="text-right hidden sm:block">
+<p id="headerProfileName" class="text-xs font-bold font-manrope">Alex Rivera</p>
+<p class="text-[10px] text-slate-500 uppercase tracking-wider">Admin</p>
+</div>
+<div class="flex h-10 w-10 items-center justify-center rounded-full border-2 border-primary/15 bg-white text-primary">
+<span class="material-symbols-outlined">person</span>
+</div>
+</button>
+<div id="profileMenuPanel" class="absolute right-0 top-[calc(100%+0.75rem)] hidden min-w-[240px] rounded-2xl border border-outline-variant/20 bg-white p-4 shadow-xl shadow-slate-900/10">
+<p class="text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-400">Profile</p>
+<p id="profilePanelName" class="mt-3 text-sm font-semibold text-on-surface">Alex Rivera</p>
+<p id="profilePanelEmail" class="mt-1 text-sm text-on-surface-variant">alex@example.com</p>
+</div>
+</div>
+</header>
+
+<nav class="fixed inset-x-0 bottom-0 z-50 overflow-x-hidden border-t border-white/70 bg-[#faf8ff]/95 px-2 py-2 backdrop-blur-xl lg:hidden">
+<div class="grid grid-cols-5 gap-1">
+<a class="flex flex-col items-center gap-1 rounded-2xl px-2 py-2 text-[10px] font-semibold text-slate-500" href="/inventory">
+<span class="material-symbols-outlined text-lg">inventory_2</span>
+<span>Inventory</span>
+</a>
+<a class="flex flex-col items-center gap-1 rounded-2xl px-2 py-2 text-[10px] font-semibold text-slate-500" href="/monetization">
+<span class="material-symbols-outlined text-lg">payments</span>
+<span>Revenue</span>
+</a>
+<a class="flex flex-col items-center gap-1 rounded-2xl px-2 py-2 text-[10px] font-semibold bg-primary text-white" href="/orchestration">
+<span class="material-symbols-outlined text-lg">smart_toy</span>
+<span>Agents</span>
+</a>
+<a class="flex flex-col items-center gap-1 rounded-2xl px-2 py-2 text-[10px] font-semibold text-slate-500" href="/analytics">
+<span class="material-symbols-outlined text-lg">leaderboard</span>
+<span>Analytics</span>
+</a>
+<a class="flex flex-col items-center gap-1 rounded-2xl px-2 py-2 text-[10px] font-semibold text-slate-500" href="/settings">
+<span class="material-symbols-outlined text-lg">settings</span>
+<span>Settings</span>
+</a>
+</div>
+</nav>
+
+<main class="pb-24 pt-24 px-4 sm:px-6 lg:ml-72 lg:px-10 lg:pb-12">
+<div class="max-w-7xl mx-auto mb-10">
+<h2 class="text-4xl font-extrabold font-headline tracking-tight text-on-surface mb-2">AI Agents Orchestration</h2>
+<p class="text-lg text-on-surface-variant max-w-3xl">{{ top_summary }}</p>
+</div>
+
+{% if empty_state %}
+<div class="max-w-7xl mx-auto rounded-3xl border-2 border-dashed border-outline-variant/30 bg-surface-container-low p-12 text-center">
+<div class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-white shadow-sm">
+<span class="material-symbols-outlined text-3xl text-primary">upload_file</span>
+</div>
+<h3 class="text-2xl font-bold font-headline text-on-surface">No uploaded analysis yet</h3>
+<p class="mt-3 text-sm text-on-surface-variant max-w-xl mx-auto">This page becomes live after you upload a CSV and run analysis from the Inventory page. Once that happens, the four agents here will reflect the exact uploaded inventory.</p>
+<a class="mt-6 inline-flex items-center gap-2 rounded-xl bg-primary px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-primary/20" href="/inventory">
+<span class="material-symbols-outlined text-lg">arrow_back</span>
+Go to Inventory
+</a>
+</div>
+{% else %}
+<div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+{% for card in agent_cards %}
+<div class="bg-surface-container-lowest p-6 rounded-xl shadow-sm hover:translate-y-[-4px] transition-all duration-300 group {% if loop.index == 2 %}border-2 border-primary/5{% endif %}">
+<div class="flex justify-between items-start mb-6">
+<div class="p-3 bg-primary/10 text-primary rounded-xl group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-2xl">{{ card.icon }}</span>
+</div>
+{% if card.status_tone == 'success' %}
+<span class="px-3 py-1 bg-tertiary-container text-on-tertiary-fixed-variant text-[10px] font-bold uppercase rounded-full tracking-widest flex items-center gap-1">
+<span class="w-1.5 h-1.5 bg-tertiary-fixed-dim rounded-full"></span> {{ card.status_label }}
+</span>
+{% elif card.status_tone == 'warning' %}
+<span class="px-3 py-1 bg-amber-100 text-amber-800 text-[10px] font-bold uppercase rounded-full tracking-widest flex items-center gap-1">
+<span class="w-1.5 h-1.5 bg-amber-500 rounded-full"></span> {{ card.status_label }}
+</span>
+{% else %}
+<span class="px-3 py-1 bg-slate-100 text-slate-500 text-[10px] font-bold uppercase rounded-full tracking-widest flex items-center gap-1">
+<span class="w-1.5 h-1.5 bg-slate-400 rounded-full"></span> {{ card.status_label }}
+</span>
+{% endif %}
+</div>
+<h3 class="text-lg font-bold font-headline mb-1">{{ card.name }}</h3>
+<p class="text-sm text-on-surface-variant mb-6 leading-relaxed">{{ card.description }}</p>
+<div class="space-y-3 pt-4 border-t border-outline-variant/10">
+<div class="flex justify-between text-xs gap-3">
+<span class="text-slate-400 font-label">Input</span>
+<span class="font-semibold text-primary text-right">{{ card.input }}</span>
+</div>
+<div class="flex justify-between text-xs gap-3">
+<span class="text-slate-400 font-label">Output</span>
+<span class="font-semibold text-on-surface text-right">{{ card.output }}</span>
+</div>
+</div>
+</div>
+{% endfor %}
+</div>
+
+<div class="max-w-7xl mx-auto mb-12">
+<div class="bg-surface-container-low rounded-3xl p-10 relative overflow-hidden">
+<div class="absolute inset-0 bg-gradient-to-r from-primary/5 to-transparent pointer-events-none"></div>
+<div class="relative z-10">
+<div class="flex items-center gap-2 mb-8">
+<span class="material-symbols-outlined text-primary" data-icon="account_tree">account_tree</span>
+<h3 class="text-xl font-bold font-headline">Live Orchestration Flow</h3>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+{% for step in workflow_steps %}
+<button type="button" data-workflow-step="{{ step.key }}" class="workflow-step rounded-2xl bg-white/80 p-6 text-center shadow-sm transition-all hover:-translate-y-1 hover:shadow-md">
+<div class="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full {% if step.state == 'complete' %}bg-primary text-white{% else %}bg-surface-container-high text-primary{% endif %}">
+<span class="material-symbols-outlined text-2xl">{% if loop.index == 1 %}upload_file{% elif loop.index == 2 %}analytics{% elif loop.index == 3 %}sell{% else %}recommend{% endif %}</span>
+</div>
+<p class="text-sm font-bold font-manrope">{{ step.title }}</p>
+<p class="text-[11px] text-slate-500 mt-2">{{ step.subtitle }}</p>
+</button>
+{% endfor %}
+</div>
+<div class="mt-8 rounded-2xl bg-white p-6 shadow-sm">
+<div class="flex items-center justify-between gap-4 border-b border-outline-variant/20 pb-4">
+<div>
+<p class="text-xs font-bold uppercase tracking-[0.2em] text-primary">Selected Output</p>
+<h4 id="workflowDetailTitle" class="mt-2 text-xl font-bold font-headline text-on-surface"></h4>
+</div>
+</div>
+<p id="workflowDetailSummary" class="mt-4 text-sm leading-6 text-on-surface-variant"></p>
+<div id="workflowDetailItems" class="mt-5 grid gap-3 md:grid-cols-2"></div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="max-w-7xl mx-auto">
+<div class="flex items-center gap-3 mb-8">
+<div class="w-10 h-1 bg-primary rounded-full"></div>
+<h3 class="text-2xl font-extrabold font-headline">How AI Made These Decisions</h3>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+{% for item in explanations %}
+<div class="bg-surface-container-low/50 rounded-2xl p-8 flex gap-6 group hover:bg-white transition-colors duration-300">
+<div class="shrink-0 w-12 h-12 bg-white rounded-xl shadow-sm flex items-center justify-center group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-primary">{% if loop.index == 1 %}auto_awesome{% else %}ads_click{% endif %}</span>
+</div>
+<div>
+<h4 class="text-lg font-bold mb-3">{{ item.title }}</h4>
+<p class="text-on-surface-variant text-sm leading-relaxed mb-4">"{{ item.body }}"</p>
+<div class="flex items-center gap-2 text-xs font-semibold text-primary">
+<span>{{ item.from_label }}</span>
+<span class="material-symbols-outlined text-sm" data-icon="arrow_forward">arrow_forward</span>
+<span class="text-tertiary">{{ item.to_label }}</span>
+</div>
+</div>
+</div>
+{% endfor %}
+</div>
+</div>
+{% endif %}
+</main>
+<script>
+    (() => {
+        const profileStorageKey = "assetflowSettingsProfile";
+        const fallbackProfile = { name: "Alex Rivera", email: "alex@example.com" };
+        const profileMenuButton = document.getElementById("profileMenuButton");
+        const profileMenuPanel = document.getElementById("profileMenuPanel");
+        const headerProfileName = document.getElementById("headerProfileName");
+        const profilePanelName = document.getElementById("profilePanelName");
+        const profilePanelEmail = document.getElementById("profilePanelEmail");
+
+        function loadProfile() {
+            try {
+                const stored = localStorage.getItem(profileStorageKey);
+                return stored ? { ...fallbackProfile, ...JSON.parse(stored) } : fallbackProfile;
+            } catch (error) {
+                return fallbackProfile;
+            }
+        }
+
+        function closeProfilePanel() {
+            if (!profileMenuPanel || !profileMenuButton) return;
+            profileMenuPanel.classList.add("hidden");
+            profileMenuButton.setAttribute("aria-expanded", "false");
+        }
+
+        const profile = loadProfile();
+        if (headerProfileName) headerProfileName.textContent = profile.name;
+        if (profilePanelName) profilePanelName.textContent = profile.name;
+        if (profilePanelEmail) profilePanelEmail.textContent = profile.email;
+
+        if (profileMenuButton && profileMenuPanel) {
+            profileMenuButton.addEventListener("click", (event) => {
+                event.stopPropagation();
+                const willOpen = profileMenuPanel.classList.contains("hidden");
+                profileMenuPanel.classList.toggle("hidden", !willOpen);
+                profileMenuButton.setAttribute("aria-expanded", willOpen ? "true" : "false");
+            });
+
+            document.addEventListener("click", (event) => {
+                if (!profileMenuButton.contains(event.target) && !profileMenuPanel.contains(event.target)) {
+                    closeProfilePanel();
+                }
+            });
+
+            document.addEventListener("keydown", (event) => {
+                if (event.key === "Escape") {
+                    closeProfilePanel();
+                }
+            });
+        }
+    })();
+</script>
+{% if not empty_state %}
+<script>
+    const workflowDetails = {{ workflow_details | tojson }};
+    const workflowButtons = [...document.querySelectorAll('.workflow-step')];
+    const workflowDetailTitle = document.getElementById('workflowDetailTitle');
+    const workflowDetailSummary = document.getElementById('workflowDetailSummary');
+    const workflowDetailItems = document.getElementById('workflowDetailItems');
+
+    function renderWorkflowDetail(stepKey) {
+        const detail = workflowDetails[stepKey];
+        if (!detail) return;
+
+        workflowDetailTitle.textContent = detail.title;
+        workflowDetailSummary.textContent = detail.summary;
+        workflowDetailItems.innerHTML = '';
+
+        (detail.items || []).forEach((item) => {
+            const card = document.createElement('div');
+            card.className = 'rounded-xl bg-surface-container-low p-4';
+            card.innerHTML = `
+                <p class="text-sm font-semibold text-on-surface">${item.label}</p>
+                <p class="mt-2 text-xs leading-5 text-on-surface-variant">${item.value}</p>
+            `;
+            workflowDetailItems.appendChild(card);
+        });
+
+        workflowButtons.forEach((button) => {
+            const isActive = button.dataset.workflowStep === stepKey;
+            button.classList.toggle('ring-2', isActive);
+            button.classList.toggle('ring-primary', isActive);
+            button.classList.toggle('ring-offset-2', isActive);
+        });
+    }
+
+    workflowButtons.forEach((button) => {
+        button.addEventListener('click', () => renderWorkflowDetail(button.dataset.workflowStep));
+    });
+
+    renderWorkflowDetail('upload');
+</script>
+{% endif %}
+</body></html>

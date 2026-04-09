@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AssetFlow | Inventory Management</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary-fixed": "#6ffbbe",
+                        "secondary-container": "#d0e1fb",
+                        "surface-tint": "#4d44e3",
+                        "primary-container": "#4f46e5",
+                        "on-error-container": "#93000a",
+                        "inverse-surface": "#283044",
+                        "on-tertiary": "#ffffff",
+                        "surface-container": "#eaedff",
+                        "surface-container-lowest": "#ffffff",
+                        "on-error": "#ffffff",
+                        "on-tertiary-fixed": "#002113",
+                        "surface-variant": "#dae2fd",
+                        "primary-fixed": "#e2dfff",
+                        "on-secondary-fixed-variant": "#38485d",
+                        "on-secondary": "#ffffff",
+                        "surface-dim": "#d2d9f4",
+                        "on-secondary-fixed": "#0b1c30",
+                        "on-primary-container": "#dad7ff",
+                        "outline-variant": "#c7c4d8",
+                        "on-tertiary-container": "#67f4b7",
+                        "surface-bright": "#faf8ff",
+                        "on-tertiary-fixed-variant": "#005236",
+                        "on-secondary-container": "#54647a",
+                        "surface-container-low": "#f2f3ff",
+                        "error-container": "#ffdad6",
+                        "outline": "#777587",
+                        "on-primary-fixed-variant": "#3323cc",
+                        "error": "#ba1a1a",
+                        "on-background": "#131b2e",
+                        "tertiary-container": "#006e4b",
+                        "secondary-fixed": "#d3e4fe",
+                        "inverse-on-surface": "#eef0ff",
+                        "tertiary-fixed-dim": "#4edea3",
+                        "tertiary": "#005338",
+                        "inverse-primary": "#c3c0ff",
+                        "on-primary-fixed": "#0f0069",
+                        "surface-container-highest": "#dae2fd",
+                        "on-surface-variant": "#464555",
+                        "on-primary": "#ffffff",
+                        "secondary": "#505f76",
+                        "surface-container-high": "#e2e7ff",
+                        "surface": "#faf8ff",
+                        "primary-fixed-dim": "#c3c0ff",
+                        "background": "#faf8ff",
+                        "primary": "#3525cd",
+                        "on-surface": "#131b2e",
+                        "secondary-fixed-dim": "#b7c8e1"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "fontFamily": {
+                        "headline": ["Manrope"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body { font-family: 'Inter', sans-serif; }
+        h1, h2, h3 { font-family: 'Manrope', sans-serif; }
+        .nav-link-active {
+            background: linear-gradient(135deg, rgba(53, 37, 205, 0.12), rgba(79, 70, 229, 0.18));
+            color: #3525cd;
+            box-shadow: inset 0 0 0 1px rgba(53, 37, 205, 0.08);
+        }
+    </style>
+<script src="./static/app.js"></script></head>
+<body class="bg-surface text-on-surface overflow-x-hidden">
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-0 bottom-0 hidden w-72 overflow-x-hidden bg-[#f8f7ff] lg:flex flex-col h-screen px-5 py-5 z-50">
+<div class="rounded-[1.75rem] bg-white/90 p-5 shadow-sm shadow-primary/5">
+<div class="flex items-center gap-3">
+<div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-primary to-primary-container text-white shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined">deployed_code</span>
+</div>
+<div>
+<h1 class="text-2xl font-bold text-primary font-manrope tracking-tight">AssetFlow</h1>
+<p class="text-xs text-slate-500 font-medium tracking-tight">Monetization Engine</p>
+</div>
+</div>
+<div class="mt-5 rounded-2xl bg-surface-container-low px-4 py-3">
+<p class="text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-500">Current Workspace</p>
+<p class="mt-1 text-sm font-semibold text-on-surface">Inventory Management</p>
+</div>
+</div>
+<nav class="mt-6 flex-1 overflow-y-auto overflow-x-hidden">
+<div>
+<p class="px-3 text-[11px] font-semibold uppercase tracking-[0.22em] text-slate-400">Workspace</p>
+<div class="mt-3 space-y-1">
+<a class="nav-link-active flex items-center gap-3 rounded-2xl px-4 py-3 font-semibold font-manrope hover:translate-x-1 transition-all duration-200 cursor-pointer" href="./index.html">
+<span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
+<span>Inventory</span>
+</a>
+</div>
+</div>
+<div class="mt-6">
+<p class="px-3 text-[11px] font-semibold uppercase tracking-[0.22em] text-slate-400">Intelligence</p>
+<div class="mt-3 space-y-1">
+<a class="flex items-center gap-3 rounded-2xl px-4 py-3 text-slate-500 font-medium font-manrope hover:translate-x-1 hover:bg-white transition-all duration-200 cursor-pointer" href="http://127.0.0.1:8000/monetization">
+<span class="material-symbols-outlined" data-icon="payments">payments</span>
+<span>Monetization</span>
+</a>
+<a class="flex items-center gap-3 rounded-2xl px-4 py-3 text-slate-500 font-medium font-manrope hover:translate-x-1 hover:bg-white transition-all duration-200 cursor-pointer" href="http://127.0.0.1:8000/orchestration">
+<span class="material-symbols-outlined" data-icon="smart_toy">smart_toy</span>
+<span>Agents</span>
+</a>
+<a class="flex items-center gap-3 rounded-2xl px-4 py-3 text-slate-500 font-medium font-manrope hover:translate-x-1 hover:bg-white transition-all duration-200 cursor-pointer" href="http://127.0.0.1:8000/analytics">
+    <span class="material-symbols-outlined" data-icon="leaderboard">leaderboard</span>
+    <span>Analytics</span>
+</a>
+</div>
+</div>
+<div class="mt-6">
+<p class="px-3 text-[11px] font-semibold uppercase tracking-[0.22em] text-slate-400">System</p>
+<div class="mt-3 space-y-1">
+<a class="flex items-center gap-3 rounded-2xl px-4 py-3 text-slate-500 font-medium font-manrope hover:translate-x-1 hover:bg-white transition-all duration-200 cursor-pointer" href="http://127.0.0.1:8000/settings">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span>Settings</span>
+</a>
+</div>
+</div>
+</nav>
+<div class="mt-4 space-y-1 border-t border-surface-container-high pt-4">
+<a class="flex items-center gap-3 rounded-2xl px-4 py-3 text-slate-500 font-medium font-manrope hover:translate-x-1 hover:bg-white transition-all duration-200 cursor-pointer" href="./login.html">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+<span>Sign Out</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="min-h-screen pb-24 lg:ml-72 lg:pb-10">
+<!-- TopNavBar -->
+<header class="fixed top-0 right-0 left-0 z-40 bg-[#faf8ff]/85 backdrop-blur-xl shadow-sm h-16 flex justify-between items-center px-4 transition-all sm:px-6 lg:left-72 lg:px-8">
+<div class="flex items-center gap-4 flex-1">
+<a class="lg:hidden text-lg font-bold text-primary font-manrope" href="./index.html">AssetFlow</a>
+<div class="hidden rounded-full bg-primary/8 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-primary sm:inline-flex">
+Inventory
+</div>
+<div class="relative w-full max-w-md">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-lg" data-icon="search">search</span>
+<input class="w-full bg-surface-container-low border-none rounded-full py-2 pl-10 pr-4 text-sm focus:ring-2 focus:ring-primary/40 focus:bg-surface-container-lowest transition-all outline-none text-on-surface" placeholder="Search inventory..." type="text"/>
+</div>
+</div>
+<div class="relative flex items-center">
+<button id="profileMenuButton" type="button" class="flex items-center gap-3 rounded-full bg-white/80 px-3 py-2 shadow-sm transition hover:bg-white" aria-expanded="false" aria-haspopup="true">
+<div class="text-right hidden sm:block">
+<p id="headerProfileName" class="text-sm font-semibold font-manrope text-on-surface">Alex Thompson</p>
+<p class="text-[10px] text-slate-500 font-medium uppercase tracking-wider">Inventory Lead</p>
+</div>
+<img alt="User profile avatar" class="h-10 w-10 rounded-full border-2 border-primary/15 object-cover" data-alt="Close-up professional headshot of a smiling man in a creative studio environment with soft natural lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAOOdTMX3S7UdEb2lBC1eJYZI4rKaybz233OyZPYtUxesRB7xy8Cv1BWyyF8S3cgHKMlH1BCD2nPHXS4v9pazgGqGlbdNMEHOCUWDML7DP9rSX8tevuLyBJSqAGdJbL1TpdUb3sGTkLpI8sNAH4yyCx3CzxR2_8Gs1qaas2fnwMRESMqpsBC65jsZ34iPzQ9-X62v4fgR_DPD1gX2y4ouzoC2FCrW-bCVJHVkRy4tPfdntu_dKNYxbgdWkpTosTFFfZSLfypIhLX9wy"/>
+</button>
+<div id="profileMenuPanel" class="absolute right-0 top-[calc(100%+0.75rem)] hidden min-w-[240px] rounded-2xl border border-outline-variant/20 bg-white p-4 shadow-xl shadow-slate-900/10">
+<p class="text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-400">Profile</p>
+<p id="profilePanelName" class="mt-3 text-sm font-semibold text-on-surface">Alex Thompson</p>
+<p id="profilePanelEmail" class="mt-1 text-sm text-on-surface-variant">alex@example.com</p>
+</div>
+</div>
+</header>
+<nav class="fixed inset-x-0 bottom-0 z-50 overflow-x-hidden border-t border-white/70 bg-[#faf8ff]/95 px-2 py-2 backdrop-blur-xl lg:hidden">
+<div class="grid grid-cols-5 gap-1">
+<a class="flex flex-col items-center gap-1 rounded-2xl px-2 py-2 text-[10px] font-semibold bg-primary text-white" href="./index.html">
+<span class="material-symbols-outlined text-lg">inventory_2</span>
+<span>Inventory</span>
+</a>
+<a class="flex flex-col items-center gap-1 rounded-2xl px-2 py-2 text-[10px] font-semibold text-slate-500" href="http://127.0.0.1:8000/monetization">
+<span class="material-symbols-outlined text-lg">payments</span>
+<span>Revenue</span>
+</a>
+<a class="flex flex-col items-center gap-1 rounded-2xl px-2 py-2 text-[10px] font-semibold text-slate-500" href="http://127.0.0.1:8000/orchestration">
+<span class="material-symbols-outlined text-lg">smart_toy</span>
+<span>Agents</span>
+</a>
+<a class="flex flex-col items-center gap-1 rounded-2xl px-2 py-2 text-[10px] font-semibold text-slate-500" href="http://127.0.0.1:8000/analytics">
+<span class="material-symbols-outlined text-lg">leaderboard</span>
+<span>Analytics</span>
+</a>
+<a class="flex flex-col items-center gap-1 rounded-2xl px-2 py-2 text-[10px] font-semibold text-slate-500" href="http://127.0.0.1:8000/settings">
+<span class="material-symbols-outlined text-lg">settings</span>
+<span>Settings</span>
+</a>
+</div>
+</nav>
+<!-- Page Content -->
+<div class="pt-24 pb-12 px-8">
+<!-- Header Section -->
+<div class="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-6">
+<div>
+<h2 class="text-4xl font-bold text-on-surface font-headline tracking-tight mb-2">Inventory Management</h2>
+<p class="text-on-surface-variant font-body">Track, manage, and optimize your global asset flow.</p>
+</div>
+<div class="flex items-center gap-3">
+<button id="uploadBtn" class="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-gradient-to-br from-primary to-primary-container text-white font-semibold text-sm shadow-lg shadow-primary/20 hover:opacity-90 transition-all active:scale-95">
+<span class="material-symbols-outlined text-lg" data-icon="upload_file">upload_file</span>
+                        Upload CSV
+                    </button>
+                    <input type="file" id="csvFileInput" accept=".csv" class="hidden">
+                    <button id="analyzeBtn" disabled class="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-white text-primary border border-primary font-semibold text-sm shadow-lg hover:bg-surface transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed">
+<span class="material-symbols-outlined text-lg" data-icon="analytics">analytics</span>
+                        Run Analysis
+                    </button>
+</div>
+</div>
+<!-- Dashboard Stats (Bento Style) -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-10">
+<div class="bg-surface-container-low p-6 rounded-2xl flex flex-col gap-1 group hover:bg-surface-container-high transition-colors">
+<span class="text-on-surface-variant font-label text-xs uppercase tracking-widest font-semibold">Total Assets</span>
+<div class="flex items-baseline gap-2">
+<span id="totalAssetsValue" class="text-3xl font-bold font-headline">--</span>
+<span id="totalAssetsMeta" class="text-slate-400 text-xs font-medium">Upload a CSV</span>
+</div>
+</div>
+<div class="bg-surface-container-low p-6 rounded-2xl flex flex-col gap-1 group hover:bg-surface-container-high transition-colors">
+<span class="text-on-surface-variant font-label text-xs uppercase tracking-widest font-semibold">In Stock</span>
+<div class="flex items-baseline gap-2">
+<span id="inStockValue" class="text-3xl font-bold font-headline">--</span>
+<span id="inStockMeta" class="text-slate-400 text-xs font-medium">Awaiting upload</span>
+</div>
+</div>
+<div class="bg-surface-container-low p-6 rounded-2xl flex flex-col gap-1 group hover:bg-surface-container-high transition-colors">
+<span class="text-on-surface-variant font-label text-xs uppercase tracking-widest font-semibold">Low Stock</span>
+<div class="flex items-baseline gap-2">
+<span id="lowStockValue" class="text-3xl font-bold font-headline text-amber-600">--</span>
+<span id="lowStockMeta" class="text-slate-400 text-xs font-medium">Awaiting upload</span>
+</div>
+</div>
+<div class="bg-surface-container-low p-6 rounded-2xl flex flex-col gap-1 group hover:bg-surface-container-high transition-colors">
+<span class="text-on-surface-variant font-label text-xs uppercase tracking-widest font-semibold">Dead Stock</span>
+<div class="flex items-baseline gap-2">
+<span id="deadStockValue" class="text-3xl font-bold font-headline text-error">--</span>
+<span id="deadStockMeta" class="text-slate-400 text-xs font-medium">Awaiting upload</span>
+</div>
+</div>
+</div>
+<!-- Inventory Table Container -->
+<div class="bg-surface-container-lowest rounded-3xl overflow-hidden shadow-2xl shadow-on-surface/5">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low/50">
+<th class="px-8 py-5 text-on-surface-variant font-label text-xs uppercase tracking-widest font-bold">Product</th>
+<th class="px-6 py-5 text-on-surface-variant font-label text-xs uppercase tracking-widest font-bold">Status</th>
+<th class="px-6 py-5 text-on-surface-variant font-label text-xs uppercase tracking-widest font-bold">Price</th>
+<th class="px-6 py-5 text-on-surface-variant font-label text-xs uppercase tracking-widest font-bold">Discount</th>
+<th class="px-6 py-5 text-on-surface-variant font-label text-xs uppercase tracking-widest font-bold">Risk</th>
+<th class="px-8 py-5 text-on-surface-variant font-label text-xs uppercase tracking-widest font-bold">Action</th>
+</tr>
+</thead>
+<tbody id="resultsBody" class="divide-y divide-surface-container-high/50">
+    <tr><td colspan="6" class="px-8 py-10 text-center text-sm text-on-surface-variant">Upload inventory CSV to run multi-agent monetization analysis.</td></tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination / Footer -->
+<div class="px-8 py-4 bg-surface-container-low/30 border-t border-surface-container-high/50 flex items-center justify-between">
+<p id="resultStatus" class="text-xs text-on-surface-variant font-medium">Ready for upload.</p>
+<div class="flex items-center gap-2">
+<button class="p-2 rounded-lg hover:bg-surface-container-high transition-colors text-on-surface-variant disabled:opacity-30" disabled="">
+<span class="material-symbols-outlined" data-icon="chevron_left">chevron_left</span>
+</button>
+<button class="w-8 h-8 rounded-lg bg-primary text-white text-xs font-bold">1</button>
+<button class="w-8 h-8 rounded-lg hover:bg-surface-container-high text-on-surface-variant text-xs font-bold transition-colors">2</button>
+<button class="w-8 h-8 rounded-lg hover:bg-surface-container-high text-on-surface-variant text-xs font-bold transition-colors">3</button>
+<button class="p-2 rounded-lg hover:bg-surface-container-high transition-colors text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Contextual Insights Section -->
+<div class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8">
+<div class="p-8 rounded-3xl bg-gradient-to-br from-inverse-surface to-[#1a2133] text-white flex flex-col justify-between min-h-[240px] relative overflow-hidden">
+<div class="relative z-10">
+<h3 id="liquidationTitle" class="text-2xl font-bold font-headline mb-2">Top Revenue Recovery Opportunity</h3>
+<p id="liquidationText" class="text-white/70 text-sm max-w-sm">Upload a CSV to see the most urgent liquidation or discount opportunity from your inventory.</p>
+</div>
+<div class="relative z-10 flex items-center gap-4">
+<button id="liquidationCta" class="px-6 py-2.5 rounded-xl bg-primary text-white font-semibold text-sm hover:scale-105 transition-transform active:scale-95">Upload Inventory</button>
+<span id="liquidationMeta" class="text-white/60 text-sm font-medium transition-colors">No recommendation yet</span>
+</div>
+<!-- Abstract graphic element -->
+<div class="absolute -right-12 -bottom-12 w-48 h-48 bg-primary/20 rounded-full blur-3xl"></div>
+</div>
+<div class="p-8 rounded-3xl bg-surface-container-low border border-outline-variant/10 flex flex-col justify-between min-h-[240px]">
+<div>
+<div class="flex items-center gap-2 mb-4">
+<span class="material-symbols-outlined text-primary" data-icon="auto_graph">auto_graph</span>
+<span id="restockEyebrow" class="text-xs font-bold uppercase tracking-widest text-primary">Optimization AI</span>
+</div>
+<h3 id="restockTitle" class="text-2xl font-bold font-headline text-on-surface mb-2">Restock Alerts</h3>
+<p id="restockText" class="text-on-surface-variant text-sm max-w-sm">Upload a CSV to surface the fastest-moving items that may need replenishment or closer monitoring.</p>
+</div>
+<div class="flex items-center justify-between border-t border-surface-container-high pt-6">
+<div id="restockBadges" class="flex flex-wrap gap-2"></div>
+<span id="restockPriority" class="text-xs font-semibold text-on-surface-variant">Priority: Waiting for data</span>
+</div>
+</div>
+</div>
+</div>
+</main>
+<script>
+    (() => {
+        const uploadBtnOriginal = document.getElementById('uploadBtn');
+        const csvFileInputOriginal = document.getElementById('csvFileInput');
+        const analyzeBtnOriginal = document.getElementById('analyzeBtn');
+        const resultsBody = document.getElementById('resultsBody');
+        const resultStatus = document.getElementById('resultStatus');
+        const totalAssetsValue = document.getElementById('totalAssetsValue');
+        const totalAssetsMeta = document.getElementById('totalAssetsMeta');
+        const inStockValue = document.getElementById('inStockValue');
+        const inStockMeta = document.getElementById('inStockMeta');
+        const lowStockValue = document.getElementById('lowStockValue');
+        const lowStockMeta = document.getElementById('lowStockMeta');
+        const deadStockValue = document.getElementById('deadStockValue');
+        const deadStockMeta = document.getElementById('deadStockMeta');
+        const liquidationTitle = document.getElementById('liquidationTitle');
+        const liquidationText = document.getElementById('liquidationText');
+        const liquidationCta = document.getElementById('liquidationCta');
+        const liquidationMeta = document.getElementById('liquidationMeta');
+        const restockEyebrow = document.getElementById('restockEyebrow');
+        const restockTitle = document.getElementById('restockTitle');
+        const restockText = document.getElementById('restockText');
+        const restockBadges = document.getElementById('restockBadges');
+        const restockPriority = document.getElementById('restockPriority');
+        const pendingAnalyticsSelectionKey = 'analyticsSelectedProduct';
+        const profileStorageKey = 'assetflowSettingsProfile';
+        const profileMenuButton = document.getElementById('profileMenuButton');
+        const profileMenuPanel = document.getElementById('profileMenuPanel');
+        const headerProfileName = document.getElementById('headerProfileName');
+        const profilePanelName = document.getElementById('profilePanelName');
+        const profilePanelEmail = document.getElementById('profilePanelEmail');
+
+        const uploadBtn = uploadBtnOriginal.cloneNode(true);
+        uploadBtnOriginal.replaceWith(uploadBtn);
+
+        const csvFileInput = csvFileInputOriginal.cloneNode(true);
+        csvFileInputOriginal.replaceWith(csvFileInput);
+
+        const analyzeBtn = analyzeBtnOriginal.cloneNode(true);
+        analyzeBtnOriginal.replaceWith(analyzeBtn);
+
+        let selectedFile = null;
+        let highlightedRecommendation = null;
+
+        function loadProfile() {
+            const fallback = { name: 'Alex Thompson', email: 'alex@example.com' };
+            try {
+                const stored = localStorage.getItem(profileStorageKey);
+                return stored ? { ...fallback, ...JSON.parse(stored) } : fallback;
+            } catch (error) {
+                return fallback;
+            }
+        }
+
+        function closeProfilePanel() {
+            if (!profileMenuPanel || !profileMenuButton) return;
+            profileMenuPanel.classList.add('hidden');
+            profileMenuButton.setAttribute('aria-expanded', 'false');
+        }
+
+        function statusChip(status) {
+            const s = (status || '').toUpperCase();
+            if (s.includes('DEAD')) return 'bg-error-container text-on-error-container';
+            if (s.includes('SLOW')) return 'bg-amber-100 text-amber-700';
+            return 'bg-tertiary-container text-tertiary-fixed';
+        }
+
+        function actionChip(action) {
+            const a = (action || '').toUpperCase();
+            if (a.includes('LIQUIDATE')) return 'bg-error-container text-error';
+            if (a.includes('CLEAR')) return 'bg-amber-100 text-amber-700';
+            if (a.includes('PROMOTE')) return 'bg-secondary-container text-on-secondary-container';
+            if (a.includes('INCREASE')) return 'bg-tertiary-container text-tertiary-fixed';
+            return 'bg-surface-container-high text-on-surface';
+        }
+
+        function escapeHtml(value) {
+            return String(value ?? '')
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
+        }
+
+        function formatCurrency(value) {
+            return typeof value === 'number' && Number.isFinite(value) ? `\u20B9${value.toFixed(2)}` : '—';
+        }
+
+        function formatPercent(value) {
+            return typeof value === 'number' && Number.isFinite(value) ? `${(value * 100).toFixed(0)}%` : '—';
+        }
+
+        function formatConfidence(value) {
+            return typeof value === 'number' && Number.isFinite(value) ? `${(value * 100).toFixed(0)}%` : '—';
+        }
+
+        function formatDiscount(value) {
+            return typeof value === 'number' && Number.isFinite(value) ? `${value.toFixed(0)}%` : '—';
+        }
+
+        function formatProfit(value) {
+            if (typeof value !== 'number' || !Number.isFinite(value)) return '—';
+            const sign = value > 0 ? '+' : '';
+            return `${sign}\u20B9${value.toFixed(2)}/unit`;
+        }
+
+        function profitTone(value) {
+            if (typeof value !== 'number' || !Number.isFinite(value)) return 'text-on-surface-variant';
+            if (value > 0) return 'text-emerald-700';
+            if (value < 0) return 'text-error';
+            return 'text-on-surface-variant';
+        }
+
+        function toDisplayAction(action) {
+            return String(action || 'hold').replace(/_/g, ' ').toUpperCase();
+        }
+
+        function resetStats() {
+            totalAssetsValue.textContent = '--';
+            totalAssetsMeta.textContent = 'Upload a CSV';
+            inStockValue.textContent = '--';
+            inStockMeta.textContent = 'Awaiting upload';
+            lowStockValue.textContent = '--';
+            lowStockMeta.textContent = 'Awaiting upload';
+            deadStockValue.textContent = '--';
+            deadStockMeta.textContent = 'Awaiting upload';
+        }
+
+        function resetInsightCards() {
+            liquidationTitle.textContent = 'Top Revenue Recovery Opportunity';
+            liquidationText.textContent = 'Upload a CSV to see the most urgent liquidation or discount opportunity from your inventory.';
+            liquidationCta.textContent = 'Upload Inventory';
+            liquidationMeta.textContent = 'No recommendation yet';
+            liquidationCta.dataset.mode = 'upload';
+            delete liquidationCta.dataset.product;
+            highlightedRecommendation = null;
+
+            restockEyebrow.textContent = 'Optimization AI';
+            restockTitle.textContent = 'Restock Alerts';
+            restockText.textContent = 'Upload a CSV to surface the fastest-moving items that may need replenishment or closer monitoring.';
+            restockBadges.innerHTML = '';
+            restockPriority.textContent = 'Priority: Waiting for data';
+        }
+
+        function focusRecommendation(productName) {
+            if (!productName) return;
+
+            const targetRow = resultsBody.querySelector(`[data-product-row="${CSS.escape(productName)}"]`);
+            if (!targetRow) return;
+
+            const detailId = targetRow.dataset.detailTarget;
+            const detailRow = detailId ? document.getElementById(detailId) : null;
+            const toggleBtn = targetRow.querySelector('.agent-toggle');
+
+            if (highlightedRecommendation) {
+                highlightedRecommendation.classList.remove('ring-2', 'ring-primary', 'ring-offset-2');
+            }
+
+            targetRow.classList.add('ring-2', 'ring-primary', 'ring-offset-2');
+            highlightedRecommendation = targetRow;
+
+            if (detailRow && detailRow.classList.contains('hidden')) {
+                detailRow.classList.remove('hidden');
+                if (toggleBtn) {
+                    toggleBtn.innerHTML = '<span class="material-symbols-outlined text-sm">expand_less</span> Hide Agent Details';
+                }
+            }
+
+            targetRow.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        function consumeAnalyticsSelection() {
+            const productName = localStorage.getItem(pendingAnalyticsSelectionKey);
+            if (!productName) return;
+            localStorage.removeItem(pendingAnalyticsSelectionKey);
+            requestAnimationFrame(() => focusRecommendation(productName));
+        }
+
+        function updateInsightCards(results) {
+            const liquidationCandidates = results
+                .filter((item) => {
+                    const category = item.agents?.demand_agent?.category;
+                    const action = String(item.final_decision?.final_action || item.agents?.action_agent?.action || '').toUpperCase();
+                    return category === 'dead_stock' || action.includes('LIQUIDATE') || action.includes('PROMOTE');
+                })
+                .sort((a, b) => {
+                    const riskA = a.agents?.risk_agent?.risk_score ?? -1;
+                    const riskB = b.agents?.risk_agent?.risk_score ?? -1;
+                    return riskB - riskA;
+                });
+
+            const topLiquidation = liquidationCandidates[0];
+            if (topLiquidation) {
+                const product = topLiquidation.product || 'Unnamed item';
+                const action = toDisplayAction(topLiquidation.final_decision?.final_action || topLiquidation.agents?.action_agent?.action);
+                const risk = formatPercent(topLiquidation.agents?.risk_agent?.risk_score);
+                const profit = formatProfit(topLiquidation.final_decision?.expected_profit);
+                liquidationTitle.textContent = product;
+                liquidationText.textContent = `${action} is the strongest recovery move right now. Risk score: ${risk}. Estimated unit impact: ${profit}.`;
+                liquidationCta.textContent = 'View Recommendation';
+                liquidationMeta.textContent = `Confidence: ${formatConfidence(topLiquidation.final_decision?.confidence)}`;
+                liquidationCta.dataset.mode = 'focus';
+                liquidationCta.dataset.product = product;
+            } else {
+                liquidationTitle.textContent = 'No urgent liquidation need';
+                liquidationText.textContent = 'No dead stock or forced-clearance candidates were found in this upload.';
+                liquidationCta.textContent = 'Inventory Healthy';
+                liquidationMeta.textContent = 'No action required';
+                liquidationCta.dataset.mode = 'idle';
+                delete liquidationCta.dataset.product;
+            }
+
+            const restockCandidates = results
+                .filter((item) => {
+                    const category = item.agents?.demand_agent?.category;
+                    return category === 'fast_moving' || category === 'healthy';
+                })
+                .sort((a, b) => {
+                    const scoreA = a.agents?.demand_agent?.demand_score ?? -1;
+                    const scoreB = b.agents?.demand_agent?.demand_score ?? -1;
+                    return scoreB - scoreA;
+                })
+                .slice(0, 3);
+
+            if (restockCandidates.length) {
+                restockEyebrow.textContent = 'Live Demand Signals';
+                restockTitle.textContent = 'Restock Alerts';
+                restockText.textContent = `${restockCandidates.length} fast-moving items deserve close replenishment tracking after this analysis run.`;
+                restockBadges.innerHTML = '';
+                restockCandidates.forEach((item) => {
+                    const badge = document.createElement('span');
+                    badge.className = 'inline-flex items-center rounded-full bg-white px-3 py-1 text-xs font-semibold text-on-surface shadow-sm';
+                    badge.textContent = item.product || 'Unknown item';
+                    restockBadges.appendChild(badge);
+                });
+                restockPriority.textContent = 'Priority: High';
+            } else {
+                restockEyebrow.textContent = 'Live Demand Signals';
+                restockTitle.textContent = 'No restock alerts';
+                restockText.textContent = 'This upload does not contain any fast-moving items that need urgent replenishment.';
+                restockBadges.innerHTML = '';
+                restockPriority.textContent = 'Priority: Low';
+            }
+        }
+
+        function updateStats(results) {
+            const total = results.length;
+            const lowStock = results.filter((item) => item.agents?.demand_agent?.category === 'slow_moving').length;
+            const deadStock = results.filter((item) => item.agents?.demand_agent?.category === 'dead_stock').length;
+            const inStock = results.filter((item) => {
+                const category = item.agents?.demand_agent?.category;
+                return category === 'healthy' || category === 'fast_moving';
+            }).length;
+
+            totalAssetsValue.textContent = String(total);
+            totalAssetsMeta.textContent = total === 1 ? '1 item analyzed' : total + ' items analyzed';
+            inStockValue.textContent = String(inStock);
+            inStockMeta.textContent = total ? Math.round((inStock / total) * 100) + '% of total' : '0% of total';
+            lowStockValue.textContent = String(lowStock);
+            lowStockMeta.textContent = lowStock ? 'Needs attention' : 'No slow movers';
+            deadStockValue.textContent = String(deadStock);
+            deadStockMeta.textContent = deadStock ? 'Immediate action' : 'No dead stock';
+        }
+
+        function buildLegacyResults(data) {
+            const demand = data.demand_analysis || {};
+            const deadStock = data.dead_stock_analysis || {};
+            const pricing = data.pricing || {};
+            const decisions = data.decisions || {};
+
+            const dsResults = deadStock.results || [];
+            const dsMap = {};
+            dsResults.forEach((result) => {
+                dsMap[result.product_name] = result;
+            });
+
+            const decList = decisions.decisions || [];
+            const decMap = {};
+            decList.forEach((decision) => {
+                decMap[decision.item] = decision;
+            });
+
+            const recPrices = pricing.recommended_prices || {};
+            const discounts = pricing.discounts || {};
+
+            const allItems = new Set([
+                ...(demand.dead_stock || []),
+                ...(demand.fast_moving || []),
+                ...(demand.slow_moving || []),
+                ...Object.keys(demand.stock_levels || {}),
+                ...dsResults.map((result) => result.product_name),
+                ...decList.map((decision) => decision.item)
+            ]);
+
+            return [...allItems].map((name) => {
+                let category = 'healthy';
+                if ((demand.dead_stock || []).includes(name)) category = 'dead_stock';
+                else if ((demand.slow_moving || []).includes(name)) category = 'slow_moving';
+                else if ((demand.fast_moving || []).includes(name)) category = 'fast_moving';
+
+                return {
+                    product: name,
+                    agents: {
+                        demand_agent: {
+                            category,
+                            reason: 'Demand insight unavailable in legacy response.'
+                        },
+                        risk_agent: {
+                            risk_score: dsMap[name]?.risk_score,
+                            reason: 'Risk reasoning unavailable in legacy response.'
+                        },
+                        pricing_agent: {
+                            current_price: null,
+                            suggested_price: recPrices[name],
+                            discount: discounts[name],
+                            reason: 'Pricing reasoning unavailable in legacy response.'
+                        },
+                        action_agent: {
+                            action: decMap[name]?.action || 'hold',
+                            reason: 'Action reasoning unavailable in legacy response.'
+                        }
+                    },
+                    final_decision: {
+                        final_action: decMap[name]?.action || 'HOLD',
+                        explanation: decMap[name]?.reason || 'Decision explanation unavailable in legacy response.',
+                        confidence: null,
+                        expected_profit: null
+                    }
+                };
+            });
+        }
+
+        function attachDetailToggles() {
+            resultsBody.querySelectorAll('.agent-toggle').forEach((button) => {
+                button.addEventListener('click', () => {
+                    const target = document.getElementById(button.dataset.target);
+                    if (!target) return;
+
+                    const willOpen = target.classList.contains('hidden');
+                    target.classList.toggle('hidden');
+                    button.innerHTML = willOpen
+                        ? '<span class="material-symbols-outlined text-sm">expand_less</span> Hide Agent Details'
+                        : '<span class="material-symbols-outlined text-sm">unfold_more</span> View Agent Details';
+                });
+            });
+        }
+
+        function renderResults(results) {
+            resultsBody.innerHTML = "";
+
+            if (!results.length) {
+                resultsBody.innerHTML = `<tr><td colspan="6" class="px-8 py-10 text-center text-sm text-on-surface-variant">No items found in analysis.</td></tr>`;
+                resultStatus.innerText = "Analysis returned no items.";
+                resetStats();
+                resetInsightCards();
+                return;
+            }
+
+            results.forEach((item, index) => {
+                const demandAgent = item.agents?.demand_agent || {};
+                const riskAgent = item.agents?.risk_agent || {};
+                const pricingAgent = item.agents?.pricing_agent || {};
+                const actionAgent = item.agents?.action_agent || {};
+                const finalDecision = item.final_decision || {};
+
+                const name = item.product || 'Unknown';
+                const status = String(demandAgent.category || 'healthy').replace(/_/g, ' ').toUpperCase();
+                const action = toDisplayAction(finalDecision.final_action || actionAgent.action);
+                const expectedProfit = typeof finalDecision.expected_profit === 'number'
+                    ? finalDecision.expected_profit
+                    : (
+                        typeof pricingAgent.suggested_price === 'number' && typeof pricingAgent.current_price === 'number'
+                            ? pricingAgent.suggested_price - pricingAgent.current_price
+                            : null
+                    );
+
+                const detailRowId = `details-row-${index}`;
+
+                const summaryRow = document.createElement('tr');
+                summaryRow.className = 'group hover:bg-surface-container-low transition-colors duration-200 align-top';
+                summaryRow.dataset.productRow = name;
+                summaryRow.dataset.detailTarget = detailRowId;
+                summaryRow.innerHTML = `
+                    <td class="px-8 py-5">
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 rounded-lg bg-surface-container text-primary flex items-center justify-center shrink-0">
+                                <span class="material-symbols-outlined" data-icon="inventory">inventory</span>
+                            </div>
+                            <div class="min-w-0">
+                                <p class="text-sm font-semibold font-manrope text-on-surface">${escapeHtml(name)}</p>
+                                <div class="mt-2 space-y-1 text-[11px] leading-5 text-on-surface-variant">
+                                    <p><span class="font-semibold text-on-surface">Demand:</span> ${escapeHtml(demandAgent.reason || 'Not available')}</p>
+                                    <p><span class="font-semibold text-on-surface">Risk:</span> ${escapeHtml(riskAgent.reason || 'Not available')}</p>
+                                    <p><span class="font-semibold text-on-surface">Pricing:</span> ${escapeHtml(pricingAgent.reason || 'Not available')}</p>
+                                    <p><span class="font-semibold text-on-surface">Action:</span> ${escapeHtml(actionAgent.reason || 'Not available')}</p>
+                                </div>
+                                <button type="button" data-target="${detailRowId}" class="agent-toggle mt-3 inline-flex items-center gap-1 text-[11px] font-semibold text-primary hover:text-primary-container transition-colors">
+                                    <span class="material-symbols-outlined text-sm">unfold_more</span>
+                                    View Agent Details
+                                </button>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-6 py-5">
+                        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full ${statusChip(status)} text-[10px] font-bold uppercase tracking-wider">
+                            <span class="w-1.5 h-1.5 rounded-full bg-current"></span>
+                            ${escapeHtml(status)}
+                        </span>
+                    </td>
+                    <td class="px-6 py-5 font-body text-sm font-semibold">${formatCurrency(pricingAgent.suggested_price)}</td>
+                    <td class="px-6 py-5">
+                        <span class="px-3 py-1 rounded-full bg-secondary-container text-on-secondary-container text-[10px] font-bold uppercase tracking-wider">${formatDiscount(pricingAgent.discount)}</span>
+                    </td>
+                    <td class="px-6 py-5 font-body text-sm font-medium">${formatPercent(riskAgent.risk_score)}</td>
+                    <td class="px-8 py-5">
+                        <div class="space-y-2">
+                            <span class="inline-flex px-3 py-1.5 rounded-full ${actionChip(action)} text-[10px] font-bold uppercase tracking-wider">${escapeHtml(action)}</span>
+                            <div class="space-y-1 text-[11px] leading-5 text-on-surface-variant max-w-sm">
+                                <p><span class="font-semibold text-on-surface">Explanation:</span> ${escapeHtml(finalDecision.explanation || 'Not available')}</p>
+                                <p><span class="font-semibold text-on-surface">Confidence:</span> ${escapeHtml(formatConfidence(finalDecision.confidence))}</p>
+                                <p><span class="font-semibold text-on-surface">Profit:</span> <span class="${profitTone(expectedProfit)}">${escapeHtml(formatProfit(expectedProfit))}</span></p>
+                            </div>
+                        </div>
+                    </td>
+                `;
+
+                const detailRow = document.createElement('tr');
+                detailRow.id = detailRowId;
+                detailRow.className = 'hidden bg-surface-container-low/40';
+                detailRow.innerHTML = `
+                    <td colspan="6" class="px-8 pb-5">
+                        <div class="ml-14 rounded-2xl border border-outline-variant/20 bg-surface-container-lowest p-4">
+                            <div class="grid gap-3 md:grid-cols-2 xl:grid-cols-4 text-[11px] leading-5">
+                                <div class="rounded-xl bg-surface-container-low p-3">
+                                    <p class="text-[10px] font-bold uppercase tracking-widest text-primary">Demand Agent</p>
+                                    <p class="mt-2 text-on-surface-variant">${escapeHtml(demandAgent.reason || 'Not available')}</p>
+                                </div>
+                                <div class="rounded-xl bg-surface-container-low p-3">
+                                    <p class="text-[10px] font-bold uppercase tracking-widest text-primary">Risk Agent</p>
+                                    <p class="mt-2 text-on-surface-variant">${escapeHtml(riskAgent.reason || 'Not available')}</p>
+                                </div>
+                                <div class="rounded-xl bg-surface-container-low p-3">
+                                    <p class="text-[10px] font-bold uppercase tracking-widest text-primary">Pricing Agent</p>
+                                    <p class="mt-2 text-on-surface-variant">${escapeHtml(pricingAgent.reason || 'Not available')}</p>
+                                </div>
+                                <div class="rounded-xl bg-surface-container-low p-3">
+                                    <p class="text-[10px] font-bold uppercase tracking-widest text-primary">Action Agent</p>
+                                    <p class="mt-2 text-on-surface-variant">${escapeHtml(actionAgent.reason || 'Not available')}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                `;
+
+                resultsBody.appendChild(summaryRow);
+                resultsBody.appendChild(detailRow);
+            });
+
+            attachDetailToggles();
+            updateStats(results);
+            updateInsightCards(results);
+            consumeAnalyticsSelection();
+        }
+
+        uploadBtn.addEventListener('click', () => {
+            csvFileInput.click();
+        });
+
+        liquidationCta.addEventListener('click', () => {
+            const mode = liquidationCta.dataset.mode;
+            if (mode === 'focus') {
+                focusRecommendation(liquidationCta.dataset.product);
+                return;
+            }
+
+            if (mode === 'upload') {
+                csvFileInput.click();
+            }
+        });
+
+        csvFileInput.addEventListener('change', (e) => {
+            if (!e.target.files.length) return;
+            selectedFile = e.target.files[0];
+            resetStats();
+            resetInsightCards();
+            resultStatus.innerText = `Selected File: ${selectedFile.name}. Ready for Analysis.`;
+            resultStatus.classList.add("text-primary");
+            analyzeBtn.disabled = false;
+        });
+
+        analyzeBtn.addEventListener('click', async () => {
+            if (!selectedFile) return;
+
+            analyzeBtn.disabled = true;
+            uploadBtn.disabled = true;
+            analyzeBtn.innerHTML = '<span class="material-symbols-outlined text-lg animate-spin" data-icon="sync">sync</span> Running 4 AI Agents...';
+            resultStatus.innerText = "Demand -> Risk -> Pricing -> Decision agents running...";
+
+            try {
+                const formData = new FormData();
+                formData.append('file', selectedFile);
+
+                const res = await fetch(`${window.AssetFlowApp.API_BASE}/analyze/`, {
+                    method: "POST",
+                    body: formData
+                });
+
+                if (!res.ok) throw new Error("API request failed");
+
+                const data = await res.json();
+
+                if (data.error) {
+                    resultStatus.innerText = `Error: ${data.error}`;
+                    resultStatus.classList.add("text-error");
+                    resetStats();
+                    resetInsightCards();
+                    return;
+                }
+
+                const results = Array.isArray(data.results) ? data.results : buildLegacyResults(data);
+                renderResults(results);
+                updateStats(results);
+
+                const summary = data.decisions?.summary || data.pricing?.strategy_summary || 'Analysis complete.';
+                resultStatus.innerText = `Analysis complete. ${results.length} items evaluated. ${summary}`;
+            } catch (error) {
+                console.error(error);
+                resultStatus.innerText = "Error analyzing file. Check console.";
+                resultStatus.classList.add("text-error");
+                resetStats();
+                resetInsightCards();
+            } finally {
+                analyzeBtn.disabled = false;
+                uploadBtn.disabled = false;
+                analyzeBtn.innerHTML = '<span class="material-symbols-outlined text-lg" data-icon="analytics">analytics</span> Run Analysis';
+            }
+        });
+
+        async function loadLatestAnalysis() {
+            try {
+                const res = await fetch(`${window.AssetFlowApp.API_BASE}/latest-analysis`);
+                if (!res.ok) return;
+
+                const data = await res.json();
+                if (!data.has_results || !Array.isArray(data.results) || !data.results.length) return;
+
+                renderResults(data.results);
+                resultStatus.innerText = data.filename
+                    ? `Showing latest uploaded analysis: ${data.filename}`
+                    : 'Showing latest uploaded analysis.';
+                resultStatus.classList.add("text-primary");
+            } catch (error) {
+                console.error('Unable to restore latest analysis', error);
+            }
+        }
+
+        const profile = loadProfile();
+        if (headerProfileName) headerProfileName.textContent = profile.name;
+        if (profilePanelName) profilePanelName.textContent = profile.name;
+        if (profilePanelEmail) profilePanelEmail.textContent = profile.email;
+
+        if (profileMenuButton && profileMenuPanel) {
+            profileMenuButton.addEventListener('click', (event) => {
+                event.stopPropagation();
+                const willOpen = profileMenuPanel.classList.contains('hidden');
+                profileMenuPanel.classList.toggle('hidden', !willOpen);
+                profileMenuButton.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+            });
+
+            document.addEventListener('click', (event) => {
+                if (!profileMenuButton.contains(event.target) && !profileMenuPanel.contains(event.target)) {
+                    closeProfilePanel();
+                }
+            });
+
+            document.addEventListener('keydown', (event) => {
+                if (event.key === 'Escape') {
+                    closeProfilePanel();
+                }
+            });
+        }
+
+        loadLatestAnalysis();
+    })();
+</script>
+</body></html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

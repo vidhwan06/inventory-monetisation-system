@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Login - AssetFlow</title>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary-fixed": "#6ffbbe",
+                        "secondary-container": "#d0e1fb",
+                        "surface-tint": "#4d44e3",
+                        "primary-container": "#4f46e5",
+                        "on-error-container": "#93000a",
+                        "inverse-surface": "#283044",
+                        "on-tertiary": "#ffffff",
+                        "surface-container": "#eaedff",
+                        "surface-container-lowest": "#ffffff",
+                        "on-error": "#ffffff",
+                        "on-tertiary-fixed": "#002113",
+                        "surface-variant": "#dae2fd",
+                        "primary-fixed": "#e2dfff",
+                        "on-secondary-fixed-variant": "#38485d",
+                        "on-secondary": "#ffffff",
+                        "surface-dim": "#d2d9f4",
+                        "on-secondary-fixed": "#0b1c30",
+                        "on-primary-container": "#dad7ff",
+                        "outline-variant": "#c7c4d8",
+                        "on-tertiary-container": "#67f4b7",
+                        "surface-bright": "#faf8ff",
+                        "on-tertiary-fixed-variant": "#005236",
+                        "on-secondary-container": "#54647a",
+                        "surface-container-low": "#f2f3ff",
+                        "error-container": "#ffdad6",
+                        "outline": "#777587",
+                        "on-primary-fixed-variant": "#3323cc",
+                        "error": "#ba1a1a",
+                        "on-background": "#131b2e",
+                        "tertiary-container": "#006e4b",
+                        "secondary-fixed": "#d3e4fe",
+                        "inverse-on-surface": "#eef0ff",
+                        "tertiary-fixed-dim": "#4edea3",
+                        "tertiary": "#005338",
+                        "inverse-primary": "#c3c0ff",
+                        "on-primary-fixed": "#0f0069",
+                        "surface-container-highest": "#dae2fd",
+                        "on-surface-variant": "#464555",
+                        "on-primary": "#ffffff",
+                        "secondary": "#505f76",
+                        "surface-container-high": "#e2e7ff",
+                        "surface": "#faf8ff",
+                        "primary-fixed-dim": "#c3c0ff",
+                        "background": "#faf8ff",
+                        "primary": "#3525cd",
+                        "on-surface": "#131b2e",
+                        "secondary-fixed-dim": "#b7c8e1"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "fontFamily": {
+                        "headline": ["Manrope"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        h1, h2, h3, .brand-font { font-family: 'Manrope', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body class="bg-surface min-h-screen flex items-center justify-center p-6 selection:bg-primary-container selection:text-white">
+<div class="absolute inset-0 z-0 overflow-hidden">
+<div class="absolute -top-[10%] -right-[10%] w-[40%] h-[40%] bg-primary-container/5 rounded-full blur-[120px]"></div>
+<div class="absolute -bottom-[10%] -left-[10%] w-[40%] h-[40%] bg-tertiary-container/5 rounded-full blur-[120px]"></div>
+</div>
+<main class="relative z-10 w-full max-w-[480px]">
+<div class="bg-surface-container-lowest rounded-xl p-8 md:p-12 shadow-[0_40px_80px_-15px_rgba(19,27,46,0.04)] border border-outline-variant/10">
+<div class="flex flex-col items-center mb-10">
+<div class="flex items-center gap-3 mb-4">
+<div class="w-12 h-12 bg-gradient-to-br from-primary to-primary-container rounded-lg flex items-center justify-center shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined text-white text-2xl" data-icon="inventory_2">inventory_2</span>
+</div>
+<span class="text-2xl font-extrabold brand-font text-primary tracking-tight">AssetFlow</span>
+</div>
+<h1 class="text-2xl font-bold text-on-surface mb-2">Welcome back</h1>
+<p class="text-on-surface-variant text-sm font-medium">Please enter your name, email, and password to continue</p>
+</div>
+<form action="/" method="GET" class="space-y-6">
+<div class="space-y-2">
+<label class="block text-xs font-semibold uppercase tracking-wider text-on-surface-variant px-1" for="name">Name</label>
+<div class="relative group">
+<div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-on-surface-variant group-focus-within:text-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]" data-icon="person">person</span>
+</div>
+<input class="w-full pl-11 pr-4 py-3 bg-surface-container-low border-0 rounded-lg text-on-surface placeholder:text-on-surface-variant/50 focus:ring-2 focus:ring-primary/20 focus:bg-surface-container-lowest transition-all duration-200 outline-none body-md" id="name" name="name" placeholder="Your full name" type="text"/>
+</div>
+</div>
+<div class="space-y-2">
+<label class="block text-xs font-semibold uppercase tracking-wider text-on-surface-variant px-1" for="email">Email Address</label>
+<div class="relative group">
+<div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-on-surface-variant group-focus-within:text-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]" data-icon="mail">mail</span>
+</div>
+<input class="w-full pl-11 pr-4 py-3 bg-surface-container-low border-0 rounded-lg text-on-surface placeholder:text-on-surface-variant/50 focus:ring-2 focus:ring-primary/20 focus:bg-surface-container-lowest transition-all duration-200 outline-none body-md" id="email" name="email" placeholder="name@company.com" type="email"/>
+</div>
+</div>
+<div class="space-y-2">
+<label class="block text-xs font-semibold uppercase tracking-wider text-on-surface-variant px-1" for="password">Password</label>
+<div class="relative group">
+<div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-on-surface-variant group-focus-within:text-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]" data-icon="lock">lock</span>
+</div>
+<input class="w-full pl-11 pr-12 py-3 bg-surface-container-low border-0 rounded-lg text-on-surface placeholder:text-on-surface-variant/50 focus:ring-2 focus:ring-primary/20 focus:bg-surface-container-lowest transition-all duration-200 outline-none body-md" id="password" name="password" placeholder="Password" type="password"/>
+<button aria-label="Show password" class="absolute inset-y-0 right-0 pr-4 flex items-center text-on-surface-variant hover:text-on-surface transition-colors" id="password-toggle" type="button">
+<span class="material-symbols-outlined text-[20px]" id="password-toggle-icon">visibility</span>
+</button>
+</div>
+</div>
+<button class="w-full py-4 bg-gradient-to-r from-primary to-primary-container text-white font-bold rounded-lg shadow-xl shadow-primary/20 hover:scale-[1.01] active:scale-[0.99] transition-all duration-200 flex items-center justify-center gap-2" type="submit">
+                    Sign In
+                    <span class="material-symbols-outlined text-[20px]" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</form>
+</div>
+<footer class="mt-8 flex justify-center gap-6 text-xs font-bold text-on-surface-variant uppercase tracking-widest opacity-60">
+<a class="hover:text-primary transition-colors" href="#">Privacy Policy</a>
+<a class="hover:text-primary transition-colors" href="#">Terms of Service</a>
+<a class="hover:text-primary transition-colors" href="#">Support</a>
+</footer>
+</main>
+<div class="fixed bottom-0 right-0 p-8 hidden lg:block max-w-sm">
+<div class="bg-primary/5 backdrop-blur-md rounded-xl p-6 border border-primary/10">
+<div class="flex items-center gap-4 mb-4">
+<div class="w-10 h-10 rounded-full overflow-hidden border-2 border-white shadow-sm">
+<img alt="Testimonial" data-alt="Professional business consultant smiling warmly in high-end office environment with natural sunlight" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD__WxGtIHqmlL7OJwNqMGiN0ETfrJNzsjePbrqFpnsIETD5BigUSNuJGPfARrToh1_jRaE_hTnv85P06PrIj3gJfBCB8yLqB9MIcDdFC2HC5tPgfaSPS0ufqvLXnLgYGJS14Gj5BhqZGiBEDMGOjz1_J3ZP6gNm4CCC8e2ydYxF85PPg6iuprZvudbwowbQS_WQJzq-FXSWI8a6TB9QMtiyGgsXgAaC-B4Ptk9roL6wmMQP9pV7vvGu0XQhKDM2dVetFeWp7mSVnYJ"/>
+</div>
+<div>
+<p class="text-xs font-bold text-primary">Global Logistics Lead</p>
+<p class="text-[10px] text-on-surface-variant">Verified Enterprise User</p>
+</div>
+</div>
+<p class="text-sm italic font-medium text-on-surface leading-relaxed">
+                "AssetFlow completely transformed our inventory cycle. We've seen a 22% increase in monetization efficiency since onboarding."
+            </p>
+</div>
+</div>
+<script>
+        const passwordInput = document.getElementById('password');
+        const passwordToggle = document.getElementById('password-toggle');
+        const passwordToggleIcon = document.getElementById('password-toggle-icon');
+
+        if (passwordInput && passwordToggle && passwordToggleIcon) {
+            passwordToggle.addEventListener('click', () => {
+                const isHidden = passwordInput.type === 'password';
+                passwordInput.type = isHidden ? 'text' : 'password';
+                passwordToggle.setAttribute('aria-label', isHidden ? 'Hide password' : 'Show password');
+                passwordToggleIcon.textContent = isHidden ? 'visibility_off' : 'visibility';
+            });
+        }
+    </script>
+</body></html>
