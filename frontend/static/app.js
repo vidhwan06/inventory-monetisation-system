@@ -1,5 +1,5 @@
 window.AssetFlowApp = (() => {
-    const API_BASE = "http://127.0.0.1:8000";
+    const API_BASE = "https://inventory-monetisation-system.onrender.com";
     const pageMap = {
         inventory: "./index.html",
         analytics: "./analytics.html",
