@@ -1,26 +1,28 @@
 def action_agent(demand: dict, risk: dict) -> dict:
     """
-    Decide the high-level action from the demand category.
-    Returns action, confidence, and reason.
+    Liquidation Strategy Agent.
+    Combines demand and dead-stock risk into the final operational move.
     """
-    demand_cat = demand.get("category")
+    demand_band = demand.get("demand_band")
+    is_dead_stock = bool(risk.get("is_dead_stock"))
+    risk_level = risk.get("level")
 
-    if demand_cat == "fast_moving":
-        action = "increase_price"
-        confidence = 0.90
-        reason = "Fast-moving demand supports a price increase to improve margin."
-    elif demand_cat == "healthy":
-        action = "hold"
-        confidence = 0.80
-        reason = "Healthy demand supports maintaining the current inventory strategy."
-    elif demand_cat == "slow_moving":
-        action = "promote"
-        confidence = 0.85
-        reason = "Slow-moving demand benefits from promotion to increase sell-through."
-    else:
+    if is_dead_stock:
         action = "liquidate"
-        confidence = 0.95 if risk.get("level") == "high" else 0.90
-        reason = "Dead stock should be liquidated to free capital and storage capacity."
+        confidence = 0.95
+        reason = "Dead stock should be cleared quickly to free capital and storage."
+    elif demand_band == "high" and risk_level == "low":
+        action = "increase_price"
+        confidence = 0.88
+        reason = "High demand with low risk supports a margin-focused price increase."
+    elif demand_band == "medium":
+        action = "hold"
+        confidence = 0.82
+        reason = "Medium demand and active movement support maintaining the current strategy."
+    else:
+        action = "promote"
+        confidence = 0.8
+        reason = "Low demand but active inventory should be promoted before liquidation."
 
     return {
         "action": action,

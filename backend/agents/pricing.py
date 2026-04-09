@@ -5,40 +5,40 @@ def _to_float(value, default=0.0):
         return default
 
 
+def _to_int(value, default=0):
+    try:
+        return int(float(value))
+    except (TypeError, ValueError):
+        return default
+
+
 def pricing_agent(product: dict) -> dict:
     """
-    Adjust price dynamically from the sales-to-stock demand ratio.
-    Returns current_price, suggested_price, discount, and reason.
+    Revenue Optimization Agent.
+    Recommends price actions from cleaned sales and recency signals without mutating the input record.
     """
     current_price = max(_to_float(product.get("price", 0.0)), 0.0)
-    sales = max(_to_float(product.get("sales", 0.0)), 0.0)
-    stock = max(_to_float(product.get("stock", 0.0)), 0.0)
+    sales = max(_to_int(product.get("sales", 0)), 0)
+    days_since_last_sale = product.get("days_since_last_sale")
 
-    if stock <= 0:
-        demand_ratio = 1.0 if sales > 0 else 0.0
-    else:
-        demand_ratio = sales / stock
+    stale_inventory = isinstance(days_since_last_sale, int) and days_since_last_sale > 60
 
-    if demand_ratio > 0.7:
-        suggested_price = current_price * 1.10
+    if sales > 50 and (days_since_last_sale is None or days_since_last_sale <= 14):
+        suggested_price = current_price * 1.08
         discount = 0.0
-        reason = (
-            f"Demand ratio is {demand_ratio:.2f}, so price increases by 10% from "
-            f"{current_price:.2f} to strengthen margin."
-        )
-    elif demand_ratio < 0.3:
-        suggested_price = current_price * 0.80
-        discount = 20.0
-        reason = (
-            f"Demand ratio is {demand_ratio:.2f}, so price decreases by 20% from "
-            f"{current_price:.2f} to improve movement."
-        )
-    else:
+        reason = "High recent demand supports an 8% price increase to improve margin."
+    elif sales >= 10 and not stale_inventory:
         suggested_price = current_price
         discount = 0.0
-        reason = (
-            f"Demand ratio is {demand_ratio:.2f}, so current pricing remains appropriate."
-        )
+        reason = "Steady demand supports holding the current price."
+    elif stale_inventory or sales == 0:
+        suggested_price = current_price * 0.75
+        discount = 25.0
+        reason = "Dead stock needs a deeper 25% markdown to recover cash faster."
+    else:
+        suggested_price = current_price * 0.9
+        discount = 10.0
+        reason = "Low-demand inventory benefits from a 10% discount to improve sell-through."
 
     return {
         "current_price": round(current_price, 2),

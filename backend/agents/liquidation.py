@@ -1,2 +1,3 @@
-def decision_agent(inv, price):
-    return {"decision": "sell/hold"}
+from agents.action import action_agent as liquidation_strategy_agent
+
+__all__ = ["liquidation_strategy_agent"]

@@ -1,9 +1,11 @@
 import csv
 import os
+import re
 from io import StringIO
 from pathlib import Path
 from typing import Any, Dict, Iterable
 
+import pandas as pd
 from fastapi import FastAPI, File, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse, RedirectResponse
@@ -24,33 +26,55 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Resolve the data directory relative to this file so it works from any cwd
 _DATA_DIR = Path(__file__).parent / "data"
-
-# Frontend URL â€” used for redirects back to the SPA.
-# Override with FRONTEND_URL env var when deploying to Render + Vercel.
 FRONTEND_URL = os.getenv("FRONTEND_URL", "http://127.0.0.1:5500")
 
 LATEST_ANALYSIS_RESULTS: list[Dict[str, Any]] = []
 LATEST_ANALYSIS_FILENAME: str | None = None
 
 FIELD_ALIASES = {
-    "name": {"name", "product", "productname", "product_name", "item", "item_name"},
-    "price": {"price", "productprice", "product_price"},
+    "name": {"name", "product", "productname", "product_name", "item", "item_name", "productname"},
+    "price": {"price", "productprice", "product_price", "mrp", "sellingprice", "selling_price"},
     "discount": {"discount", "discountpercent", "discount_percentage", "discount_pct"},
-    "sales": {"sales", "sale", "unitssold", "units_sold"},
-    "stock": {"stock", "stockquantity", "stock_quantity", "inventory", "quantity"},
+    "sales": {
+        "sales",
+        "sale",
+        "unitssold",
+        "units_sold",
+        "unitssoldlast30days",
+        "units_sold_last_30_days",
+        "units_sold_last30days",
+        "last30daysales",
+    },
+    "stock": {
+        "stock",
+        "stockquantity",
+        "stock_quantity",
+        "inventory",
+        "quantity",
+        "availablequantity",
+        "available_quantity",
+    },
+    "last_sold_date": {
+        "lastsolddate",
+        "last_sold_date",
+        "lastsold",
+        "recent_sale_date",
+        "last_sale_date",
+    },
 }
 
 
 def normalize_header(header: Any) -> str:
-    return str(header or "").strip().lower().replace(" ", "").replace("-", "_")
+    text = str(header or "").strip().lower().replace("-", "_")
+    text = re.sub(r"[^a-z0-9_]+", "_", text)
+    text = re.sub(r"_+", "_", text).strip("_")
+    return text
 
 
 def parse_numeric(value: Any, default: float = 0.0) -> float:
     if value is None:
         return default
-
     if isinstance(value, (int, float)):
         return float(value)
 
@@ -72,36 +96,92 @@ def normalize_discount(value: Any) -> float:
     return round(discount, 2)
 
 
-def normalize_product_row(row: Dict[str, Any]) -> Dict[str, Any]:
-    normalized_row = {
-        normalize_header(key): value.strip() if isinstance(value, str) else value
-        for key, value in row.items()
-        if key is not None
-    }
+def find_matching_column(columns: Iterable[str], aliases: set[str]) -> str | None:
+    for column in columns:
+        comparable = normalize_header(column).replace("_", "")
+        if column in aliases or comparable in aliases:
+            return column
+    return None
 
-    canonical_product: Dict[str, Any] = {}
+
+def build_clean_inventory_dataframe(rows: Iterable[Dict[str, Any]]) -> pd.DataFrame:
+    raw_df = pd.DataFrame(list(rows))
+    if raw_df.empty:
+        return pd.DataFrame(
+            columns=[
+                "name",
+                "price",
+                "discount",
+                "sales",
+                "stock",
+                "last_sold_date",
+                "reference_date",
+                "days_since_last_sale",
+            ]
+        )
+
+    raw_df.columns = [normalize_header(column) for column in raw_df.columns]
+
+    cleaned_df = pd.DataFrame(index=raw_df.index)
     for target_key, aliases in FIELD_ALIASES.items():
-        for key, value in normalized_row.items():
-            comparable_key = key.replace("_", "")
-            if key == target_key or key in aliases or comparable_key in aliases:
-                canonical_product[target_key] = value
-                break
+        matched_column = find_matching_column(raw_df.columns, aliases)
+        cleaned_df[target_key] = raw_df[matched_column] if matched_column else None
 
-    product_name = canonical_product.get("name")
-    if isinstance(product_name, str):
-        product_name = product_name.strip()
+    cleaned_df["name"] = cleaned_df["name"].fillna("Unknown").astype(str).str.strip()
+    cleaned_df.loc[cleaned_df["name"] == "", "name"] = "Unknown"
+
+    cleaned_df["price"] = cleaned_df["price"].apply(lambda value: parse_numeric(value, default=0.0))
+    cleaned_df["discount"] = cleaned_df["discount"].apply(normalize_discount)
+    cleaned_df["sales"] = cleaned_df["sales"].apply(lambda value: int(parse_numeric(value, default=0.0)))
+    cleaned_df["stock"] = cleaned_df["stock"].apply(lambda value: parse_numeric(value, default=0.0))
+    cleaned_df["last_sold_date"] = pd.to_datetime(cleaned_df["last_sold_date"], errors="coerce")
+
+    reference_date = cleaned_df["last_sold_date"].dropna().max()
+    cleaned_df["reference_date"] = reference_date
+
+    if pd.isna(reference_date):
+        cleaned_df["days_since_last_sale"] = None
+    else:
+        day_deltas = (reference_date - cleaned_df["last_sold_date"]).dt.days
+        cleaned_df["days_since_last_sale"] = day_deltas.where(cleaned_df["last_sold_date"].notna(), other=None)
+
+    return cleaned_df
+
+
+def normalize_product_row(product: Dict[str, Any]) -> Dict[str, Any]:
+    days_since_last_sale = product.get("days_since_last_sale")
+    if pd.isna(days_since_last_sale):
+        days_since_last_sale = None
+    elif days_since_last_sale is not None:
+        days_since_last_sale = int(days_since_last_sale)
+
+    last_sold_date = product.get("last_sold_date")
+    if pd.notna(last_sold_date):
+        last_sold_date = pd.Timestamp(last_sold_date).date().isoformat()
+    else:
+        last_sold_date = None
+
+    reference_date = product.get("reference_date")
+    if pd.notna(reference_date):
+        reference_date = pd.Timestamp(reference_date).date().isoformat()
+    else:
+        reference_date = None
 
     return {
-        "name": product_name or "Unknown",
-        "price": parse_numeric(canonical_product.get("price"), default=0.0),
-        "discount": normalize_discount(canonical_product.get("discount")),
-        "sales": parse_numeric(canonical_product.get("sales"), default=0.0),
-        "stock": parse_numeric(canonical_product.get("stock"), default=0.0),
+        "name": str(product.get("name") or "Unknown").strip() or "Unknown",
+        "price": parse_numeric(product.get("price"), default=0.0),
+        "discount": normalize_discount(product.get("discount")),
+        "sales": int(parse_numeric(product.get("sales"), default=0.0)),
+        "stock": parse_numeric(product.get("stock"), default=0.0),
+        "last_sold_date": last_sold_date,
+        "reference_date": reference_date,
+        "days_since_last_sale": days_since_last_sale,
     }
 
 
 def load_products_from_rows(rows: Iterable[Dict[str, Any]]) -> list[Dict[str, Any]]:
-    return [normalize_product_row(row) for row in rows]
+    cleaned_df = build_clean_inventory_dataframe(rows)
+    return [normalize_product_row(product) for product in cleaned_df.to_dict(orient="records")]
 
 
 def load_products(filepath: str) -> list[Dict[str, Any]]:
@@ -114,14 +194,14 @@ def load_products(filepath: str) -> list[Dict[str, Any]]:
 
 
 def process_product(product: Dict[str, Any]) -> Dict[str, Any]:
-    normalized_product = normalize_product_row(product)
-    demand_result = demand_agent(normalized_product)
-    risk_result = risk_agent(normalized_product)
-    pricing_result = pricing_agent(normalized_product)
+    cleaned_product = normalize_product_row(product)
+    demand_result = demand_agent(cleaned_product)
+    risk_result = risk_agent(cleaned_product)
+    pricing_result = pricing_agent(cleaned_product)
     action_result = action_agent(demand_result, risk_result)
 
     final_decision = aggregate_decision(
-        product=normalized_product,
+        product=cleaned_product,
         demand=demand_result,
         risk=risk_result,
         pricing=pricing_result,
@@ -137,8 +217,8 @@ def process_product(product: Dict[str, Any]) -> Dict[str, Any]:
     )
 
     return {
-        "product": normalized_product.get("name", "Unknown"),
-        "source": normalized_product,
+        "product": cleaned_product.get("name", "Unknown"),
+        "source": cleaned_product,
         "agents": {
             "demand_agent": demand_result,
             "risk_agent": risk_result,
@@ -160,13 +240,11 @@ def home():
 
 @app.get("/inventory")
 def inventory():
-    """Redirect to the frontend inventory page (index.html)."""
     return RedirectResponse(url=f"{FRONTEND_URL}/index.html", status_code=302)
 
 
 @app.get("/login")
 def login():
-    """Redirect to the frontend login page."""
     return RedirectResponse(url=f"{FRONTEND_URL}/login.html", status_code=302)
 
 
@@ -189,7 +267,15 @@ async def analyze_csv(file: UploadFile = File(...)):
         products = load_products_from_rows(reader)
         results = compute_results(products)
 
-        demand_analysis = {"fast_moving": [], "slow_moving": [], "dead_stock": []}
+        demand_analysis = {
+            "high_demand": [],
+            "medium_demand": [],
+            "low_demand": [],
+            "fast_moving": [],
+            "healthy": [],
+            "slow_moving": [],
+            "dead_stock": [],
+        }
         dead_stock_results = []
         rec_prices = {}
         discounts = {}
@@ -197,16 +283,36 @@ async def analyze_csv(file: UploadFile = File(...)):
 
         for result in results:
             name = result["product"]
-            demand_cat = result["agents"]["demand_agent"]["category"]
-            if demand_cat == "fast_moving":
+            demand_agent_result = result["agents"]["demand_agent"]
+            risk_agent_result = result["agents"]["risk_agent"]
+
+            demand_band = demand_agent_result["demand_band"]
+            if demand_band == "high":
+                demand_analysis["high_demand"].append(name)
                 demand_analysis["fast_moving"].append(name)
-            elif demand_cat == "slow_moving":
-                demand_analysis["slow_moving"].append(name)
-            elif demand_cat == "dead_stock":
+            elif demand_band == "medium":
+                demand_analysis["medium_demand"].append(name)
+                demand_analysis["healthy"].append(name)
+            else:
+                demand_analysis["low_demand"].append(name)
+                if not risk_agent_result["is_dead_stock"]:
+                    demand_analysis["slow_moving"].append(name)
+
+            if risk_agent_result["is_dead_stock"]:
                 demand_analysis["dead_stock"].append(name)
 
-            risk_score = result["agents"]["risk_agent"]["risk_score"]
-            dead_stock_results.append({"product_name": name, "risk_score": risk_score})
+            dead_stock_results.append(
+                {
+                    "product_name": name,
+                    "is_dead_stock": risk_agent_result["is_dead_stock"],
+                    "inventory_status": risk_agent_result["inventory_status"],
+                    "risk_score": risk_agent_result["risk_score"],
+                    "days_since_last_sale": risk_agent_result["days_since_last_sale"],
+                    "last_sold_date": risk_agent_result["last_sold_date"],
+                    "reference_date": risk_agent_result["reference_date"],
+                    "reason": risk_agent_result["reason"],
+                }
+            )
 
             rec_prices[name] = result["agents"]["pricing_agent"]["suggested_price"]
             discounts[name] = result["agents"]["pricing_agent"]["discount"]
@@ -220,6 +326,15 @@ async def analyze_csv(file: UploadFile = File(...)):
             )
 
         response_payload = {
+            "pipeline": {
+                "steps": [
+                    "CSV upload parsed into a shared cleaned inventory dataframe",
+                    "Column aliases normalized for name, stock, sales, price, and last sold date",
+                    "Reference date set to the maximum Last Sold Date found in the uploaded dataset",
+                    "Dead stock, demand, pricing, and liquidation agents run independently on each cleaned product record",
+                    "Agent outputs aggregated into final recommendations",
+                ]
+            },
             "demand_analysis": demand_analysis,
             "dead_stock_analysis": {"results": dead_stock_results},
             "pricing": {"recommended_prices": rec_prices, "discounts": discounts},
@@ -242,5 +357,3 @@ def latest_analysis():
         "results": LATEST_ANALYSIS_RESULTS,
         "has_results": bool(LATEST_ANALYSIS_RESULTS),
     }
-
-

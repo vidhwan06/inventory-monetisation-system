@@ -1,52 +1,36 @@
-def _to_float(value, default=0.0):
+def _to_int(value, default=0):
     try:
-        return float(value)
+        return int(float(value))
     except (TypeError, ValueError):
         return default
 
 
 def demand_agent(product: dict) -> dict:
     """
-    Analyze demand from the actual sales-to-stock ratio.
-    Returns demand_score, category, and reason.
+    Demand Analysis Agent.
+    Classifies demand from Units Sold (Last 30 Days) using explicit business thresholds.
     """
-    sales = max(_to_float(product.get("sales", 0.0)), 0.0)
-    stock = max(_to_float(product.get("stock", 0.0)), 0.0)
+    sales = max(_to_int(product.get("sales", 0)), 0)
 
-    if stock <= 0:
-        demand_score = 1.0 if sales > 0 else 0.0
-    else:
-        demand_score = sales / stock
-
-    demand_score = round(demand_score, 2)
-
-    if demand_score > 0.7:
+    if sales > 50:
+        demand_score = 0.9
+        demand_band = "high"
         category = "fast_moving"
-        reason = (
-            f"Demand ratio is {demand_score} from sales {sales:.2f} and stock {stock:.2f}, "
-            "indicating strong inventory turnover."
-        )
-    elif demand_score >= 0.3:
+        reason = f"High demand because Units Sold (Last 30 Days) is {sales}, above 50."
+    elif sales >= 10:
+        demand_score = 0.6
+        demand_band = "medium"
         category = "healthy"
-        reason = (
-            f"Demand ratio is {demand_score} from sales {sales:.2f} and stock {stock:.2f}, "
-            "showing balanced movement."
-        )
-    elif demand_score >= 0.1:
-        category = "slow_moving"
-        reason = (
-            f"Demand ratio is {demand_score} from sales {sales:.2f} and stock {stock:.2f}, "
-            "which suggests slower sell-through."
-        )
+        reason = f"Medium demand because Units Sold (Last 30 Days) is {sales}, within 10 to 50."
     else:
-        category = "dead_stock"
-        reason = (
-            f"Demand ratio is {demand_score} from sales {sales:.2f} and stock {stock:.2f}, "
-            "showing very weak movement."
-        )
+        demand_score = 0.25
+        demand_band = "low"
+        category = "slow_moving"
+        reason = f"Low demand because Units Sold (Last 30 Days) is {sales}, below 10."
 
     return {
         "demand_score": demand_score,
+        "demand_band": demand_band,
         "category": category,
         "reason": reason,
     }
