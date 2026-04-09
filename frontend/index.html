@@ -4,7 +4,7 @@
 
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Monetra | Inventory Management</title>
+<title>AssetFlow | Inventory Management</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
@@ -89,18 +89,18 @@
             box-shadow: inset 0 0 0 1px rgba(53, 37, 205, 0.08);
         }
     </style>
-</head>
+<script src="./static/app.js"></script></head>
 <body class="bg-surface text-on-surface overflow-x-hidden">
 <!-- SideNavBar -->
 <aside class="fixed left-0 top-0 bottom-0 hidden w-72 overflow-x-hidden bg-[#f8f7ff] lg:flex flex-col h-screen px-5 py-5 z-50">
 <div class="rounded-[1.75rem] bg-white/90 p-5 shadow-sm shadow-primary/5">
 <div class="flex items-center gap-3">
 <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-primary to-primary-container text-white shadow-lg shadow-primary/20">
-<span class="material-symbols-outlined">monitoring</span>
+<span class="material-symbols-outlined">deployed_code</span>
 </div>
 <div>
-<h1 class="text-2xl font-bold text-primary font-manrope tracking-tight">Monetra</h1>
-<p class="text-xs text-slate-500 font-medium tracking-tight">Inventory Monetization Platform</p>
+<h1 class="text-2xl font-bold text-primary font-manrope tracking-tight">AssetFlow</h1>
+<p class="text-xs text-slate-500 font-medium tracking-tight">Monetization Engine</p>
 </div>
 </div>
 <div class="mt-5 rounded-2xl bg-surface-container-low px-4 py-3">
@@ -112,7 +112,7 @@
 <div>
 <p class="px-3 text-[11px] font-semibold uppercase tracking-[0.22em] text-slate-400">Workspace</p>
 <div class="mt-3 space-y-1">
-<a class="nav-link-active flex items-center gap-3 rounded-2xl px-4 py-3 font-semibold font-manrope hover:translate-x-1 transition-all duration-200 cursor-pointer" href="/inventory">
+<a class="nav-link-active flex items-center gap-3 rounded-2xl px-4 py-3 font-semibold font-manrope hover:translate-x-1 transition-all duration-200 cursor-pointer" href="./index.html">
 <span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
 <span>Inventory</span>
 </a>
@@ -121,15 +121,15 @@
 <div class="mt-6">
 <p class="px-3 text-[11px] font-semibold uppercase tracking-[0.22em] text-slate-400">Intelligence</p>
 <div class="mt-3 space-y-1">
-<a class="flex items-center gap-3 rounded-2xl px-4 py-3 text-slate-500 font-medium font-manrope hover:translate-x-1 hover:bg-white transition-all duration-200 cursor-pointer" href="/monetization">
+<a class="flex items-center gap-3 rounded-2xl px-4 py-3 text-slate-500 font-medium font-manrope hover:translate-x-1 hover:bg-white transition-all duration-200 cursor-pointer" href="./monetization.html">
 <span class="material-symbols-outlined" data-icon="payments">payments</span>
 <span>Monetization</span>
 </a>
-<a class="flex items-center gap-3 rounded-2xl px-4 py-3 text-slate-500 font-medium font-manrope hover:translate-x-1 hover:bg-white transition-all duration-200 cursor-pointer" href="/orchestration">
+<a class="flex items-center gap-3 rounded-2xl px-4 py-3 text-slate-500 font-medium font-manrope hover:translate-x-1 hover:bg-white transition-all duration-200 cursor-pointer" href="./agents.html">
 <span class="material-symbols-outlined" data-icon="smart_toy">smart_toy</span>
 <span>Agents</span>
 </a>
-<a class="flex items-center gap-3 rounded-2xl px-4 py-3 text-slate-500 font-medium font-manrope hover:translate-x-1 hover:bg-white transition-all duration-200 cursor-pointer" href="/analytics">
+<a class="flex items-center gap-3 rounded-2xl px-4 py-3 text-slate-500 font-medium font-manrope hover:translate-x-1 hover:bg-white transition-all duration-200 cursor-pointer" href="./analytics.html">
     <span class="material-symbols-outlined" data-icon="leaderboard">leaderboard</span>
     <span>Analytics</span>
 </a>
@@ -138,7 +138,7 @@
 <div class="mt-6">
 <p class="px-3 text-[11px] font-semibold uppercase tracking-[0.22em] text-slate-400">System</p>
 <div class="mt-3 space-y-1">
-<a class="flex items-center gap-3 rounded-2xl px-4 py-3 text-slate-500 font-medium font-manrope hover:translate-x-1 hover:bg-white transition-all duration-200 cursor-pointer" href="/settings">
+<a class="flex items-center gap-3 rounded-2xl px-4 py-3 text-slate-500 font-medium font-manrope hover:translate-x-1 hover:bg-white transition-all duration-200 cursor-pointer" href="./settings.html">
 <span class="material-symbols-outlined" data-icon="settings">settings</span>
 <span>Settings</span>
 </a>
@@ -146,7 +146,7 @@
 </div>
 </nav>
 <div class="mt-4 space-y-1 border-t border-surface-container-high pt-4">
-<a class="flex items-center gap-3 rounded-2xl px-4 py-3 text-slate-500 font-medium font-manrope hover:translate-x-1 hover:bg-white transition-all duration-200 cursor-pointer" href="/login">
+<a class="flex items-center gap-3 rounded-2xl px-4 py-3 text-slate-500 font-medium font-manrope hover:translate-x-1 hover:bg-white transition-all duration-200 cursor-pointer" href="./login.html">
 <span class="material-symbols-outlined" data-icon="logout">logout</span>
 <span>Sign Out</span>
 </a>
@@ -157,7 +157,7 @@
 <!-- TopNavBar -->
 <header class="fixed top-0 right-0 left-0 z-40 bg-[#faf8ff]/85 backdrop-blur-xl shadow-sm h-16 flex justify-between items-center px-4 transition-all sm:px-6 lg:left-72 lg:px-8">
 <div class="flex items-center gap-4 flex-1">
-<a class="lg:hidden text-lg font-bold text-primary font-manrope" href="/inventory">Monetra</a>
+<a class="lg:hidden text-lg font-bold text-primary font-manrope" href="./index.html">AssetFlow</a>
 <div class="hidden rounded-full bg-primary/8 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-primary sm:inline-flex">
 Inventory
 </div>
@@ -169,40 +169,28 @@ Inventory
 <div class="relative flex items-center">
 <button id="profileMenuButton" type="button" class="flex items-center gap-3 rounded-full bg-white/80 px-3 py-2 shadow-sm transition hover:bg-white" aria-expanded="false" aria-haspopup="true">
 <div class="text-right hidden sm:block">
-<p id="headerProfileName" class="text-sm font-semibold font-manrope text-on-surface">Username</p>
+<p id="headerProfileName" class="text-sm font-semibold font-manrope text-on-surface">Alex Thompson</p>
 <p class="text-[10px] text-slate-500 font-medium uppercase tracking-wider">Inventory Lead</p>
 </div>
 <img alt="User profile avatar" class="h-10 w-10 rounded-full border-2 border-primary/15 object-cover" data-alt="Close-up professional headshot of a smiling man in a creative studio environment with soft natural lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAOOdTMX3S7UdEb2lBC1eJYZI4rKaybz233OyZPYtUxesRB7xy8Cv1BWyyF8S3cgHKMlH1BCD2nPHXS4v9pazgGqGlbdNMEHOCUWDML7DP9rSX8tevuLyBJSqAGdJbL1TpdUb3sGTkLpI8sNAH4yyCx3CzxR2_8Gs1qaas2fnwMRESMqpsBC65jsZ34iPzQ9-X62v4fgR_DPD1gX2y4ouzoC2FCrW-bCVJHVkRy4tPfdntu_dKNYxbgdWkpTosTFFfZSLfypIhLX9wy"/>
 </button>
 <div id="profileMenuPanel" class="absolute right-0 top-[calc(100%+0.75rem)] hidden min-w-[240px] rounded-2xl border border-outline-variant/20 bg-white p-4 shadow-xl shadow-slate-900/10">
 <p class="text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-400">Profile</p>
-<p id="profilePanelName" class="mt-3 text-sm font-semibold text-on-surface">Username</p>
-<p id="profilePanelEmail" class="mt-1 text-sm text-on-surface-variant">@username</p>
+<p id="profilePanelName" class="mt-3 text-sm font-semibold text-on-surface">Alex Thompson</p>
+<p id="profilePanelEmail" class="mt-1 text-sm text-on-surface-variant">alex@example.com</p>
 </div>
 </div>
 </header>
 <nav class="fixed inset-x-0 bottom-0 z-50 overflow-x-hidden border-t border-white/70 bg-[#faf8ff]/95 px-2 py-2 backdrop-blur-xl lg:hidden">
 <div class="grid grid-cols-5 gap-1">
-<a class="flex flex-col items-center gap-1 rounded-2xl px-2 py-2 text-[10px] font-semibold bg-primary text-white" href="/inventory">
+<a class="flex flex-col items-center gap-1 rounded-2xl px-2 py-2 text-[10px] font-semibold bg-primary text-white" href="./index.html">
 <span class="material-symbols-outlined text-lg">inventory_2</span>
 <span>Inventory</span>
 </a>
-<a class="flex flex-col items-center gap-1 rounded-2xl px-2 py-2 text-[10px] font-semibold text-slate-500" href="/monetization">
-<span class="material-symbols-outlined text-lg">payments</span>
-<span>Revenue</span>
-</a>
-<a class="flex flex-col items-center gap-1 rounded-2xl px-2 py-2 text-[10px] font-semibold text-slate-500" href="/orchestration">
-<span class="material-symbols-outlined text-lg">smart_toy</span>
-<span>Agents</span>
-</a>
-<a class="flex flex-col items-center gap-1 rounded-2xl px-2 py-2 text-[10px] font-semibold text-slate-500" href="/analytics">
-<span class="material-symbols-outlined text-lg">leaderboard</span>
-<span>Analytics</span>
-</a>
-<a class="flex flex-col items-center gap-1 rounded-2xl px-2 py-2 text-[10px] font-semibold text-slate-500" href="/settings">
-<span class="material-symbols-outlined text-lg">settings</span>
-<span>Settings</span>
-</a>
+<a class="flex flex-col items-center gap-1 rounded-2xl px-2 py-2 text-[10px] font-semibold text-slate-500" href="./monetization.html"><span class="material-symbols-outlined text-lg">payments</span><span>Revenue</span></a>
+<a class="flex flex-col items-center gap-1 rounded-2xl px-2 py-2 text-[10px] font-semibold text-slate-500" href="./agents.html"><span class="material-symbols-outlined text-lg">smart_toy</span><span>Agents</span></a>
+<a class="flex flex-col items-center gap-1 rounded-2xl px-2 py-2 text-[10px] font-semibold text-slate-500" href="./analytics.html"><span class="material-symbols-outlined text-lg">leaderboard</span><span>Analytics</span></a>
+<a class="flex flex-col items-center gap-1 rounded-2xl px-2 py-2 text-[10px] font-semibold text-slate-500" href="./settings.html"><span class="material-symbols-outlined text-lg">settings</span><span>Settings</span></a>
 </div>
 </nav>
 <!-- Page Content -->
@@ -367,7 +355,7 @@ Inventory
         let highlightedRecommendation = null;
 
         function loadProfile() {
-            const fallback = { name: 'Username', email: '@username' };
+            const fallback = { name: 'Alex Thompson', email: 'alex@example.com' };
             try {
                 const stored = localStorage.getItem(profileStorageKey);
                 return stored ? { ...fallback, ...JSON.parse(stored) } : fallback;
@@ -825,7 +813,7 @@ Inventory
                 const formData = new FormData();
                 formData.append('file', selectedFile);
 
-                const res = await fetch("/analyze/", {
+                const res = await fetch(`${window.AssetFlowApp.API_BASE}/analyze/`, {
                     method: "POST",
                     body: formData
                 });
@@ -863,7 +851,7 @@ Inventory
 
         async function loadLatestAnalysis() {
             try {
-                const res = await fetch('/latest-analysis');
+                const res = await fetch(`${window.AssetFlowApp.API_BASE}/latest-analysis`);
                 if (!res.ok) return;
 
                 const data = await res.json();
@@ -909,6 +897,7 @@ Inventory
     })();
 </script>
 </body></html>
+
 
 
 

@@ -3,7 +3,7 @@
 <html class="light" lang="en"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>{{ page_title or 'AI Agents Orchestration | Monetra' }}</title>
+<title>{{ page_title or 'AI Agents Orchestration | AssetFlow' }}</title>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
@@ -94,11 +94,11 @@
 <div class="rounded-[1.75rem] bg-white/90 p-5 shadow-sm shadow-primary/5">
 <div class="flex items-center gap-3">
 <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-primary to-primary-container text-white shadow-lg shadow-primary/20">
-<span class="material-symbols-outlined">monitoring</span>
+<span class="material-symbols-outlined">deployed_code</span>
 </div>
 <div>
-<h1 class="text-2xl font-bold text-primary font-manrope tracking-tight">Monetra</h1>
-<p class="text-xs text-slate-500 font-manrope">Inventory Monetization Platform</p>
+<h1 class="text-2xl font-bold text-primary font-manrope tracking-tight">AssetFlow</h1>
+<p class="text-xs text-slate-500 font-manrope">Monetization Engine</p>
 </div>
 </div>
 <div class="mt-5 rounded-2xl bg-surface-container-low px-4 py-3">
@@ -153,7 +153,7 @@
 
 <header class="fixed top-0 right-0 left-0 z-40 bg-[#faf8ff]/85 backdrop-blur-xl shadow-sm flex justify-between items-center h-16 px-4 sm:px-6 lg:left-72 lg:px-8">
 <div class="flex items-center flex-1">
-<a class="lg:hidden text-lg font-bold text-primary font-manrope" href="/inventory">Monetra</a>
+<a class="lg:hidden text-lg font-bold text-primary font-manrope" href="/inventory">AssetFlow</a>
 <div class="hidden rounded-full bg-primary/8 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-primary sm:inline-flex">Agents</div>
 <div class="relative w-full max-w-md group">
 <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-lg">search</span>
@@ -163,7 +163,7 @@
 <div class="relative flex items-center">
 <button id="profileMenuButton" type="button" class="flex items-center gap-3 rounded-full bg-white/80 px-3 py-2 shadow-sm transition hover:bg-white" aria-expanded="false" aria-haspopup="true">
 <div class="text-right hidden sm:block">
-<p id="headerProfileName" class="text-xs font-bold font-manrope">Username</p>
+<p id="headerProfileName" class="text-xs font-bold font-manrope">Alex Rivera</p>
 <p class="text-[10px] text-slate-500 uppercase tracking-wider">Admin</p>
 </div>
 <div class="flex h-10 w-10 items-center justify-center rounded-full border-2 border-primary/15 bg-white text-primary">
@@ -172,8 +172,8 @@
 </button>
 <div id="profileMenuPanel" class="absolute right-0 top-[calc(100%+0.75rem)] hidden min-w-[240px] rounded-2xl border border-outline-variant/20 bg-white p-4 shadow-xl shadow-slate-900/10">
 <p class="text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-400">Profile</p>
-<p id="profilePanelName" class="mt-3 text-sm font-semibold text-on-surface">Username</p>
-<p id="profilePanelEmail" class="mt-1 text-sm text-on-surface-variant">@username</p>
+<p id="profilePanelName" class="mt-3 text-sm font-semibold text-on-surface">Alex Rivera</p>
+<p id="profilePanelEmail" class="mt-1 text-sm text-on-surface-variant">alex@example.com</p>
 </div>
 </div>
 </header>
@@ -321,7 +321,7 @@ Go to Inventory
 <script>
     (() => {
         const profileStorageKey = "assetflowSettingsProfile";
-        const fallbackProfile = { name: "Username", email: "@username" };
+        const fallbackProfile = { name: "Alex Rivera", email: "alex@example.com" };
         const profileMenuButton = document.getElementById("profileMenuButton");
         const profileMenuPanel = document.getElementById("profileMenuPanel");
         const headerProfileName = document.getElementById("headerProfileName");

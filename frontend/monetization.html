@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AssetFlow | Monetization</title>
+<meta name="description" content="AI-driven monetization suggestions to maximize inventory value through smart pricing and recovery actions."/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        colors: {
+          "tertiary-fixed": "#6ffbbe", "secondary-container": "#d0e1fb", "surface-tint": "#4d44e3",
+          "primary-container": "#4f46e5", "on-error-container": "#93000a", "inverse-surface": "#283044",
+          "on-tertiary": "#ffffff", "surface-container": "#eaedff", "surface-container-lowest": "#ffffff",
+          "on-error": "#ffffff", "on-tertiary-fixed": "#002113", "surface-variant": "#dae2fd",
+          "primary-fixed": "#e2dfff", "on-secondary-fixed-variant": "#38485d", "on-secondary": "#ffffff",
+          "surface-dim": "#d2d9f4", "on-secondary-fixed": "#0b1c30", "on-primary-container": "#dad7ff",
+          "outline-variant": "#c7c4d8", "on-tertiary-container": "#67f4b7", "surface-bright": "#faf8ff",
+          "on-tertiary-fixed-variant": "#005236", "on-secondary-container": "#54647a",
+          "surface-container-low": "#f2f3ff", "error-container": "#ffdad6", "outline": "#777587",
+          "on-primary-fixed-variant": "#3323cc", "error": "#ba1a1a", "on-background": "#131b2e",
+          "tertiary-container": "#006e4b", "secondary-fixed": "#d3e4fe", "inverse-on-surface": "#eef0ff",
+          "tertiary-fixed-dim": "#4edea3", "tertiary": "#005338", "inverse-primary": "#c3c0ff",
+          "on-primary-fixed": "#0f0069", "surface-container-highest": "#dae2fd",
+          "on-surface-variant": "#464555", "on-primary": "#ffffff", "secondary": "#505f76",
+          "surface-container-high": "#e2e7ff", "surface": "#faf8ff", "primary-fixed-dim": "#c3c0ff",
+          "background": "#faf8ff", "primary": "#3525cd", "on-surface": "#131b2e",
+          "secondary-fixed-dim": "#b7c8e1"
+        },
+        borderRadius: { DEFAULT: "0.125rem", lg: "0.25rem", xl: "0.5rem", full: "0.75rem" },
+        fontFamily: { headline: ["Manrope"], body: ["Inter"], label: ["Inter"] }
+      }
+    }
+  }
+</script>
+<style>
+  .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+  body { font-family: 'Inter', sans-serif; }
+  h1, h2, h3 { font-family: 'Manrope', sans-serif; }
+  .nav-link-active { background: linear-gradient(135deg,rgba(53,37,205,.12),rgba(79,70,229,.18)); color:#3525cd; box-shadow:inset 0 0 0 1px rgba(53,37,205,.08); }
+  .skeleton { background: linear-gradient(90deg,#e2e7ff 25%,#eef0ff 50%,#e2e7ff 75%); background-size:200% 100%; animation: shimmer 1.5s infinite; }
+  @keyframes shimmer { 0%{background-position:200% 0} 100%{background-position:-200% 0} }
+</style>
+</head>
+<body class="bg-surface text-on-surface overflow-x-hidden">
+
+<!-- Sidebar -->
+<aside class="fixed left-0 top-0 bottom-0 hidden w-72 overflow-x-hidden bg-[#f8f7ff] lg:flex flex-col h-screen px-5 py-5 z-50">
+  <div class="rounded-[1.75rem] bg-white/90 p-5 shadow-sm shadow-primary/5">
+    <div class="flex items-center gap-3">
+      <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-primary to-primary-container text-white shadow-lg shadow-primary/20">
+        <span class="material-symbols-outlined">deployed_code</span>
+      </div>
+      <div>
+        <h1 class="text-2xl font-bold text-primary font-manrope tracking-tight">AssetFlow</h1>
+        <p class="text-xs text-slate-500 font-medium tracking-tight">Monetization Engine</p>
+      </div>
+    </div>
+    <div class="mt-5 rounded-2xl bg-surface-container-low px-4 py-3">
+      <p class="text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-500">Current Workspace</p>
+      <p class="mt-1 text-sm font-semibold text-on-surface">Monetization</p>
+    </div>
+  </div>
+  <nav class="mt-6 flex-1 overflow-y-auto overflow-x-hidden">
+    <div>
+      <p class="px-3 text-[11px] font-semibold uppercase tracking-[0.22em] text-slate-400">Workspace</p>
+      <div class="mt-3 space-y-1">
+        <a class="flex items-center gap-3 rounded-2xl px-4 py-3 text-slate-500 font-medium font-manrope hover:translate-x-1 hover:bg-white transition-all duration-200" href="./index.html">
+          <span class="material-symbols-outlined">inventory_2</span><span>Inventory</span>
+        </a>
+      </div>
+    </div>
+    <div class="mt-6">
+      <p class="px-3 text-[11px] font-semibold uppercase tracking-[0.22em] text-slate-400">Intelligence</p>
+      <div class="mt-3 space-y-1">
+        <a class="nav-link-active flex items-center gap-3 rounded-2xl px-4 py-3 font-semibold font-manrope hover:translate-x-1 transition-all duration-200" href="./monetization.html">
+          <span class="material-symbols-outlined">payments</span><span>Monetization</span>
+        </a>
+        <a class="flex items-center gap-3 rounded-2xl px-4 py-3 text-slate-500 font-medium font-manrope hover:translate-x-1 hover:bg-white transition-all duration-200" href="./agents.html">
+          <span class="material-symbols-outlined">smart_toy</span><span>Agents</span>
+        </a>
+        <a class="flex items-center gap-3 rounded-2xl px-4 py-3 text-slate-500 font-medium font-manrope hover:translate-x-1 hover:bg-white transition-all duration-200" href="./analytics.html">
+          <span class="material-symbols-outlined">leaderboard</span><span>Analytics</span>
+        </a>
+      </div>
+    </div>
+    <div class="mt-6">
+      <p class="px-3 text-[11px] font-semibold uppercase tracking-[0.22em] text-slate-400">System</p>
+      <div class="mt-3 space-y-1">
+        <a class="flex items-center gap-3 rounded-2xl px-4 py-3 text-slate-500 font-medium font-manrope hover:translate-x-1 hover:bg-white transition-all duration-200" href="./settings.html">
+          <span class="material-symbols-outlined">settings</span><span>Settings</span>
+        </a>
+      </div>
+    </div>
+  </nav>
+  <div class="mt-4 space-y-1 border-t border-surface-container-high pt-4">
+    <a class="flex items-center gap-3 rounded-2xl px-4 py-3 text-slate-500 font-medium font-manrope hover:translate-x-1 hover:bg-white transition-all duration-200" href="./login.html">
+      <span class="material-symbols-outlined">logout</span><span>Sign Out</span>
+    </a>
+  </div>
+</aside>
+
+<!-- Main -->
+<main class="min-h-screen pb-24 lg:ml-72 lg:pb-10">
+  <!-- Header -->
+  <header class="fixed top-0 right-0 left-0 z-40 bg-[#faf8ff]/85 backdrop-blur-xl shadow-sm h-16 flex justify-between items-center px-4 sm:px-6 lg:left-72 lg:px-8">
+    <div class="flex items-center gap-4 flex-1">
+      <a class="lg:hidden text-lg font-bold text-primary font-manrope" href="./index.html">AssetFlow</a>
+      <div class="hidden rounded-full bg-primary/8 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-primary sm:inline-flex">Monetization</div>
+      <div class="relative w-full max-w-md">
+        <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-lg">search</span>
+        <input class="w-full bg-surface-container-low border-none rounded-full py-2 pl-10 pr-4 text-sm focus:ring-2 focus:ring-primary/40 transition-all outline-none" placeholder="Search recommendations..." type="text"/>
+      </div>
+    </div>
+    <div class="relative flex items-center">
+      <button id="profileMenuButton" type="button" class="flex items-center gap-3 rounded-full bg-white/80 px-3 py-2 shadow-sm transition hover:bg-white">
+        <div class="text-right hidden sm:block">
+          <p id="headerProfileName" class="text-sm font-semibold font-manrope text-on-surface">Alex Thompson</p>
+          <p class="text-[10px] text-slate-500 uppercase tracking-wider">Inventory Lead</p>
+        </div>
+        <div class="flex h-10 w-10 items-center justify-center rounded-full border-2 border-primary/15 bg-white text-primary">
+          <span class="material-symbols-outlined">person</span>
+        </div>
+      </button>
+      <div id="profileMenuPanel" class="absolute right-0 top-[calc(100%+0.75rem)] hidden min-w-[240px] rounded-2xl border border-outline-variant/20 bg-white p-4 shadow-xl">
+        <p class="text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-400">Profile</p>
+        <p id="profilePanelName" class="mt-3 text-sm font-semibold">Alex Thompson</p>
+        <p id="profilePanelEmail" class="mt-1 text-sm text-on-surface-variant">alex@example.com</p>
+      </div>
+    </div>
+  </header>
+
+  <!-- Bottom mobile nav -->
+  <nav class="fixed inset-x-0 bottom-0 z-50 border-t border-white/70 bg-[#faf8ff]/95 px-2 py-2 backdrop-blur-xl lg:hidden">
+    <div class="grid grid-cols-5 gap-1">
+      <a class="flex flex-col items-center gap-1 rounded-2xl px-2 py-2 text-[10px] font-semibold text-slate-500" href="./index.html"><span class="material-symbols-outlined text-lg">inventory_2</span><span>Inventory</span></a>
+      <a class="flex flex-col items-center gap-1 rounded-2xl px-2 py-2 text-[10px] font-semibold bg-primary text-white" href="./monetization.html"><span class="material-symbols-outlined text-lg">payments</span><span>Revenue</span></a>
+      <a class="flex flex-col items-center gap-1 rounded-2xl px-2 py-2 text-[10px] font-semibold text-slate-500" href="./agents.html"><span class="material-symbols-outlined text-lg">smart_toy</span><span>Agents</span></a>
+      <a class="flex flex-col items-center gap-1 rounded-2xl px-2 py-2 text-[10px] font-semibold text-slate-500" href="./analytics.html"><span class="material-symbols-outlined text-lg">leaderboard</span><span>Analytics</span></a>
+      <a class="flex flex-col items-center gap-1 rounded-2xl px-2 py-2 text-[10px] font-semibold text-slate-500" href="./settings.html"><span class="material-symbols-outlined text-lg">settings</span><span>Settings</span></a>
+    </div>
+  </nav>
+
+  <!-- Page Content -->
+  <div class="pt-24 pb-12 px-4 sm:px-6 lg:px-8">
+
+    <!-- Page Header -->
+    <div class="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
+      <div>
+        <h2 class="text-4xl font-bold text-on-surface font-headline tracking-tight mb-2">Smart Suggestions</h2>
+        <p class="text-on-surface-variant">AI-driven opportunities to maximise inventory value through strategic pricing and recovery.</p>
+      </div>
+      <div id="headlineStat" class="inline-flex items-center gap-3 rounded-2xl bg-primary/8 px-5 py-3">
+        <span class="text-2xl font-bold font-headline text-primary" id="potentialValue">—</span>
+        <span class="text-xs font-semibold uppercase tracking-[0.2em] text-on-surface-variant">Potential Gain</span>
+      </div>
+    </div>
+
+    <!-- Empty / Loading state -->
+    <div id="emptyState" class="hidden rounded-3xl border-2 border-dashed border-outline-variant/40 bg-surface-container-low p-12 text-center mb-8">
+      <div class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-white shadow-sm">
+        <span class="material-symbols-outlined text-3xl text-primary">upload_file</span>
+      </div>
+      <h3 class="text-xl font-bold font-headline text-on-surface">No recommendations yet</h3>
+      <p class="mt-2 text-sm text-on-surface-variant max-w-md mx-auto">Upload a CSV from the Inventory page to generate live monetization recommendations.</p>
+      <a href="./index.html" class="mt-6 inline-flex items-center gap-2 rounded-xl bg-primary px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-primary/20">
+        <span class="material-symbols-outlined text-lg">arrow_back</span> Go to Inventory
+      </a>
+    </div>
+
+    <!-- Content (hidden until data loads) -->
+    <div id="contentArea" class="hidden">
+
+      <!-- Hero + Liquidation 2-col -->
+      <div class="grid grid-cols-1 lg:grid-cols-[1.7fr,1fr] gap-6 mb-8">
+        <!-- Hero card -->
+        <article class="relative overflow-hidden rounded-[2rem] bg-surface-container-lowest p-8 shadow-sm">
+          <div class="absolute inset-y-0 right-0 w-1/2 bg-gradient-to-l from-primary/5 to-transparent pointer-events-none"></div>
+          <div class="relative z-10">
+            <div class="flex flex-wrap items-center gap-3 mb-6">
+              <span class="inline-flex items-center gap-2 rounded-full bg-tertiary-container px-4 py-1.5 text-xs font-bold uppercase tracking-[0.18em] text-on-tertiary-container">
+                <span class="material-symbols-outlined text-sm" style="font-variation-settings:'FILL' 1">auto_awesome</span>
+                Highest Impact
+              </span>
+              <span id="heroAction" class="text-xs font-semibold uppercase tracking-[0.2em] text-on-surface-variant"></span>
+            </div>
+            <h3 id="heroTitle" class="text-3xl font-bold font-headline leading-tight text-on-surface mb-4"></h3>
+            <p id="heroExplanation" class="text-sm leading-7 text-on-surface-variant mb-4"></p>
+            <div class="grid grid-cols-2 gap-4 mt-6">
+              <div class="rounded-2xl bg-surface-container-low p-5">
+                <p class="text-xs font-semibold uppercase tracking-[0.2em] text-on-surface-variant">Suggested Price</p>
+                <p id="heroPrice" class="mt-3 text-3xl font-bold font-headline text-on-surface"></p>
+              </div>
+              <div class="rounded-2xl bg-surface-container-low p-5">
+                <p class="text-xs font-semibold uppercase tracking-[0.2em] text-on-surface-variant">Risk Score</p>
+                <p id="heroRisk" class="mt-3 text-3xl font-bold font-headline text-emerald-600"></p>
+              </div>
+            </div>
+          </div>
+          <div class="absolute -bottom-10 -right-8 opacity-10">
+            <span class="material-symbols-outlined text-[220px]" style="font-variation-settings:'wght' 100">inventory_2</span>
+          </div>
+        </article>
+
+        <!-- Liquidation alert -->
+        <div class="space-y-6">
+          <article class="rounded-[2rem] bg-error-container/40 p-6 shadow-sm">
+            <div class="flex items-center gap-2 mb-4">
+              <span class="material-symbols-outlined text-error" style="font-variation-settings:'FILL' 1">warning</span>
+              <span class="text-xs font-bold uppercase tracking-[0.2em] text-on-error-container">Liquidation Alert</span>
+            </div>
+            <h3 id="liqProduct" class="text-2xl font-bold font-headline text-on-surface mb-3"></h3>
+            <p id="liqSummary" class="text-sm leading-6 text-on-surface-variant"></p>
+            <div class="mt-4 flex items-center justify-between rounded-2xl bg-white/70 px-4 py-3">
+              <div>
+                <p class="text-[11px] font-semibold uppercase tracking-[0.18em] text-on-surface-variant">Recommended Move</p>
+                <p id="liqAction" class="mt-1 text-sm font-semibold text-on-surface"></p>
+              </div>
+              <div class="text-right">
+                <p class="text-[11px] font-semibold uppercase tracking-[0.18em] text-on-surface-variant">Risk Score</p>
+                <p id="liqRisk" class="mt-1 text-sm font-semibold text-primary"></p>
+              </div>
+            </div>
+          </article>
+          <!-- Health summary -->
+          <article class="rounded-[2rem] bg-surface-container-low p-6 shadow-sm">
+            <p class="text-xs font-semibold uppercase tracking-[0.2em] text-on-surface-variant mb-4">Monetization Health</p>
+            <div id="healthSummary" class="space-y-3"></div>
+          </article>
+        </div>
+      </div>
+
+      <!-- Recommendation table -->
+      <section class="rounded-[2rem] bg-surface-container-lowest p-8 shadow-sm">
+        <div class="mb-6">
+          <p class="text-xs font-semibold uppercase tracking-[0.2em] text-primary">Recommendation Queue</p>
+          <h3 class="mt-2 text-2xl font-bold font-headline text-on-surface">Top Monetization Actions</h3>
+          <p class="mt-1 text-sm text-on-surface-variant">Ranked by revenue impact from the latest uploaded CSV.</p>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="min-w-full text-left">
+            <thead>
+              <tr class="border-b border-surface-container-high text-xs uppercase tracking-[0.16em] text-on-surface-variant">
+                <th class="pb-3 pr-4">Product</th>
+                <th class="pb-3 pr-4">Action</th>
+                <th class="pb-3 pr-4">Risk</th>
+                <th class="pb-3 pr-4">Suggested Price</th>
+                <th class="pb-3 pr-4">Discount</th>
+                <th class="pb-3">Status</th>
+              </tr>
+            </thead>
+            <tbody id="recoTable" class="text-sm divide-y divide-surface-container-low"></tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+  </div>
+</main>
+
+<script>
+const API_BASE = "https://inventory-monetisation-system.onrender.com";
+
+function riskColor(score) {
+  if (score >= 7) return "bg-error-container text-on-error-container";
+  if (score >= 4) return "bg-amber-100 text-amber-700";
+  return "bg-tertiary-fixed/20 text-tertiary";
+}
+function riskLabel(score) {
+  if (score >= 7) return "High";
+  if (score >= 4) return "Medium";
+  return "Low";
+}
+function actionLabel(action) {
+  return (action || "HOLD").replace(/_/g, " ").toUpperCase();
+}
+function currency(v) { return `₹${Number(v).toLocaleString("en-IN", {maximumFractionDigits:2})}`; }
+
+async function loadData() {
+  try {
+    const res = await fetch(`${API_BASE}/latest-analysis`);
+    const data = await res.json();
+
+    if (!data.has_results || !data.results?.length) {
+      document.getElementById("emptyState").classList.remove("hidden");
+      return;
+    }
+
+    document.getElementById("contentArea").classList.remove("hidden");
+    const results = data.results;
+
+    // Sort by risk score desc for liquidation / highest impact
+    const sorted = [...results].sort((a, b) =>
+      (b.agents.risk_agent.risk_score ?? 0) - (a.agents.risk_agent.risk_score ?? 0)
+    );
+
+    // Hero = highest suggested price uplift (fast-moving or pricing change)
+    const hero = results.find(r => r.agents.demand_agent.category === "fast_moving") || results[0];
+    const heroPrice = hero.agents.pricing_agent.suggested_price;
+    const heroRisk = hero.agents.risk_agent.risk_score;
+    document.getElementById("heroAction").textContent = actionLabel(hero.final_decision.action);
+    document.getElementById("heroTitle").textContent = `${hero.product} is the strongest monetization opportunity.`;
+    document.getElementById("heroExplanation").textContent = hero.final_decision.explanation || hero.agents.demand_agent.reason || "";
+    document.getElementById("heroPrice").textContent = currency(heroPrice);
+    document.getElementById("heroRisk").textContent = `${heroRisk}/10`;
+
+    // Liquidation = highest risk dead_stock
+    const liq = sorted.find(r => r.agents.demand_agent.category === "dead_stock") || sorted[0];
+    document.getElementById("liqProduct").textContent = liq.product;
+    document.getElementById("liqSummary").textContent = liq.agents.risk_agent.reason || liq.final_decision.explanation || "";
+    document.getElementById("liqAction").textContent = actionLabel(liq.final_decision.action);
+    document.getElementById("liqRisk").textContent = `${liq.agents.risk_agent.risk_score}/10`;
+
+    // Health summary
+    const fastCount = results.filter(r => r.agents.demand_agent.category === "fast_moving").length;
+    const deadCount = results.filter(r => r.agents.demand_agent.category === "dead_stock").length;
+    const highRisk = results.filter(r => r.agents.risk_agent.risk_score >= 7).length;
+    const totalVal = results.reduce((s, r) => s + r.agents.pricing_agent.suggested_price * (r.source?.stock || 0), 0);
+    document.getElementById("potentialValue").textContent = currency(totalVal);
+
+    const health = [
+      { label: "Fast-Moving Items", value: fastCount, meta: "Strong demand velocity" },
+      { label: "Dead Stock Items", value: deadCount, meta: "Immediate action needed" },
+      { label: "High Risk Items", value: highRisk, meta: "Risk score ≥ 7" },
+    ];
+    document.getElementById("healthSummary").innerHTML = health.map(h => `
+      <div class="rounded-2xl bg-white p-4">
+        <div class="flex items-end justify-between gap-3">
+          <div>
+            <p class="text-xs font-semibold uppercase tracking-[0.18em] text-on-surface-variant">${h.label}</p>
+            <p class="mt-2 text-2xl font-bold font-headline text-on-surface">${h.value}</p>
+          </div>
+          <p class="max-w-[160px] text-right text-xs text-on-surface-variant">${h.meta}</p>
+        </div>
+      </div>`).join("");
+
+    // Recommendation table
+    const rankOrder = { dead_stock: 0, slow_moving: 1, fast_moving: 2 };
+    const ranked = [...results].sort((a,b) => (rankOrder[a.agents.demand_agent.category]??1) - (rankOrder[b.agents.demand_agent.category]??1));
+    document.getElementById("recoTable").innerHTML = ranked.map(r => {
+      const risk = r.agents.risk_agent.risk_score;
+      const cat = r.agents.demand_agent.category || "healthy";
+      const catLabel = cat.replace(/_/g," ").replace(/\b\w/g,c=>c.toUpperCase());
+      return `
+      <tr>
+        <td class="py-4 pr-4">
+          <p class="font-semibold text-on-surface">${r.product}</p>
+          <p class="mt-1 text-xs text-on-surface-variant">${catLabel} | Stock: ${r.source?.stock ?? "–"}</p>
+        </td>
+        <td class="py-4 pr-4 font-medium text-primary">${actionLabel(r.final_decision.action)}</td>
+        <td class="py-4 pr-4">
+          <span class="inline-flex rounded-full px-3 py-1 text-xs font-bold uppercase tracking-widest ${riskColor(risk)}">${riskLabel(risk)}</span>
+        </td>
+        <td class="py-4 pr-4 font-semibold text-on-surface">${currency(r.agents.pricing_agent.suggested_price)}</td>
+        <td class="py-4 pr-4 text-on-surface-variant">${r.agents.pricing_agent.discount ?? 0}%</td>
+        <td class="py-4">
+          <span class="inline-flex rounded-xl bg-surface-container-high px-3 py-1.5 text-xs font-semibold text-on-surface">${catLabel}</span>
+        </td>
+      </tr>
+      <tr class="bg-surface-container-lowest/60">
+        <td colspan="6" class="pb-4 pt-1 text-xs leading-6 text-on-surface-variant">${r.final_decision.explanation || ""}</td>
+      </tr>`;
+    }).join("");
+
+  } catch (err) {
+    document.getElementById("emptyState").classList.remove("hidden");
+    document.getElementById("emptyState").querySelector("h3").textContent = "Could not load data";
+    document.getElementById("emptyState").querySelector("p").textContent = "Make sure the backend is running and a CSV has been uploaded.";
+  }
+}
+
+// Profile menu
+const profileBtn = document.getElementById("profileMenuButton");
+const profilePanel = document.getElementById("profileMenuPanel");
+profileBtn.addEventListener("click", e => { e.stopPropagation(); profilePanel.classList.toggle("hidden"); });
+document.addEventListener("click", () => profilePanel.classList.add("hidden"));
+
+loadData();
+</script>
+</body></html>
