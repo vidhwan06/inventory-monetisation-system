@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "cleanUrls": true,
+  "cleanUrls": false,
   "rewrites": [
     {
       "source": "/static/(.*)",
@@ -11,7 +11,15 @@
       "destination": "/frontend/analytics.html"
     },
     {
+      "source": "/analytics.html",
+      "destination": "/frontend/analytics.html"
+    },
+    {
       "source": "/monetization",
+      "destination": "/frontend/monetization.html"
+    },
+    {
+      "source": "/monetization.html",
       "destination": "/frontend/monetization.html"
     },
     {
@@ -19,7 +27,15 @@
       "destination": "/frontend/agents.html"
     },
     {
+      "source": "/agents.html",
+      "destination": "/frontend/agents.html"
+    },
+    {
       "source": "/settings",
+      "destination": "/frontend/settings.html"
+    },
+    {
+      "source": "/settings.html",
       "destination": "/frontend/settings.html"
     },
     {
@@ -27,7 +43,15 @@
       "destination": "/frontend/login.html"
     },
     {
+      "source": "/login.html",
+      "destination": "/frontend/login.html"
+    },
+    {
       "source": "/inventory_view",
+      "destination": "/frontend/inventory_view.html"
+    },
+    {
+      "source": "/inventory_view.html",
       "destination": "/frontend/inventory_view.html"
     },
     {
@@ -35,7 +59,15 @@
       "destination": "/frontend/orchestration.html"
     },
     {
+      "source": "/orchestration.html",
+      "destination": "/frontend/orchestration.html"
+    },
+    {
       "source": "/",
+      "destination": "/frontend/index.html"
+    },
+    {
+      "source": "/index.html",
       "destination": "/frontend/index.html"
     },
     {

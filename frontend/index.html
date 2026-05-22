@@ -89,7 +89,7 @@
             box-shadow: inset 0 0 0 1px rgba(53, 37, 205, 0.08);
         }
     </style>
-<script src="./static/app.js"></script></head>
+<script src="./static/app.js?v=local-file-api-8000"></script></head>
 <body class="bg-surface text-on-surface overflow-x-hidden">
 <!-- SideNavBar -->
 <aside class="fixed left-0 top-0 bottom-0 hidden w-72 overflow-x-hidden bg-[#f8f7ff] lg:flex flex-col h-screen px-5 py-5 z-50">
@@ -818,7 +818,10 @@ Inventory
                     body: formData
                 });
 
-                if (!res.ok) throw new Error("API request failed");
+                if (!res.ok) {
+                    const errorText = await res.text();
+                    throw new Error(errorText || `API request failed with status ${res.status}`);
+                }
 
                 const data = await res.json();
 
@@ -838,7 +841,7 @@ Inventory
                 resultStatus.innerText = `Analysis complete. ${results.length} items evaluated. ${summary}`;
             } catch (error) {
                 console.error(error);
-                resultStatus.innerText = "Error analyzing file. Check console.";
+                resultStatus.innerText = `Error analyzing file: ${error.message}. API: ${window.AssetFlowApp.API_BASE}`;
                 resultStatus.classList.add("text-error");
                 resetStats();
                 resetInsightCards();

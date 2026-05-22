@@ -1,9 +1,22 @@
 window.AssetFlowApp = (() => {
-    const LOCAL_API_BASE = "http://127.0.0.1:8001";
+    const LOCAL_API_BASE = "http://127.0.0.1:8000";
     const PROD_API_BASE = "https://inventory-monetisation-system.onrender.com";
     const storedApiBase = localStorage.getItem("assetflow_backend");
-    const isLocalHost = ["127.0.0.1", "localhost"].includes(window.location.hostname);
-    const API_BASE = storedApiBase || (isLocalHost ? LOCAL_API_BASE : PROD_API_BASE);
+    const isLocalHost = ["", "127.0.0.1", "localhost"].includes(window.location.hostname);
+    const knownNonLocalDefaults = new Set([
+        "http://127.0.0.1:8001",
+        "http://localhost:8001",
+        PROD_API_BASE,
+    ]);
+    const migratedApiBase = isLocalHost && knownNonLocalDefaults.has(storedApiBase)
+        ? LOCAL_API_BASE
+        : storedApiBase;
+
+    if (storedApiBase && migratedApiBase !== storedApiBase) {
+        localStorage.setItem("assetflow_backend", migratedApiBase);
+    }
+
+    const API_BASE = isLocalHost ? LOCAL_API_BASE : (migratedApiBase || PROD_API_BASE);
     const pageMap = {
         inventory: "./index.html",
         analytics: "./analytics.html",
