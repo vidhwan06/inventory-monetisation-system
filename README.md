@@ -9,6 +9,13 @@ The system analyses inventory data through multiple specialized AI agents and co
 It was developed as a hackathon project to explore how multi-agent AI can be applied to practical business and inventory-management problems.
 
 ---
+## 🌐 Live Demo
+
+🚀 **[Try AssetFlow Live](https://inventory-monetisation-system.vercel.app/)**
+
+> **Note:** The live demo is a deployed prototype. Some AI-powered features may require valid API configuration to function fully.
+
+---
 
 ## 🚀 What Does AssetFlow Do?
 
