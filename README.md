@@ -1,99 +1,64 @@
-# AssetFlow — Inventory Monetisation System
+# AssetFlow — Inventory Monetisation System 📦🤖
 
-A multi-agent AI system for inventory analysis and monetisation strategy, built with FastAPI (backend) and plain HTML/JS (frontend).
+### AI-Powered Inventory Analysis & Monetisation Platform
 
-## Project Structure
+AssetFlow is a multi-agent AI system designed to help businesses analyse inventory, identify potential risks and opportunities, and generate actionable monetisation strategies.
 
-```
-Inventory monetisation system/
-├── backend/                    ← FastAPI API server
-│   ├── main.py                 ← App entry point + all routes
-│   ├── requirements.txt        ← Python dependencies
-│   ├── agents/                 ← AI agent modules
-│   │   ├── __init__.py
-│   │   ├── action.py
-│   │   ├── demand.py
-│   │   ├── pricing.py
-│   │   ├── risk.py
-│   │   └── gemini_config.py
-│   ├── aggregator/             ← Decision aggregation
-│   │   ├── __init__.py
-│   │   └── decision.py
-│   ├── templates/              ← Jinja2 server-rendered pages
-│   │   ├── base.html
-│   │   ├── analytics.html
-│   │   ├── monetization.html
-│   │   ├── orchestration.html
-│   │   └── settings.html
-│   ├── data/
-│   │   └── products.csv        ← Sample product data
-│   └── inventory.csv
-│
-├── frontend/                   ← Static frontend pages
-│   ├── index.html              ← Main inventory dashboard (open in browser)
-│   ├── login.html              ← Login page (open in browser)
-│   └── static/
-│       └── app.js              ← Shared API helpers + utilities
-│
-├── .env                        ← Environment variables (not committed)
-├── .gitignore
-└── requirements.txt            ← Root requirements (mirrors backend/)
-```
+The system analyses inventory data through multiple specialized AI agents and combines their outputs into a unified decision-making workflow.
 
-## API Routes
+It was developed as a hackathon project to explore how multi-agent AI can be applied to practical business and inventory-management problems.
 
-| Method | Route | Description |
-|--------|-------|-------------|
-| GET | `/` | Health check → `{"message": "API is running"}` |
-| GET | `/inventory` | Redirect to frontend index.html |
-| GET | `/login` | Redirect to frontend login.html |
-| POST | `/analyze/` | Upload CSV → run multi-agent analysis |
-| GET | `/latest-analysis` | Get last analysis results (JSON) |
-| GET | `/analyze_all` | Analyze built-in `data/products.csv` |
-| GET | `/analytics` | Server-rendered analytics dashboard |
-| GET | `/monetization` | Server-rendered monetization suggestions |
-| GET | `/orchestration` | Server-rendered agent orchestration view |
-| GET | `/settings` | Server-rendered settings page |
+---
 
-## Running Locally
+## 🚀 What Does AssetFlow Do?
 
-### 1. Backend
+Traditional inventory systems mainly focus on tracking stock.
 
-```bash
-cd backend
-pip install -r requirements.txt
-uvicorn main:app --reload
-```
+AssetFlow goes a step further by analysing inventory data and asking:
 
-Backend will be available at: **http://127.0.0.1:8000**
+- Which products are becoming slow-moving?
+- What products have potential demand?
+- Which inventory carries financial or operational risk?
+- What actions can be taken to recover or improve inventory value?
+- How can different AI analyses be combined into a practical recommendation?
 
-### 2. Frontend
+The system processes inventory data and coordinates multiple specialized AI agents to answer these questions.
 
-Open `frontend/index.html` directly in your browser, or serve it with any static server:
+---
 
-```bash
-# Using Python (from project root)
-python -m http.server 5500 --directory frontend
-```
+## 🧠 Multi-Agent Architecture
 
-Frontend will be available at: **http://127.0.0.1:5500**
+AssetFlow uses specialized AI agents, with each agent focusing on a different aspect of inventory analysis.
 
-### 3. Environment Variables
-
-Copy `.env.example` to `.env` and fill in your values:
-
-```env
-GEMINI_API_KEY=your_google_generative_ai_key
-FRONTEND_URL=http://127.0.0.1:5500
-```
-
-## Deployment
-
-### Frontend → Vercel
-- Deploy the `frontend/` folder
-- Set environment variable or update `app.js` `API_BASE` to your Render backend URL
-
-### Backend → Render
-- Deploy the `backend/` folder
-- Set `GEMINI_API_KEY` and `FRONTEND_URL` in Render environment variables
-- Start command: `uvicorn main:app --host 0.0.0.0 --port $PORT`
+```text
+                    Inventory Data
+                          │
+                          ▼
+                  ┌───────────────┐
+                  │ Data Ingestion │
+                  └───────┬───────┘
+                          │
+             ┌────────────┼────────────┐
+             │            │            │
+             ▼            ▼            ▼
+       ┌──────────┐ ┌──────────┐ ┌──────────┐
+       │ Demand   │ │ Pricing  │ │   Risk   │
+       │  Agent   │ │  Agent   │ │  Agent   │
+       └────┬─────┘ └────┬─────┘ └────┬─────┘
+            │            │            │
+            └────────────┼────────────┘
+                         │
+                         ▼
+                  ┌─────────────┐
+                  │    Action   │
+                  │    Agent    │
+                  └──────┬──────┘
+                         │
+                         ▼
+                ┌──────────────────┐
+                │ Decision         │
+                │ Aggregator       │
+                └────────┬─────────┘
+                         │
+                         ▼
+              Monetisation Strategy
